@@ -61,6 +61,15 @@ class ClientsServiceProvider extends ServiceProvider
             __DIR__.'/../config/clients.php' => config_path('clients.php'),
         ], 'clients.config');
 
+        $this->publishes([
+            __DIR__.'/../database/migrations/' => database_path('migrations')
+        ], 'clients.migrations');
+
+        // Publishing the routes.
+        $this->publishes([
+            __DIR__.'/../routes' => base_path('routes'),
+        ], 'clients.routes');
+
         // Publishing the views.
         /*$this->publishes([
             __DIR__.'/../resources/views' => base_path('resources/views/vendor/ilbronza'),
