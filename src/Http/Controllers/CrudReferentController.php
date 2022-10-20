@@ -130,7 +130,7 @@ class CrudReferentController extends CRUD
         'archived',
         'reorder',
         'createFromClient',
-        'stroreReorder'
+        'storeReorder'
     ];
 
     /**

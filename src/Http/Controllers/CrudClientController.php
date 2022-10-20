@@ -84,7 +84,7 @@ class CrudClientController extends CRUD
         'destroy',
         'deleted',
         'archived',
-        'stroreReorder'
+        'storeReorder'
     ];
 
     /**
