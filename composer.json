@@ -12,7 +12,6 @@
     "homepage": "https://github.com/ilbronza/clients",
     "keywords": ["Laravel", "Clients"],
     "require": {
-        "illuminate/support": "~9"
     },
     "require-dev": {
         "phpunit/phpunit": "~9.0",
