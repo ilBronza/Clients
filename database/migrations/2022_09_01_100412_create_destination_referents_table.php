@@ -16,15 +16,15 @@ return new class extends Migration
         Schema::create('destination_referents', function (Blueprint $table) {
             $table->id('id');
 
-            $table->uuid('client_id');
+            $table->uuid('destination_id');
             $table->uuid('referent_id');
 
             $table->unsignedSmallInteger('priority')->default(0);
 
-            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('destination_id')->references('id')->on('destinations');
             $table->foreign('referent_id')->references('id')->on('referents');
 
-            $table->unique(['client_id', 'referent_id']);
+            $table->unique(['destination_id', 'referent_id']);
         });
     }
 

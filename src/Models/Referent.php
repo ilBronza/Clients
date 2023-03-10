@@ -12,6 +12,8 @@ class Referent extends BaseModel
 	use CRUDUseUuidTrait;
 	use CRUDSluggableTrait;
 
+	static $deletingRelationships = [];
+
 	public function destination()
 	{
 		return $this->belongsTo(config('clients.destination.class'));
@@ -19,7 +21,7 @@ class Referent extends BaseModel
 
 	public function destinations()
 	{
-		return $this->belongsToMany(config('clients.destination.class'));
+		return $this->belongsToMany(config('clients.destination.class'), config('clients.destinationReferent.table'));
 	}
 
 	public function client()

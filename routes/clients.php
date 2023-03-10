@@ -2,6 +2,7 @@
 
 use IlBronza\Clients\Http\Controllers\CrudClientController;
 use IlBronza\Clients\Http\Controllers\CrudDestinationController;
+use IlBronza\Clients\Http\Controllers\CrudReferentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,14 +15,18 @@ use IlBronza\Clients\Http\Controllers\CrudDestinationController;
 |
 */
 
-Route::group(['middleware' => ['auth', 'role:administrator']], function () {
-
-	Route::group(['prefix' => 'clients'], function()
+Route::group([
+	'middleware' => ['web', 'auth'],
+	'prefix' => 'clients-management',
+	],
+	function()
 	{
-		Route::get('', [CrudClientController::class, 'index'])->name('clients.index');
+		Route::resource('clients', CrudClientController::class);
 
 		Route::get('clients/{client}/destinations/create', [CrudDestinationController::class, 'createFromClient'])->name('clients.destinations.create');
 		Route::get('clients/{client}/referents/create', [CrudReferentController::class, 'createFromClient'])->name('clients.referents.create');
 
+
+		Route::resource('destinations', CrudDestinationController::class);
+		Route::resource('referents', CrudReferentController::class);
 	});
-});

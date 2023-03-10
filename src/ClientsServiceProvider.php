@@ -13,10 +13,10 @@ class ClientsServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'ilbronza');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'clients');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'ilbronza');
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadRoutesFrom(__DIR__.'/routes.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/clients.php');
 
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
@@ -66,9 +66,9 @@ class ClientsServiceProvider extends ServiceProvider
         ], 'clients.migrations');
 
         // Publishing the routes.
-        $this->publishes([
-            __DIR__.'/../routes' => base_path('routes'),
-        ], 'clients.routes');
+        // $this->publishes([
+        //     __DIR__.'/../routes' => base_path('routes'),
+        // ], 'clients.routes');
 
         // Publishing the views.
         /*$this->publishes([
@@ -81,9 +81,9 @@ class ClientsServiceProvider extends ServiceProvider
         ], 'clients.views');*/
 
         // Publishing the translation files.
-        /*$this->publishes([
-            __DIR__.'/../resources/lang' => resource_path('lang/vendor/ilbronza'),
-        ], 'clients.views');*/
+        $this->publishes([
+            __DIR__.'/../resources/lang' => base_path('resources/lang/vendor/clients'),
+        ], 'clients.translations');
 
         // Registering package commands.
         // $this->commands([]);

@@ -18,4 +18,8 @@ return [
 	'destination' => [
 		'class' => Destination::class
 	],
+
+	'destinationReferent' => [
+		'table' => 'destination_referents'
+	]
 ];

@@ -27,20 +27,20 @@ class Client extends BaseModel
 
 	public function getCreateDestinationButton() : Button
 	{
-		return new Button(
-			route('clients.destinations.create', ['client' => $this]),
-			trans('destinations.create'),
-			'location'
-		);
+        return Button::create([
+            'href' => route('clients.destinations.create', ['client' => $this]),
+            'text' => trans('destinations.create'),
+            'icon' => 'location'
+        ]);
 	}
 
 	public function getCreateReferentButton() : Button
 	{
-		return new Button(
-			route('clients.referents.create', ['client' => $this]),
-			trans('referents.create'),
-			'user'
-		);
+        return Button::create([
+            'href' => route('clients.referents.create', ['client' => $this]),
+            'text' => trans('referents.create'),
+            'icon' => 'user'
+        ]);
 	}
 
 }

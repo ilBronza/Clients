@@ -13,8 +13,11 @@ use IlBronza\CRUD\Traits\CRUDPlainIndexTrait;
 use IlBronza\CRUD\Traits\CRUDRelationshipTrait;
 use IlBronza\CRUD\Traits\CRUDShowTrait;
 use IlBronza\CRUD\Traits\CRUDUpdateEditorTrait;
+use IlBronza\Clients\Http\ParametersFile\Referent\CreateReferentParameters;
+use IlBronza\Clients\Http\ParametersFile\Referent\EditReferentParameters;
 use IlBronza\Clients\Models\Client;
 use IlBronza\Clients\Models\Referent;
+use IlBronza\Ukn\Ukn;
 use Illuminate\Http\Request;
 
 class CrudReferentController extends CRUD
@@ -98,6 +101,12 @@ class CrudReferentController extends CRUD
                     'rules' => 'string|nullable|exists:destinations,id',
                     'relation' => 'destination'
                 ],
+                'destinations' => [
+                    'type' => 'select',
+                    'multiple' => true,
+                    'rules' => 'array|nullable|exists:destinations,id',
+                    'relation' => 'destinations'
+                ],
                 'first_name' => ['text' => 'string|nullable|max:255'],
                 'second_name' => ['text' => 'string|nullable|max:255'],
                 'email' => ['text' => 'string|required|max:255'],
@@ -110,10 +119,14 @@ class CrudReferentController extends CRUD
 
     public $returnBack = true;
 
-    /**
-     * subject model class full path
-     **/
-    public $modelClass = Referent::class;
+    public function getModelClass() : string
+    {
+        return config('clients.referent.class');
+    }
+
+
+    public $createParametersFile = CreateReferentParameters::class;
+    public $editParametersFile = EditReferentParameters::class;
 
     /**
      * http methods allowed. remove non existing methods to get a 403
@@ -127,10 +140,7 @@ class CrudReferentController extends CRUD
         'store',
         'destroy',
         'deleted',
-        'archived',
-        'reorder',
         'createFromClient',
-        'storeReorder'
     ];
 
     /**
@@ -196,6 +206,8 @@ class CrudReferentController extends CRUD
         $referent->first_name = $client->getName();
         $referent->save();
 
+        Ukn::s(__('clients::referents.createdForClient', ['client' => $client->getName()]));
+
         return $this->edit($referent);
     }
 
@@ -221,18 +233,6 @@ class CrudReferentController extends CRUD
 
 
 
-     /**
-      * START CREATE PARAMETERS AND METHODS
-      **/
-
-    // public function beforeRenderCreate()
-    // {
-    //     $this->modelInstance->agent_id = session('agent')->getKey();
-    // }
-
-     /**
-      * STOP CREATE PARAMETERS AND METHODS
-      **/
 
 }
 
