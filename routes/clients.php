@@ -1,9 +1,5 @@
 <?php
 
-use IlBronza\Clients\Http\Controllers\CrudClientController;
-use IlBronza\Clients\Http\Controllers\CrudDestinationController;
-use IlBronza\Clients\Http\Controllers\CrudReferentController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,15 +14,16 @@ use IlBronza\Clients\Http\Controllers\CrudReferentController;
 Route::group([
 	'middleware' => ['web', 'auth'],
 	'prefix' => 'clients-management',
+	'as' => config('clients.routePrefix')
 	],
 	function()
 	{
-		Route::resource('clients', CrudClientController::class);
+		Route::resource('clients', config('clients.controllers.clientController'));
 
 		Route::get('clients/{client}/destinations/create', [CrudDestinationController::class, 'createFromClient'])->name('clients.destinations.create');
 		Route::get('clients/{client}/referents/create', [CrudReferentController::class, 'createFromClient'])->name('clients.referents.create');
 
 
-		Route::resource('destinations', CrudDestinationController::class);
-		Route::resource('referents', CrudReferentController::class);
+		Route::resource('destinations', config('clients.controllers.destinationController'));
+		Route::resource('referents', config('clients.controllers.referentController'));
 	});

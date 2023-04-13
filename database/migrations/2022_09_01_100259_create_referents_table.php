@@ -13,14 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('referents', function (Blueprint $table) {
+        Schema::create(config('clients.models.referent.table'), function (Blueprint $table) {
             $table->uuid('id')->primary();
 
             $table->uuid('client_id')->nullable();
-            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('client_id')->references('id')->on(
+                config('clients.models.client.table')
+            );
 
             $table->uuid('destination_id')->nullable();
-            $table->foreign('destination_id')->references('id')->on('destinations');
+            $table->foreign('destination_id')->references('id')->on(
+                config('clients.models.destination.table')
+            );
 
             $table->string('first_name')->nullable();
             $table->string('second_name')->nullable();
@@ -42,6 +46,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists(config('clients.models.referent.table'));
     }
 };

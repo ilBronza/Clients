@@ -15,7 +15,7 @@ class ClientsServiceProvider extends ServiceProvider
     {
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'clients');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'ilbronza');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadRoutesFrom(__DIR__.'/../routes/clients.php');
 
         // Publishing is only necessary when using the CLI.
@@ -61,9 +61,9 @@ class ClientsServiceProvider extends ServiceProvider
             __DIR__.'/../config/clients.php' => config_path('clients.php'),
         ], 'clients.config');
 
-        $this->publishes([
-            __DIR__.'/../database/migrations/' => database_path('migrations')
-        ], 'clients.migrations');
+        // $this->publishes([
+        //     __DIR__.'/../database/migrations/' => database_path('migrations')
+        // ], 'clients.migrations');
 
         // Publishing the routes.
         // $this->publishes([

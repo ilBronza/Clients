@@ -29,6 +29,7 @@ class CrudClientController extends CRUD
                 'mySelfEdit' => 'links.edit',
                 'mySelfSee' => 'links.see',
                 'name' => 'flat',
+                'mySelfClasstype' => '_fn_getReferentsString',
                 'slug' => 'flat',
                 'fiscal_name' => 'flat',
                 'fiscal_code' => 'flat',
@@ -66,10 +67,10 @@ class CrudClientController extends CRUD
     use CRUDRelationshipTrait;
     use CRUDBelongsToManyTrait;
 
-    /**
-     * subject model class full path
-     **/
-    public $modelClass = Client::class;
+    public function setModelClass()
+    {
+        $this->modelClass = config('clients.models.client.class');
+    }
 
     /**
      * http methods allowed. remove non existing methods to get a 403
@@ -101,7 +102,7 @@ class CrudClientController extends CRUD
 
     public function getIndexElements()
     {
-        return Client::all();
+        return $this->getModelClass()::all();
     }
 
     public function show(Client $client)

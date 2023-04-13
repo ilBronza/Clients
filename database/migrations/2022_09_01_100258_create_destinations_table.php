@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('destinations', function (Blueprint $table) {
+        Schema::create(config('clients.models.destination.table'), function (Blueprint $table) {
             $table->uuid('id')->primary();
 
             $table->uuid('client_id')->nullable();
-            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('client_id')->references('id')->on(
+                config('clients.models.client.table')
+            );
 
             $table->string('name');
             $table->string('slug');
@@ -36,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists(config('clients.models.destination.table'));
     }
 };

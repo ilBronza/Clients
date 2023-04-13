@@ -22,6 +22,12 @@ class Destination extends BaseModel
 	use CRUDUseUuidTrait;
 	use CRUDSluggableTrait;
 
+	public function getTable()
+	{
+		return config('clients.models.destination.table');
+	}
+
+
 	public function client()
 	{
 		return $this->belongsTo(Client::class);

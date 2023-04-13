@@ -14,6 +14,10 @@ class Client extends BaseModel
 	use CRUDUseUuidTrait;
 	use CRUDSluggableTrait;
 
+	public function getTable()
+	{
+		return config('clients.models.client.table');
+	}
 
 	public function destinations()
 	{
@@ -41,6 +45,11 @@ class Client extends BaseModel
             'text' => trans('referents.create'),
             'icon' => 'user'
         ]);
+	}
+
+	public function getReferentsString()
+	{
+		return json_encode($this->referents()->first());
 	}
 
 }

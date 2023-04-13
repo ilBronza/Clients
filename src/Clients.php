@@ -2,7 +2,10 @@
 
 namespace IlBronza\Clients;
 
-class Clients
+use IlBronza\CRUD\Providers\RouterProvider\IbRouter;
+use IlBronza\CRUD\Providers\RouterProvider\RoutedObjectInterface;
+
+class Clients implements RoutedObjectInterface
 {
     public function manageMenuButtons()
     {
@@ -26,21 +29,21 @@ class Clients
             'name' => 'clients.index',
             'icon' => 'users',
             'text' => 'clients::clients.list',
-            'href' => route('clients.index')
+            'href' => IbRouter::route($this, 'clients.index')
         ]);
 
         $destinationsButton = $menu->createButton([
             'name' => 'destinations.index',
             'icon' => 'users',
             'text' => 'clients::destinations.list',
-            'href' => route('destinations.index')
+            'href' => IbRouter::route($this, 'destinations.index')
         ]);
 
         $referentsButton = $menu->createButton([
             'name' => 'referents.index',
             'icon' => 'users',
             'text' => 'clients::referents.list',
-            'href' => route('referents.index')
+            'href' => IbRouter::route($this, 'referents.index')
         ]);
 
         $button->addChild($clientsManagerButton);
@@ -49,5 +52,10 @@ class Clients
         $clientsManagerButton->addChild($destinationsButton);
         $clientsManagerButton->addChild($referentsButton);
 
+    }
+
+    public function getRoutePrefix() : ? string
+    {
+        return config('clients.routePrefix');
     }
 }

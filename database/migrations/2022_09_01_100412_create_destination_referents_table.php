@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('destination_referents', function (Blueprint $table) {
+        Schema::create(config('clients.models.destinationReferent.table'), function (Blueprint $table) {
             $table->id('id');
 
             $table->uuid('destination_id');
@@ -21,8 +21,12 @@ return new class extends Migration
 
             $table->unsignedSmallInteger('priority')->default(0);
 
-            $table->foreign('destination_id')->references('id')->on('destinations');
-            $table->foreign('referent_id')->references('id')->on('referents');
+            $table->foreign('destination_id')->references('id')->on(
+                config('clients.models.destination.table')
+            );
+            $table->foreign('referent_id')->references('id')->on(
+                config('clients.models.referent.table')
+            );
 
             $table->unique(['destination_id', 'referent_id']);
         });
@@ -35,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('destination_referents');
+        Schema::dropIfExists(config('clients.models.destinationReferent.table'));
     }
 };
