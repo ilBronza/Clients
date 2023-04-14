@@ -21,10 +21,11 @@ return new class extends Migration
                 config('clients.models.client.table')
             );
 
+            $table->uuid('address_id')->nullable();
+            $table->foreign('address_id')->references('id')->on(config('addresses.models.address.table', 'addresses'));
+
             $table->string('name');
             $table->string('slug');
-
-            $table->string('type')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

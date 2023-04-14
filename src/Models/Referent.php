@@ -14,6 +14,11 @@ class Referent extends BaseModel
 
 	static $deletingRelationships = [];
 
+	public function getName()
+	{
+		return $this->second_name . " " . $this->first_name;
+	}
+
 	public function getTable()
 	{
 		return config('clients.models.referent.table');

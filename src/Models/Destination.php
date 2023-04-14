@@ -22,11 +22,15 @@ class Destination extends BaseModel
 	use CRUDUseUuidTrait;
 	use CRUDSluggableTrait;
 
+	static function getProjectClassName()
+	{
+		return config('clients.models.destination.class');
+	}
+
 	public function getTable()
 	{
 		return config('clients.models.destination.table');
 	}
-
 
 	public function client()
 	{
