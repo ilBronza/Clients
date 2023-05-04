@@ -18,12 +18,29 @@ Route::group([
 	],
 	function()
 	{
-		Route::resource('clients', config('clients.controllers.clientController'));
+		Route::resource('clients', config('clients.models.client.controller'));
 
-		Route::get('clients/{client}/destinations/create', [CrudDestinationController::class, 'createFromClient'])->name('clients.destinations.create');
-		Route::get('clients/{client}/referents/create', [CrudReferentController::class, 'createFromClient'])->name('clients.referents.create');
+		Route::get(
+			'clients/{client}/destinations/create',
+			[
+				config('clients.models.destination.controller'),
+				'createFromClient'
+			]
+		)->name('clients.destinations.create');
+
+		Route::get(
+			'clients/{client}/referents/create',
+			[
+				config('clients.models.referent.controller'),
+				'createFromClient'
+			]
+		)->name('clients.referents.create');
 
 
-		Route::resource('destinations', config('clients.controllers.destinationController'));
-		Route::resource('referents', config('clients.controllers.referentController'));
+		Route::resource('destinations', config('clients.models.destination.controller'));
+		Route::resource('referents', config('clients.models.referent.controller'));
+
+		Route::resource('destinationtypes', config('clients.models.destinationtype.controller'));
+
+		Route::resource('referenttypes', config('clients.models.referenttype.controller'));
 	});

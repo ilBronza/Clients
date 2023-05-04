@@ -3,14 +3,11 @@
 namespace IlBronza\Clients\Models;
 
 use IlBronza\CRUD\Models\BaseModel;
+use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
 
 class DestinationtypeDestination extends BaseModel
 {
-	static $configKey = 'clients.models.destinationtypeDestination';
+	use ClientsPackageBaseModelTrait;
 
-	public function getTable()
-	{
-		return config(static::$configKey . '.table');
-	}
-
+	static $modelConfigPrefix = 'destinationtypeDestination';
 }

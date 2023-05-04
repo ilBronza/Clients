@@ -4,7 +4,6 @@ namespace IlBronza\Clients\Http\Controllers;
 
 use IlBronza\CRUD\CRUD;
 use IlBronza\CRUD\Traits\CRUDBelongsToManyTrait;
-use IlBronza\CRUD\Traits\CRUDCreateStoreTrait;
 use IlBronza\CRUD\Traits\CRUDDeleteTrait;
 use IlBronza\CRUD\Traits\CRUDDestroyTrait;
 use IlBronza\CRUD\Traits\CRUDEditUpdateTrait;
@@ -13,10 +12,9 @@ use IlBronza\CRUD\Traits\CRUDPlainIndexTrait;
 use IlBronza\CRUD\Traits\CRUDRelationshipTrait;
 use IlBronza\CRUD\Traits\CRUDShowTrait;
 use IlBronza\CRUD\Traits\CRUDUpdateEditorTrait;
-
 use IlBronza\Clients\Models\Client;
 use IlBronza\Clients\Models\Destination;
-
+use IlBronza\Ukn\Facades\Ukn;
 use Illuminate\Http\Request;
 
 class CrudDestinationController extends CRUD
@@ -26,13 +24,18 @@ class CrudDestinationController extends CRUD
     use CRUDIndexTrait;
     use CRUDEditUpdateTrait;
     use CRUDUpdateEditorTrait;
-    use CRUDCreateStoreTrait;
+    // use CRUDCreateStoreTrait;
 
     use CRUDDeleteTrait;
     use CRUDDestroyTrait;
 
     use CRUDRelationshipTrait;
     use CRUDBelongsToManyTrait;
+
+    public function setModelClass()
+    {
+        $this->modelClass = config('clients.models.destination.class');
+    }
 
     public static $tables = [
 
@@ -60,21 +63,27 @@ class CrudDestinationController extends CRUD
         ]
     ];
 
-    static $formFields = [
-        'common' => [
-            'default' => [
-                'client_id' => [
-                    'type' => 'select',
-                    'multiple' => false,
-                    'rules' => 'string|nullable|exists:clients,id',
-                    'relation' => 'client'
-                ],
-                'name' => ['text' => 'string|required|max:191'],
-                'slug' => ['text' => 'string|nullable|max:191'],
-                'type' => ['text' => 'string|nullable|max:191']
-            ]
-        ]
-    ];    
+    // static $formFields = [
+    //     'common' => [
+    //         'default' => [
+    //             'client_id' => [
+    //                 'type' => 'select',
+    //                 'multiple' => false,
+    //                 'rules' => 'string|nullable|exists:clients,id',
+    //                 'relation' => 'client',
+    //                 'disabled' => true
+    //             ],
+    //             'name' => ['text' => 'string|required|max:191'],
+    //             'slug' => ['text' => 'string|nullable|max:191'],
+    //             'type' => ['text' => 'string|nullable|max:191']
+    //         ]
+    //     ]
+    // ];    
+
+    public function getRouteBaseNamePrefix() : ? string
+    {
+        return config('clients.routePrefix');
+    }
 
     /**
      * subject model class full path
@@ -90,46 +99,72 @@ class CrudDestinationController extends CRUD
         'show',
         'edit',
         'update',
-        'create',
+        // 'create',
         'createFromClient',
-        'store',
+        // 'store',
         'destroy',
         'deleted',
     ];
 
+    public function getAfterUpdatedRedirectUrl()
+    {
+        return $this->getModel()->getClient()->getShowUrl();
+    }
 
     public function getIndexElements()
     {
-        return Destination::all();
+        return $this->getModelClass()::with('client', 'referents')->get();
     }
 
-    public function show(Destination $destination)
+    public function getDestination(int|string $destination)
     {
+        return $this->getModelClass()::find($destination);
+    }
+
+    public function show(int|string $destination)
+    {
+        $destination = $this->getDestination($destination);
+
         return $this->_show($destination);
     }
 
-    public function createFromClient(Client $client)
+    public function getClient($client)
     {
-        $destination = Destination::make();
+        return Client::getProjectClassName()::find($client);
+    }
+
+    public function createFromClient(int|string $client)
+    {
+        $client = $this->getClient($client);
+
+        $destination = $this->getModelClass()::make();
         $destination->client_id = $client->getKey();
         $destination->name = $client->getName();
         $destination->save();
 
-        return $this->edit($destination);
-    }
+        Ukn::s(__('clients::destinations.createdForClient', ['client' => $client->getName()]));
 
-    public function edit(Destination $destination)
-    {
         return $this->_edit($destination);
     }
 
-    public function update(Request $request, Destination $destination)
+    public function edit(int|string $destination)
     {
+        $destination = $this->getDestination($destination);
+
+        return $this->_edit($destination);
+    }
+
+    public function update(Request $request, int|string $destination)
+    {
+        $destination = $this->getDestination($destination);
+
         return $this->_update($request, $destination);
     }
 
-    public function destroy(Destination $destination)
+    public function destroy(int|string $destination)
     {
+        $destination = $this->getDestination($destination);
+
         return $this->_destroy($destination);
     }
 }

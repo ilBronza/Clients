@@ -15,9 +15,9 @@ return new class extends Migration
      */
     public function up()
     {
-        $referentType = Destinationtype::make();
-        $referentType->name = Destinationtype::getDefaultName();
-        $referentType->save();
+        $destinationType = Destinationtype::make();
+        $destinationType->name = Destinationtype::getDefaultName();
+        $destinationType->save();
 
         $referentType = Referenttype::make();
         $referentType->name = Referenttype::getDefaultName();

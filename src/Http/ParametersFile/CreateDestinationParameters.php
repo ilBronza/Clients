@@ -23,10 +23,15 @@ class CreateDestinationParameters extends FieldsetParametersFile
                     'client' => [
                         'type' => 'select',
                         'multiple' => false,
-                        'rules' => 'string|required|exists:clients,id',
+                        'rules' => 'string|required|exists:' . config('clients.models.client.table') . ',id',
                         'relation' => 'client'
                     ],
-                    'type' => ['text' => 'string|required|max:255'],                
+                    'types' => [
+                        'type' => 'select',
+                        'multiple' => true,
+                        'rules' => 'array|nullable|exists:' . config('clients.models.destinationtype.table') . ',slug',
+                        'relation' => 'types'
+                    ],                
                 ],
                 'width' => ['1-2@m']
             ],

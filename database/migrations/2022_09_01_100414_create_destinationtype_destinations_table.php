@@ -19,10 +19,10 @@ return new class extends Migration
             $table->uuid('destination_id');
             $table->string('type_slug');
 
-            $table->foreign('destination_id')->references('id')->on(
+            $table->foreign('destination_id', 'destypedest_destination_id')->references('id')->on(
                 config('clients.models.destination.table')
             );
-            $table->foreign('type_slug')->references('slug')->on(
+            $table->foreign('type_slug', 'destypedest_desttype_slug')->references('slug')->on(
                 config('clients.models.destinationtype.table')
             );
 

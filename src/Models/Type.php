@@ -4,6 +4,7 @@ namespace IlBronza\Clients\Models;
 
 use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Traits\CRUDSluggableTrait;
+use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
 
 class Type extends BaseModel
 {
@@ -11,21 +12,17 @@ class Type extends BaseModel
 	protected $keyType = 'string';
 	protected $primaryKey = 'slug';
 
+	use ClientsPackageBaseModelTrait;
 	use CRUDSluggableTrait;
 
-	static function getConfigKey()
+	public function getForeignKey()
 	{
-		return static::$configKey;
-	}
-
-	public function getTable()
-	{
-		return config(static::getConfigKey() . '.table');
+		return 'type_slug';
 	}
 
 	static function getDefaultName()
 	{
-		return config(static::getConfigKey() . '.defaultName');
+		return config('clients.models.' . static::getModelConfigPrefix() . '.defaultName');
 	}
 
 	static function getDefault() : static

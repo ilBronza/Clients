@@ -2,12 +2,14 @@
 
 namespace IlBronza\Clients\Models;
 
+use IlBronza\CRUD\Models\BaseModel;
+use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
+
 class DestinationReferent extends BaseModel
 {
-	public function getTable()
-	{
-		return config('clients.models.destinationReferent.table');
-	}
+	static $modelConfigPrefix = 'destinationReferent';
+
+	use ClientsPackageBaseModelTrait;
 
 	public function referent()
 	{

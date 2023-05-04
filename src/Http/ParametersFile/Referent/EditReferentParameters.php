@@ -21,26 +21,31 @@ class EditReferentParameters extends FieldsetParametersFile
             ],
             'general' => [
                 'fields' => [
-                    'client' => [
-                        'type' => 'select',
-                        'multiple' => false,
-                        'disabled' => true,
-                        'rules' => 'string|required|exists:clients,id',
-                        'relation' => 'client'
-                    ],
+                    // 'client' => [
+                    //     'type' => 'select',
+                    //     'multiple' => false,
+                    //     'disabled' => true,
+                    //     'rules' => 'string|required|exists:' . config('clients.models.client.table') . ',id',
+                    //     'relation' => 'client'
+                    // ],
                     'destination' => [
                         'type' => 'select',
                         'multiple' => false,
-                        'rules' => 'string|nullable|exists:destinations,id',
+                        'rules' => 'string|nullable|exists:' . config('clients.models.destination.table') . ',id',
                         'relation' => 'destination'
                     ],
                     'destinations' => [
                         'type' => 'select',
                         'multiple' => true,
-                        'rules' => 'array|nullable|exists:destinations,id',
+                        'rules' => 'array|nullable|exists:' . config('clients.models.destination.table') . ',id',
                         'relation' => 'destinations'
                     ],
-                    'type' => ['text' => 'string|required|max:255'],
+                    'types' => [
+                        'type' => 'select',
+                        'multiple' => true,
+                        'rules' => 'array|nullable|exists:' . config('clients.models.referenttype.table') . ',slug',
+                        'relation' => 'types'
+                    ],
                 ],
                 'width' => ['1-2@m']
             ],

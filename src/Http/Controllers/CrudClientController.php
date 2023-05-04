@@ -14,8 +14,9 @@ use IlBronza\CRUD\Traits\CRUDRelationshipTrait;
 use IlBronza\CRUD\Traits\CRUDShowTrait;
 use IlBronza\CRUD\Traits\CRUDUpdateEditorTrait;
 
-use IlBronza\Clients\Models\Client;
+use IlBronza\Clients\Http\ParametersFile\Client\ShowClientParameters;
 use IlBronza\Clients\Providers\RelationshipsManagers\ClientRelationManager;
+
 use Illuminate\Http\Request;
 
 class CrudClientController extends CRUD
@@ -29,7 +30,6 @@ class CrudClientController extends CRUD
                 'mySelfEdit' => 'links.edit',
                 'mySelfSee' => 'links.see',
                 'name' => 'flat',
-                'mySelfClasstype' => '_fn_getReferentsString',
                 'slug' => 'flat',
                 'fiscal_name' => 'flat',
                 'fiscal_code' => 'flat',
@@ -41,18 +41,6 @@ class CrudClientController extends CRUD
             ]
         ]
     ];
-
-    static $formFields = [
-        'common' => [
-            'default' => [
-                'name' => ['text' => 'string|required|max:255'],
-                'slug' => ['text' => 'string|nullable|max:255'],
-                'fiscal_name' => ['text' => 'string|nullable|max:255'],
-                'fiscal_code' => ['text' => 'string|nullable|max:255'],
-                'vat' => ['text' => 'string|nullable|max:255'],
-            ]
-        ]
-    ];    
 
     use CRUDShowTrait;
     use CRUDPlainIndexTrait;
@@ -70,6 +58,16 @@ class CrudClientController extends CRUD
     public function setModelClass()
     {
         $this->modelClass = config('clients.models.client.class');
+    }
+
+    // public function getModelClass() : string
+    // {
+    //     return config('clients.models.client.class');
+    // }
+
+    public function getRouteBaseNamePrefix() : ? string
+    {
+        return config('clients.routePrefix');
     }
 
     /**
@@ -102,26 +100,35 @@ class CrudClientController extends CRUD
 
     public function getIndexElements()
     {
-        return $this->getModelClass()::all();
+        return $this->getModelClass()::with('destinations', 'referents')->get();
     }
 
-    public function show(Client $client)
+    public function getClient(int|string $client)
     {
+        return $this->getModelClass()::find($client);
+    }
+
+    public function show($client)
+    {
+        $client = $this->getClient($client);
         return $this->_show($client);
     }
 
-    public function edit(Client $client)
+    public function edit($client)
     {
+        $client = $this->getClient($client);
         return $this->_edit($client);
     }
 
-    public function update(Request $request, Client $client)
+    public function update(Request $request, $client)
     {
+        $client = $this->getClient($client);
         return $this->_update($request, $client);
     }
 
-    public function destroy(Client $client)
+    public function destroy($client)
     {
+        $client = $this->getClient($client);
         return $this->_destroy($client);
     }
 }

@@ -28,11 +28,13 @@ return [
 	'models' => [
 		'client' => [
 			'class' => Client::class,
-			'table' => 'clients__clients'
+			'table' => 'clients__clients',
+			'controller' => CrudClientController::class
 		],
 		'destination' => [
 			'class' => Destination::class,
-			'table' => 'clients__destinations'
+			'table' => 'clients__destinations',
+			'controller' => CrudDestinationController::class
 		],
 		'destinationtypeDestination' => [
 			'table' => 'clients__destinationtype_destinations'
@@ -52,7 +54,8 @@ return [
 		],
 		'referent' => [
 			'class' => Referent::class,
-			'table' => 'clients__referents'
+			'table' => 'clients__referents',
+			'controller' => CrudReferentController::class
 		],
 		'destinationReferent' => [
 			'class' => DestinationReferent::class,
@@ -61,9 +64,9 @@ return [
 	],
 
 	'controllers' => [
-		'clientController' => CrudClientController::class,
-		'destinationController' => CrudDestinationController::class,
-		'referentController' => CrudReferentController::class
+		'clientController' => 'ELIMI_NARE__QUI_ZXC',
+		'destinationController' => 'ELIMI_NARE__QUI_ASD',
+		'referentController' => 'ELIMI_NARE__QUI_QWE'
 	],
 
     'routePrefix' => 'clientsmanager',

@@ -4,7 +4,7 @@ namespace IlBronza\Clients\Http\Controllers;
 
 use IlBronza\CRUD\CRUD;
 use IlBronza\CRUD\Traits\CRUDBelongsToManyTrait;
-use IlBronza\CRUD\Traits\CRUDCreateStoreTrait;
+// use IlBronza\CRUD\Traits\CRUDCreateStoreTrait;
 use IlBronza\CRUD\Traits\CRUDDeleteTrait;
 use IlBronza\CRUD\Traits\CRUDDestroyTrait;
 use IlBronza\CRUD\Traits\CRUDEditUpdateTrait;
@@ -15,8 +15,9 @@ use IlBronza\CRUD\Traits\CRUDShowTrait;
 use IlBronza\CRUD\Traits\CRUDUpdateEditorTrait;
 use IlBronza\Clients\Http\ParametersFile\Referent\CreateReferentParameters;
 use IlBronza\Clients\Http\ParametersFile\Referent\EditReferentParameters;
+
 use IlBronza\Clients\Models\Client;
-use IlBronza\Clients\Models\Referent;
+
 use IlBronza\Ukn\Ukn;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,7 @@ class CrudReferentController extends CRUD
     use CRUDIndexTrait;
     use CRUDEditUpdateTrait;
     use CRUDUpdateEditorTrait;
-    use CRUDCreateStoreTrait;
+    // use CRUDCreateStoreTrait;
 
     use CRUDDeleteTrait;
     use CRUDDestroyTrait;
@@ -67,65 +68,45 @@ class CrudReferentController extends CRUD
                 'mySelfPrimary' => 'primary',
                 'mySelfEdit' => 'links.edit',
                 'mySelfSee' => 'links.see',
-                'client' => [
-                    'type' => 'links.see',
-                    'textParameter' => 'name'
-                ],
+
+
+                'first_name' => 'flat',
+                'second_name' => 'flat',
+
+                'types' => 'relations.belongsToMany',
+
+                'email' => 'flat',
+                'phone' => 'flat',
+
                 'destination' => [
                     'type' => 'links.see',
                     'textParameter' => 'name'
                 ],
+                'destinations' => 'relations.belongsToMany',
 
-                'first_name' => 'flat',
-                'second_name' => 'flat',
-                'email' => 'flat',
-                'phone' => 'flat',
-                'type' => 'flat',
                 'mySelfDelete' => 'links.delete'
             ]
         ]
     ];
 
-    static $formFields = [
-        'common' => [
-            'default' => [
-                'client' => [
-                    'type' => 'select',
-                    'multiple' => false,
-                    'rules' => 'string|required|exists:clients,id',
-                    'relation' => 'client'
-                ],
-                'destination' => [
-                    'type' => 'select',
-                    'multiple' => false,
-                    'rules' => 'string|nullable|exists:destinations,id',
-                    'relation' => 'destination'
-                ],
-                'destinations' => [
-                    'type' => 'select',
-                    'multiple' => true,
-                    'rules' => 'array|nullable|exists:destinations,id',
-                    'relation' => 'destinations'
-                ],
-                'first_name' => ['text' => 'string|nullable|max:255'],
-                'second_name' => ['text' => 'string|nullable|max:255'],
-                'email' => ['text' => 'string|required|max:255'],
-                'phone' => ['text' => 'string|nullable|max:255'],
-
-                'type' => ['text' => 'string|required|max:255'],
-            ],
-        ],
-    ];    
-
     public $returnBack = true;
+
+    public function setModelClass()
+    {
+        $this->modelClass = config('clients.models.referent.class');
+    }
+
+    public function getRouteBaseNamePrefix() : ? string
+    {
+        return config('clients.routePrefix');
+    }
 
     public function getModelClass() : string
     {
-        return config('clients.referent.class');
+        return config('clients.models.referent.class');
     }
 
-
-    public $createParametersFile = CreateReferentParameters::class;
+    // public $createParametersFile = CreateReferentParameters::class;
     public $editParametersFile = EditReferentParameters::class;
 
     /**
@@ -136,8 +117,8 @@ class CrudReferentController extends CRUD
         'show',
         'edit',
         'update',
-        'create',
-        'store',
+        // 'create',
+        // 'store',
         'destroy',
         'deleted',
         'createFromClient',
@@ -174,7 +155,7 @@ class CrudReferentController extends CRUD
 
     public function getIndexElements()
     {
-        return Referent::all();
+        return $this->getModelClass()::all();
     }
 
     /**
@@ -187,42 +168,71 @@ class CrudReferentController extends CRUD
      **/
     //  public $avoidCreateButton = true;
 
+    public function getClient($client)
+    {
+        return Client::getProjectClassName()::find($client);
+    }
 
+    public function getReferent(int|string $referent)
+    {
+        return $this->getModelClass()::find($referent);
+    }
 
     /**
      * START base methods declared in extended controller to correctly perform dependency injection
      *
      * these methods are compulsorily needed to execute CRUD base functions
      **/
-    public function show(Referent $referent)
+    public function show($referent)
     {
+        $referent = $this->getReferent($referent);
+
         return $this->_show($referent);
     }
 
-    public function createFromClient(Client $client)
+    public function createFromClient($client)
     {
-        $referent = Referent::make();
+        $client = $this->getClient($client);
+
+        $referent = $this->getModelClass()::make();
+
         $referent->client_id = $client->getKey();
         $referent->first_name = $client->getName();
         $referent->save();
 
         Ukn::s(__('clients::referents.createdForClient', ['client' => $client->getName()]));
 
-        return $this->edit($referent);
-    }
-
-    public function edit(Referent $referent)
-    {
         return $this->_edit($referent);
     }
 
-    public function update(Request $request, Referent $referent)
+    public function edit($referent)
     {
+        $referent = $this->getReferent($referent);
+
+        return $this->_edit($referent);
+    }
+
+    public function getAfterUpdateRoute()
+    {
+        return $this->getModel()->getClient()->getShowUrl();
+    }
+
+    public function getAfterStoreRoute()
+    {
+        return $this->getModel()->getClient()->getShowUrl();
+    }
+
+    public function update(Request $request, $referent)
+    {
+        $referent = $this->getReferent($referent);
+
         return $this->_update($request, $referent);
     }
 
-    public function destroy(Referent $referent)
+    public function destroy($referent)
     {
+        $referent = $this->getReferent($referent);
+
         return $this->_destroy($referent);
     }
 
