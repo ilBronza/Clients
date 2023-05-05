@@ -18,12 +18,12 @@ Route::group([
 	],
 	function()
 	{
-		Route::resource('clients', config('clients.models.client.controller'));
+		Route::resource('clients', Clients::getController('client'));
 
 		Route::get(
 			'clients/{client}/destinations/create',
 			[
-				config('clients.models.destination.controller'),
+				Clients::getController('destination'),
 				'createFromClient'
 			]
 		)->name('clients.destinations.create');
@@ -31,16 +31,13 @@ Route::group([
 		Route::get(
 			'clients/{client}/referents/create',
 			[
-				config('clients.models.referent.controller'),
+				Clients::getController('referent'),
 				'createFromClient'
 			]
 		)->name('clients.referents.create');
 
-
-		Route::resource('destinations', config('clients.models.destination.controller'));
-		Route::resource('referents', config('clients.models.referent.controller'));
-
-		Route::resource('destinationtypes', config('clients.models.destinationtype.controller'));
-
-		Route::resource('referenttypes', config('clients.models.referenttype.controller'));
+		Route::resource('destinations', Clients::getController('destination'));
+		Route::resource('referents', Clients::getController('referent'));
+		Route::resource('destinationtypes', Clients::getController('destinationtype'));
+		Route::resource('referenttypes', Clients::getController('referenttype'));
 	});

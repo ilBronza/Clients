@@ -54,6 +54,11 @@ class Clients implements RoutedObjectInterface
 
     }
 
+    public function getController(string $target)
+    {
+        return config("clients.models.{$target}.controller");
+    }
+
     public function getRoutePrefix() : ? string
     {
         return config('clients.routePrefix');
