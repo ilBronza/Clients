@@ -15,6 +15,8 @@ class Client extends BaseModel
 {
 	static $modelConfigPrefix = 'client';
 
+	protected $keyType = 'string';
+
 	use ClientsPackageBaseModelTrait;
 	use CRUDUseUuidTrait;
 	use CRUDSluggableTrait;

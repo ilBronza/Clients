@@ -14,6 +14,8 @@ class Referent extends BaseModel
 {
 	static $modelConfigPrefix = 'referent';
 
+	protected $keyType = 'string';
+
 	use ClientsPackageBaseModelTrait;
 	use CRUDUseUuidTrait;
 	use CRUDSluggableTrait;

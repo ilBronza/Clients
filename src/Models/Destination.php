@@ -17,6 +17,8 @@ class Destination extends BaseModel
 {
 	static $modelConfigPrefix = 'destination';
 
+	protected $keyType = 'string';
+
 	use ClientsPackageBaseModelTrait;
 
     use InteractsWithAddressesTrait;
