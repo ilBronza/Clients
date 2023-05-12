@@ -36,6 +36,8 @@ class CrudReferentController extends CRUD
     use CRUDRelationshipTrait;
     use CRUDBelongsToManyTrait;
 
+    public $avoidCreateButton = true;
+
     public static $tables = [
 
         'index' => [
@@ -162,11 +164,6 @@ class CrudReferentController extends CRUD
      * parameter that decides which fields to use inside index table
      **/
     //  public $indexFieldsGroups = ['index'];
-
-    /**
-     * parameter that decides if create button is available
-     **/
-    //  public $avoidCreateButton = true;
 
     public function getClient($client)
     {

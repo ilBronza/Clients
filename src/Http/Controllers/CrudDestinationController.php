@@ -32,6 +32,8 @@ class CrudDestinationController extends CRUD
     use CRUDRelationshipTrait;
     use CRUDBelongsToManyTrait;
 
+    public $avoidCreateButton = true;
+
     public function setModelClass()
     {
         $this->modelClass = config('clients.models.destination.class');

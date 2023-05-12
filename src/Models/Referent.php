@@ -27,6 +27,11 @@ class Referent extends BaseModel
 		return $this->second_name . " " . $this->first_name;
 	}
 
+	public function getEmail()
+	{
+		return $this->email;
+	}
+
 	public function destination()
 	{
 		return $this->belongsTo(Destination::getProjectClassName());
@@ -53,5 +58,10 @@ class Referent extends BaseModel
 			Referenttype::getProjectClassName(),
 			ReferenttypeReferent::make()->getTable(),
 		);
+	}
+
+	public function getTypes()
+	{
+		return $this->types;
 	}
 }

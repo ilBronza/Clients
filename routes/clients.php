@@ -36,6 +36,17 @@ Route::group([
 			]
 		)->name('clients.referents.create');
 
+		Route::get(
+			'clients/{client}/clienthashes/create',
+			[
+				Clients::getController('clienthash'),
+				'createFromClient'
+			]
+		)->name('clients.clienthashes.create');
+
+
+		Route::resource('clienthashes', Clients::getController('clienthash'));
+
 		Route::resource('destinations', Clients::getController('destination'));
 		Route::resource('referents', Clients::getController('referent'));
 		Route::resource('destinationtypes', Clients::getController('destinationtype'));

@@ -96,6 +96,7 @@ class CrudClientController extends CRUD
     {
         $this->showButtons[] = $this->modelInstance->getCreateDestinationButton();
         $this->showButtons[] = $this->modelInstance->getCreateReferentButton();
+        $this->showButtons[] = $this->modelInstance->getCreateHashButton();
     }
 
     public function getIndexElements()

@@ -1,9 +1,11 @@
 <?php
 
 use IlBronza\Clients\Http\Controllers\CrudClientController;
+use IlBronza\Clients\Http\Controllers\CrudClienthashController;
 use IlBronza\Clients\Http\Controllers\CrudDestinationController;
 use IlBronza\Clients\Http\Controllers\CrudReferentController;
 use IlBronza\Clients\Models\Client;
+use IlBronza\Clients\Models\Clienthash;
 use IlBronza\Clients\Models\Destination;
 use IlBronza\Clients\Models\DestinationReferent;
 use IlBronza\Clients\Models\Destinationtype;
@@ -31,6 +33,13 @@ return [
 			'table' => 'clients__clients',
 			'controller' => CrudClientController::class
 		],
+
+		'clienthash' => [
+			'class' => Clienthash::class,
+			'table' => 'clients__hashes',
+			'controller' => CrudClienthashController::class
+		],
+
 		'destination' => [
 			'class' => Destination::class,
 			'table' => 'clients__destinations',

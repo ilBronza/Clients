@@ -6,6 +6,7 @@ use IlBronza\Buttons\Button;
 use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Traits\CRUDSluggableTrait;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
+use IlBronza\Clients\Models\Clienthash;
 use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
 use IlBronza\Clients\Models\Destination;
 use IlBronza\Clients\Models\Referent;
@@ -33,7 +34,7 @@ class Client extends BaseModel
 
 	public function getDestinations(array $relations = [])
 	{
-		Log::error('cachare questo e verificare in caso di modifica cliente se decachato');
+		// Log::error('cachare questo e verificare in caso di modifica cliente se decachato');
 
 		return $this->destinations()->with($relations)->get();
 	}
@@ -53,13 +54,42 @@ class Client extends BaseModel
 		return $this->hasMany(Referent::getProjectClassName());
 	}
 
+	public function getReferents()
+	{
+		return $this->referents;
+	}
+
+	public function hashes()
+	{
+		return $this->hasMany(Clienthash::getProjectClassName());
+	}
+
+	public function getCreateHashButton() : Button
+	{
+		return Button::create([
+			'href' => route(config('clients.routePrefix') . 'clients.clienthashes.create', ['client' => $this]),
+			'text' => trans('clienthashes.create'),
+			'icon' => 'user'
+		]);
+	}
+
+	public function getCreateDestinationUrl()
+	{
+		return route(config('clients.routePrefix') . 'clients.destinations.create', ['client' => $this]);
+	}
+
 	public function getCreateDestinationButton() : Button
 	{
-        return Button::create([
-            'href' => route(config('clients.routePrefix') . 'clients.destinations.create', ['client' => $this]),
-            'text' => trans('destinations.create'),
-            'icon' => 'location'
-        ]);
+		return Button::create([
+			'href' => $this->getCreateDestinationUrl(),
+			'text' => trans('destinations.create'),
+			'icon' => 'location'
+		]);
+	}
+
+	public function getCreateReferentUrl()
+	{
+		return route(config('clients.routePrefix') . 'clients.referents.create', ['client' => $this]);
 	}
 
 	public function getCreateReferentButton() : Button
@@ -80,4 +110,13 @@ class Client extends BaseModel
 		return $this->referents()->whereIn('id', $referentsByTypesIds)->get();
 	}
 
+	public function getVatAttribute($value)
+	{
+		return str_pad($value, 11, '0', STR_PAD_LEFT);
+	}
+
+	public function setVatAttribute($value)
+    {
+        $this->attributes['vat'] = str_pad($value, 11, '0', STR_PAD_LEFT);
+    }
 }
