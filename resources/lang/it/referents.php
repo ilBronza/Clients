@@ -1,5 +1,6 @@
 <?php
 
 return [
-	'personalData' => 'Dati personali'
+	'personalData' => 'Dati personali',
+	'list' => 'Referenti',
 ];

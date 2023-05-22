@@ -101,7 +101,7 @@ class CrudClientController extends CRUD
 
     public function getIndexElements()
     {
-        return $this->getModelClass()::with('destinations', 'referents')->get();
+        return $this->getModelClass()::with('destinations.types', 'referents.types')->get();
     }
 
     public function getClient(int|string $client)
