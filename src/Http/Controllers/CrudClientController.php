@@ -2,6 +2,7 @@
 
 namespace IlBronza\Clients\Http\Controllers;
 
+use Illuminate\Support\Collection;
 use IlBronza\CRUD\CRUD;
 use IlBronza\CRUD\Traits\CRUDBelongsToManyTrait;
 use IlBronza\CRUD\Traits\CRUDCreateStoreTrait;
@@ -16,7 +17,6 @@ use IlBronza\CRUD\Traits\CRUDUpdateEditorTrait;
 
 use IlBronza\Clients\Http\ParametersFile\Client\ShowClientParameters;
 use IlBronza\Clients\Providers\RelationshipsManagers\ClientRelationManager;
-
 use Illuminate\Http\Request;
 
 class CrudClientController extends CRUD
@@ -99,9 +99,32 @@ class CrudClientController extends CRUD
         $this->showButtons[] = $this->modelInstance->getCreateHashButton();
     }
 
+    public function getModelLoadingRelations() : array
+    {
+        return $this->getModelClass()::getAutomaticCachingRelationships();
+    }
+
+    public function _getIndexElements(Collection|array $missingIds = null)
+    {
+        if((is_array($missingIds))&&(count($missingIds) == 0))
+            return collect();
+
+        $query = $this->getModelClass()::with(
+            $this->getModelLoadingRelations()
+        );
+
+        if($missingIds)
+            $query->whereIn('id', $missingIds);
+
+        return $query->get();
+    }
+
     public function getIndexElements()
     {
-        return $this->getModelClass()::with('destinations.types', 'referents.types')->get();
+        if($this->modelHasAutomaticCache())
+            return $this->getCachedIndexElements();
+
+        return $this->_getIndexElements();
     }
 
     public function getClient(int|string $client)

@@ -11,6 +11,7 @@ use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
 use IlBronza\Clients\Models\Client;
 use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
 use IlBronza\Clients\Models\Destinationtype;
+use IlBronza\Clients\Models\DestinationtypeDestination;
 use IlBronza\Clients\Models\Referent;
 
 class Destination extends BaseModel
@@ -81,5 +82,21 @@ class Destination extends BaseModel
 			DestinationtypeDestination::make()->getTable()
 		);
 	}
+
+	public function destinationtypeDestinations()
+	{
+		return $this->hasMany(
+			DestinationtypeDestination::getProjectClassName()
+		);		
+	}
+
+    public function setAsDefault()
+    {
+    	$type = Destinationtype::getDefault();
+
+        $this->types()->associate($type);
+
+        $this->removeTypeFromBrothers($type);
+    }
 
 }

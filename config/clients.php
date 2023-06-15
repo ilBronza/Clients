@@ -9,8 +9,10 @@ use IlBronza\Clients\Models\Clienthash;
 use IlBronza\Clients\Models\Destination;
 use IlBronza\Clients\Models\DestinationReferent;
 use IlBronza\Clients\Models\Destinationtype;
+use IlBronza\Clients\Models\DestinationtypeDestination;
 use IlBronza\Clients\Models\Referent;
 use IlBronza\Clients\Models\Referenttype;
+use IlBronza\Clients\Models\ReferenttypeReferent;
 
 return [
 	// 'client' => [
@@ -46,7 +48,8 @@ return [
 			'controller' => CrudDestinationController::class
 		],
 		'destinationtypeDestination' => [
-			'table' => 'clients__destinationtype_destinations'
+			'table' => 'clients__destinationtype_destinations',
+			'class' => DestinationtypeDestination::class,
 		],
 		'destinationtype' => [
 			'class' => Destinationtype::class,
@@ -59,7 +62,8 @@ return [
 			'defaultName' => 'default'
 		],
 		'referenttypeReferent' => [
-			'table' => 'clients__referenttype_referents'
+			'table' => 'clients__referenttype_referents',
+			'class' => ReferenttypeReferent::class,
 		],
 		'referent' => [
 			'class' => Referent::class,

@@ -9,7 +9,10 @@ use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
 use IlBronza\Clients\Models\Clienthash;
 use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
 use IlBronza\Clients\Models\Destination;
+use IlBronza\Clients\Models\Destinationtype;
 use IlBronza\Clients\Models\Referent;
+use IlBronza\Clients\Models\Traits\Client\ClientRelationsTrait;
+use IlBronza\Ukn\Facades\Ukn;
 use Illuminate\Support\Facades\Log;
 
 class Client extends BaseModel
@@ -21,6 +24,8 @@ class Client extends BaseModel
 	use ClientsPackageBaseModelTrait;
 	use CRUDUseUuidTrait;
 	use CRUDSluggableTrait;
+
+	use ClientRelationsTrait;
 
 	public function getRouteBaseNamePrefix() : ? string
 	{
@@ -39,7 +44,43 @@ class Client extends BaseModel
 		return $this->destinations()->with($relations)->get();
 	}
 
-	public function createDestination()
+	private function assignRandomDestinationAsDefault() : Destination
+	{
+		$destination = $this->destinations->first();
+		$destination->setAsDefault();
+
+		Ukn::w(_('clients::destinations.setAsDefaultBySystem', ['name' => $destination->getName()]));
+
+		return $destinations;
+	}
+
+	private function createDefaultDestination()
+	{
+		$destination = $this->createDestination();
+
+		$destination->setAsDefaultBySystem();
+
+		//dd(__METHOD__);
+		if(! $this->city)
+			return $this->assignRandomDestinationAsDefault();
+
+		$destination = Destination::make();
+
+		$destination->client_id = $this->getKey();
+		$destination->name = $this->getName();
+		$destination->second_name = $this->rag_soc2;
+		$destination->short_name = $this->getName();
+		$destination->address = $this->street;
+		$destination->city = $this->city;
+		$destination->province = $this->province;
+		$destination->zone = $this->zone;
+
+		$destination->save();
+
+		return $destination;
+	}
+
+	public function createDestination() : Destination
 	{
 		$destination = Destination::getProjectClassName()::make();
 		$destination->name = $this->getName();
@@ -48,6 +89,31 @@ class Client extends BaseModel
 
 		return $destination;
 	}
+
+	public function defaultDestination()
+	{
+		return $this->hasOne(
+			Destination::getProjectClassName()
+		)->whereHas('destinationtypeDestinations', function ($query)
+		{
+    		$type = Destinationtype::getDefault();
+
+			$query->where('type_slug', $type->getKey());
+		});
+	}
+
+	public function getDefaultDestination() : Destination
+	{
+		if($this->defaultDestination)
+			return $this->defaultDestination;
+
+		if(! $destinations = $this->destinations)
+			return $this->createDefaultDestination();
+
+		return $this->assignRandomDestinationAsDefault();
+	}
+
+
 
 	public function referents()
 	{

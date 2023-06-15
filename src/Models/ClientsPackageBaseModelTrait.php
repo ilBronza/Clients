@@ -12,13 +12,7 @@ trait ClientsPackageBaseModelTrait
 	public function getRouteBaseNamePrefix() : ? string
 	{
 		return config('clients.routePrefix');
-		// return $this->routeBasenamePrefix;
 	}
-
-    // static function getModelRoutesPrefix() : ? string
-    // {
-    //     return config('clients.routePrefix');
-    // }
 
 	static function getModelConfigPrefix()
 	{
