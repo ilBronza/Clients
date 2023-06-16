@@ -109,9 +109,11 @@ class CrudClientController extends CRUD
         if((is_array($missingIds))&&(count($missingIds) == 0))
             return collect();
 
-        $query = $this->getModelClass()::with(
-            $this->getModelLoadingRelations()
-        );
+        // $query = $this->getModelClass()::with(
+        //     $this->getModelLoadingRelations()
+        // );
+
+        $query = $this->getModelClass()::with(['destinations', 'referents']);
 
         if($missingIds)
             $query->whereIn('id', $missingIds);
@@ -121,8 +123,11 @@ class CrudClientController extends CRUD
 
     public function getIndexElements()
     {
-        if($this->modelHasAutomaticCache())
-            return $this->getCachedIndexElements();
+        ini_set('max_execution_time', '120');
+        ini_set('memory_limit', "-1");
+
+        // if($this->modelHasAutomaticCache())
+        //     return $this->getCachedIndexElements();
 
         return $this->_getIndexElements();
     }
