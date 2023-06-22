@@ -37,6 +37,11 @@ class Client extends BaseModel
 		return $this->hasMany(Destination::getProjectClassName());
 	}
 
+	public function getDestination() : Destination
+	{
+		return $this->getDefaultDestination();
+	}
+
 	public function getDestinations(array $relations = [])
 	{
 		// Log::error('cachare questo e verificare in caso di modifica cliente se decachato');
@@ -82,10 +87,11 @@ class Client extends BaseModel
 
 	public function createDestination() : Destination
 	{
-		$destination = Destination::getProjectClassName()::make();
-		$destination->name = $this->getName();
+		$destination = $this->destinations()->make([
+			'name' => $this->getName()
+		]);
 
-		$this->destinations()->save($destination);
+		$destination->save();
 
 		return $destination;
 	}
@@ -107,7 +113,7 @@ class Client extends BaseModel
 		if($this->defaultDestination)
 			return $this->defaultDestination;
 
-		if(! $destinations = $this->destinations)
+		if(! $destination = $this->destinations()->first())
 			return $this->createDefaultDestination();
 
 		return $this->assignRandomDestinationAsDefault();

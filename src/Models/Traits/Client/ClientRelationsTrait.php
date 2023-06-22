@@ -3,7 +3,7 @@
 namespace IlBronza\Clients\Models\Traits\Client;
 
 use IlBronza\Products\Models\Order;
-use IlBronza\Products\Models\Product;
+use IlBronza\Products\Models\Product\Product;
 
 trait ClientRelationsTrait
 {

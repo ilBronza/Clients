@@ -26,6 +26,10 @@ class Destination extends BaseModel
 	use CRUDUseUuidTrait;
 	use CRUDSluggableTrait;
 
+	protected $fillable = [
+		'name'
+	];
+
 	protected $casts = [
 		'street' => ExtraField::class . ':address',
 		'number' => ExtraField::class . ':address',
@@ -70,9 +74,19 @@ class Destination extends BaseModel
 		return $this->hasOne(Referent::getProjectClassName())->where('type', config('clients.referents.default_type'));
 	}
 
-    public function getDescriptionString($separator = ' - ')
+    public function getDescriptionString($separator = ' - ') : string
     {
         return "{$this->name}{$separator}{$this->street}, {$this->town} ({$this->city}){$separator}{$this->zone}";
+    }
+
+    public function getShortDescriptionString($separator = ' - ') : string
+    {
+        return "{$this->town} {$this->city}";
+    }
+
+    public function getShortDescriptionAttribute()
+    {
+    	return $this->getShortDescriptionString();
     }
 
 	public function types()
