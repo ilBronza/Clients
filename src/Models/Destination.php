@@ -113,4 +113,20 @@ class Destination extends BaseModel
         $this->removeTypeFromBrothers($type);
     }
 
+	public function scopeWithTypesString($query, string $separator = ' - ')
+	{
+		$query->addSelect([
+			'types_string' => DestinationtypeDestination::selectRaw("GROUP_CONCAT(type_slug SEPARATOR '{$separator}')")
+						->whereColumn('clients__destinations.id', 'clients__destinationtype_destinations.destination_id')
+		]);
+	}
+
+	// public function scopeWithTypesArray($query, string $separator = ' ; ')
+	// {
+	// 	$query->addSelect([
+	// 		'types_array' => DestinationtypeDestination::selectRaw("JSON_ARRAYAGG(type_slug)")
+	// 					->whereColumn('clients__destinations.id', 'clients__destinationtype_destinations.destination_id')
+	// 	]);
+	// }
+
 }

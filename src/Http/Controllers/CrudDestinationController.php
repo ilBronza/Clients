@@ -44,9 +44,11 @@ class CrudDestinationController extends CRUD
         'index' => [
             'fields' => 
             [
-                'client' => [
-                    'type' => 'links.see',
-                    'textParameter' => 'name'
+                'client_id' => [
+                    'type' => 'links.LinkCachedProperty',
+                    'modelClass' => Client::class,
+                    'property' => 'name',
+                    'avoidIcon' => true
                 ],
                 'name' => 'flat',
                 'slug' => 'flat',
@@ -115,7 +117,13 @@ class CrudDestinationController extends CRUD
 
     public function getIndexElements()
     {
-        return $this->getModelClass()::with('client', 'referents')->get();
+        ini_set('max_execution_time', "120");
+        ini_set('memory_limit', "-1");
+
+        return $this->getModelClass()::take(120000)
+            ->with('address', 'extraFields')
+            ->withTypesString()
+            ->get();
     }
 
     public function getDestination(int|string $destination)
