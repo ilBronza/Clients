@@ -121,6 +121,11 @@ class Destination extends BaseModel
 		]);
 	}
 
+	public function setTown(string $town = null)
+	{
+		return $this->_customSetter('town', $town);
+	}
+
 	// public function scopeWithTypesArray($query, string $separator = ' ; ')
 	// {
 	// 	$query->addSelect([
