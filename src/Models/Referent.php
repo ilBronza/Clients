@@ -64,4 +64,9 @@ class Referent extends BaseModel
 	{
 		return $this->types;
 	}
+
+	public function addTypes(array $types)
+	{
+		$this->types()->syncWithoutDetaching($types);
+	}
 }

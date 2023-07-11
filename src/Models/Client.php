@@ -59,6 +59,21 @@ class Client extends BaseModel
 		return $destinations;
 	}
 
+	public function createReferent(array $parameters = []) : Referent
+	{
+        $referent = Referent::getProjectClassName()::make();
+
+        $referent->client_id = $this->getKey();
+        $referent->first_name = $this->getName();
+
+        foreach($parameters as $parameter => $value)
+        	$referent->$parameter = $value;
+
+        $referent->save();
+
+        return $referent;
+	}
+
 	private function createDefaultDestination()
 	{
 		$destination = $this->createDestination();
@@ -171,6 +186,28 @@ class Client extends BaseModel
             'text' => trans('referents.create'),
             'icon' => 'user'
         ]);
+	}
+
+	public function createReferentByEmailTypes(string $email, array $types = [])
+	{
+		$referent = $this->createReferent([
+			'email' => $email
+		]);
+
+		$referent->addTypes($types);
+	}
+
+	public function addEmailsToReferentTypes(array $emails, array $types)
+	{
+		$referents = $this->referents()->with('types')->get();
+
+		foreach($emails as $email)
+
+			if($referent = $referents->firstWhere('email', $email))
+				$referent->addTypes($types);
+
+			else
+				$this->createReferentByEmailTypes($email, $types);
 	}
 
 	public function getReferentsByTypes(array $types)
