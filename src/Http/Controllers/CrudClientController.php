@@ -140,6 +140,7 @@ class CrudClientController extends CRUD
     public function show($client)
     {
         $client = $this->getClient($client);
+
         return $this->_show($client);
     }
 

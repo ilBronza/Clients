@@ -121,9 +121,9 @@ class Destination extends BaseModel
 		]);
 	}
 
-	public function setTown(string $town = null)
+	public function setTown(string $value, bool $save = false)
 	{
-		return $this->_customSetter('town', $town);
+		return $this->_customSetter('town', $value, $save);
 	}
 
 	// public function scopeWithTypesArray($query, string $separator = ' ; ')
