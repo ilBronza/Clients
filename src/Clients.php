@@ -54,6 +54,21 @@ class Clients implements RoutedObjectInterface
 
     }
 
+    public function hasClientPrivateArea() : bool
+    {
+        return !! config("clients.privateArea.client.enabled", false);
+    }
+
+    public function hasDestinations() : bool
+    {
+        return !! config("clients.destinations.enabled", false);
+    }
+
+    public function hasReferents() : bool
+    {
+        return !! config("clients.referents.enabled", false);
+    }
+
     public function getController(string $target)
     {
         return config("clients.models.{$target}.controller");

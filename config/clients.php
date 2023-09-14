@@ -15,6 +15,15 @@ use IlBronza\Clients\Models\Referenttype;
 use IlBronza\Clients\Models\ReferenttypeReferent;
 
 return [
+	'privateArea' => [
+		'enabled' => false
+	],
+	'destinations' => [
+		'enabled' => true
+	],
+	'referents' => [
+		'enabled' => true
+	],
 	// 'client' => [
 	// 	'class' => Client::class
 	// ],

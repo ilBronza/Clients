@@ -18,6 +18,11 @@ class Destination extends BaseModel
 {
 	static $modelConfigPrefix = 'destination';
 
+	static $deletingRelationships = [
+		'address',
+		'destinationtypeDestinations',
+	];
+
 	protected $keyType = 'string';
 
 	use ClientsPackageBaseModelTrait;
@@ -121,7 +126,7 @@ class Destination extends BaseModel
 		]);
 	}
 
-	public function setTown(string $value, bool $save = false)
+	public function setTown(string $value = null, bool $save = false)
 	{
 		return $this->_customSetter('town', $value, $save);
 	}

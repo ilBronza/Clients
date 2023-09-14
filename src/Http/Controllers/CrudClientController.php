@@ -94,9 +94,14 @@ class CrudClientController extends CRUD
 
     public function getExtendedShowButtons()
     {
-        $this->showButtons[] = $this->modelInstance->getCreateDestinationButton();
-        $this->showButtons[] = $this->modelInstance->getCreateReferentButton();
-        $this->showButtons[] = $this->modelInstance->getCreateHashButton();
+        if(app('clients')->hasDestinations())
+            $this->showButtons[] = $this->modelInstance->getCreateDestinationButton();
+
+        if(app('clients')->hasReferents())
+            $this->showButtons[] = $this->modelInstance->getCreateReferentButton();
+
+        if(app('clients')->hasClientPrivateArea())
+            $this->showButtons[] = $this->modelInstance->getCreateHashButton();
     }
 
     public function getModelLoadingRelations() : array

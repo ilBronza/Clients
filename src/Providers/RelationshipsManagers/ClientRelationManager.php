@@ -31,9 +31,14 @@ class ClientRelationManager Extends RelationshipsManager
 			
 		}
 
-		$relations['hashes'] = CrudClienthashController::class;
-		$relations['destinations'] = config('clients.models.destination.controller');
-		$relations['referents'] = config('clients.models.referent.controller');
+		if(app('clients')->hasClientPrivateArea())
+			$relations['hashes'] = CrudClienthashController::class;
+
+		if(app('clients')->hasDestinations())
+			$relations['destinations'] = config('clients.models.destination.controller');
+
+		if(app('clients')->hasReferents())
+			$relations['referents'] = config('clients.models.referent.controller');
 
 
 		return [
