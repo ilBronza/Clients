@@ -44,6 +44,9 @@ class Client extends BaseModel
 
 	public function getDestinations(array $relations = [])
 	{
+		if($this->relationLoaded('destinations'))
+			return $this->destinations;
+
 		// Log::error('cachare questo e verificare in caso di modifica cliente se decachato');
 
 		return $this->destinations()->with($relations)->get();
@@ -54,9 +57,9 @@ class Client extends BaseModel
 		$destination = $this->destinations->first();
 		$destination->setAsDefault();
 
-		Ukn::w(_('clients::destinations.setAsDefaultBySystem', ['name' => $destination->getName()]));
+		Ukn::w(trans('clients::destinations.setAsDefaultBySystem', ['name' => $destination->getName()]));
 
-		return $destinations;
+		return $destination;
 	}
 
 	public function createReferent(array $parameters = []) : Referent
@@ -78,24 +81,7 @@ class Client extends BaseModel
 	{
 		$destination = $this->createDestination();
 
-		$destination->setAsDefaultBySystem();
-
-		//dd(__METHOD__);
-		if(! $this->city)
-			return $this->assignRandomDestinationAsDefault();
-
-		$destination = Destination::make();
-
-		$destination->client_id = $this->getKey();
-		$destination->name = $this->getName();
-		$destination->second_name = $this->rag_soc2;
-		$destination->short_name = $this->getName();
-		$destination->address = $this->street;
-		$destination->city = $this->city;
-		$destination->province = $this->province;
-		$destination->zone = $this->zone;
-
-		$destination->save();
+		$destination->setAsDefault();
 
 		return $destination;
 	}
@@ -117,16 +103,31 @@ class Client extends BaseModel
 			Destination::getProjectClassName()
 		)->whereHas('destinationtypeDestinations', function ($query)
 		{
-    		$type = Destinationtype::getDefault();
+			$type = Destinationtype::getDefault();
 
 			$query->where('type_slug', $type->getKey());
 		});
 	}
 
-	public function getDefaultDestination() : Destination
+	public function legalDestination()
+	{
+		return $this->hasOne(
+			Destination::getProjectClassName()
+		)->whereHas('destinationtypeDestinations', function ($query)
+		{
+			$type = Destinationtype::getLegal();
+
+			$query->where('type_slug', $type->getKey());
+		});
+	}
+
+	public function getDefaultDestination() : ? Destination
 	{
 		if($this->defaultDestination)
 			return $this->defaultDestination;
+
+		if($this->destinations()->count() != 1)
+			return null;
 
 		if(! $destination = $this->destinations()->first())
 			return $this->createDefaultDestination();
@@ -134,6 +135,18 @@ class Client extends BaseModel
 		return $this->assignRandomDestinationAsDefault();
 	}
 
+	public function getLegalDestination() : ? Destination
+	{
+		if($this->legalDestination)
+			return $this->legalDestination;
+
+		if(! $destination = $this->getDefaultDestination())
+			return null;
+
+		$destination->setAsLegal();
+
+		return $destination;
+	}
 
 
 	public function referents()

@@ -63,7 +63,8 @@ return [
 		'destinationtype' => [
 			'class' => Destinationtype::class,
 			'table' => 'clients__destinationtypes',
-			'defaultName' => 'default'
+			'defaultName' => 'default',
+			'legalName' => 'legal',
 		],
 		'referenttype' => [
 			'class' => Referenttype::class,

@@ -7,6 +7,7 @@ use IlBronza\Addresses\Models\Traits\InteractsWithAddressesTrait;
 use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Models\Casts\ExtraField;
 use IlBronza\CRUD\Traits\CRUDSluggableTrait;
+use IlBronza\CRUD\Traits\Model\CRUDBrotherhoodTrait;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
 use IlBronza\Clients\Models\Client;
 use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
@@ -30,6 +31,8 @@ class Destination extends BaseModel
     use InteractsWithAddressesTrait;
 	use CRUDUseUuidTrait;
 	use CRUDSluggableTrait;
+
+	use CRUDBrotherhoodTrait;
 
 	protected $fillable = [
 		'name'
@@ -81,7 +84,7 @@ class Destination extends BaseModel
 
     public function getDescriptionString($separator = ' - ') : string
     {
-        return "{$this->name}{$separator}{$this->street}, {$this->town} ({$this->city}){$separator}{$this->zone}";
+        return "{$this->street}, {$this->number} - {$this->town} ({$this->city}) - {$this->zone}";
     }
 
     public function getShortDescriptionString($separator = ' - ') : string
@@ -109,13 +112,64 @@ class Destination extends BaseModel
 		);		
 	}
 
+	public function assignType(Destinationtype $type)
+	{
+		$this->types()->attach($type->getKey());
+	}
+
+	public function unassignType(Destinationtype $type)
+	{
+		$this->types()->detach($type->getKey());
+	}
+
+	public function removeTypeFromBrothers(Destinationtype $type)
+	{
+		$brothers = $this->getBrothers(
+			'client_id'
+		);
+
+		foreach($brothers as $brother)
+			$brother->unassignType(
+				$type
+			);
+	}
+
+	public function setName(string $name = null, bool $save = false)
+	{
+		return $this->_customSetter('name', $name, $save);
+	}
+
+	public function setZone(string $zone = null, bool $save = false)
+	{
+		return $this->_customSetter('zone', $zone, $save);
+	}
+
+	public function setAsLegal()
+	{
+		$type = Destinationtype::getLegal();
+
+		$this->assignType($type);
+		$this->removeTypeFromBrothers($type);
+	}
+
     public function setAsDefault()
     {
-    	$type = Destinationtype::getDefault();
+		$type = Destinationtype::getDefault();
 
-        $this->types()->associate($type);
+		$this->assignType($type);
+		$this->removeTypeFromBrothers($type);
+    }
 
-        $this->removeTypeFromBrothers($type);
+    public function relationTypesSet(array $values = null)
+    {
+    	if(is_null($values))
+    		return ;
+
+		if(in_array('default', $values))
+			$this->removeTypeFromBrothers(Destinationtype::getDefault());
+
+		if(in_array('legal', $values))
+			$this->removeTypeFromBrothers(Destinationtype::getLegal());
     }
 
 	public function scopeWithTypesString($query, string $separator = ' - ')

@@ -7,6 +7,11 @@ use IlBronza\Products\Models\Product\Product;
 
 trait ClientRelationsTrait
 {
+	public function makingOrders()
+	{
+		return $this->orders()->active()->notShipped();
+	}
+
 	public function activeOrders()
 	{
 		return $this->orders()->active();

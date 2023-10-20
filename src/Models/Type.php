@@ -25,7 +25,12 @@ class Type extends BaseModel
 		return config('clients.models.' . static::getModelConfigPrefix() . '.defaultName');
 	}
 
-	static function getDefault() : static
+	static function getLegalName()
+	{
+		return config('clients.models.' . static::getModelConfigPrefix() . '.legalName');
+	}
+
+	static function getDefault() : ? static
 	{
 		return cache()->remember(
 			static::staticCacheKey('default'),
@@ -33,6 +38,18 @@ class Type extends BaseModel
 			function()
 			{
 				return static::where('name', static::getDefaultName())->first();
+			}
+		);
+	}
+
+	static function getLegal() : ? static
+	{
+		return cache()->remember(
+			static::staticCacheKey('legal'),
+			3600,
+			function()
+			{
+				return static::where('name', static::getLegalName())->first();
 			}
 		);
 	}

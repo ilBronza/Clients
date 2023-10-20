@@ -4,7 +4,7 @@ namespace IlBronza\Clients\Providers\RelationshipsManagers;
 
 use IlBronza\CRUD\Providers\RelationshipsManager;
 use IlBronza\Clients\Http\Controllers\CrudClienthashController;
-
+use IlBronza\Notes\Http\Controllers\CrudNoteController;
 use IlBronza\Products\Http\Controllers\Product\ProductIndexController;
 
 
@@ -18,7 +18,8 @@ class ClientRelationManager Extends RelationshipsManager
 		{
 			app('products');
 
-			$relations['activeOrders'] = config('products.models.order.controllers.index');
+			$relations['makingOrders'] = config('products.models.order.controllers.index');
+			$relations['notes'] = CrudNoteController::class;
 			$relations['orders'] = config('products.models.order.controllers.index');
 			$relations['products'] = [
 				'controller' => config('products.models.product.controllers.index'),

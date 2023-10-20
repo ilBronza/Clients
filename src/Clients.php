@@ -46,10 +46,19 @@ class Clients implements RoutedObjectInterface
             'href' => IbRouter::route($this, 'referents.index')
         ]);
 
+        $destinationTypesButton = $menu->createButton([
+            'name' => 'destinationtypes.index',
+            'icon' => 'users',
+            'text' => 'clients::destinationtypes.list',
+            'href' => IbRouter::route($this, 'destinationtypes.index')
+        ]);
+
+
         $button->addChild($clientsManagerButton);
 
         $clientsManagerButton->addChild($clientsButton);
         $clientsManagerButton->addChild($destinationsButton);
+        $clientsManagerButton->addChild($destinationTypesButton);
         $clientsManagerButton->addChild($referentsButton);
 
     }
