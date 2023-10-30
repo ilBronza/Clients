@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\TestController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,4 +53,7 @@ Route::group([
 		Route::resource('referents', Clients::getController('referent'));
 		Route::resource('destinationtypes', Clients::getController('destinationtype'));
 		Route::resource('referenttypes', Clients::getController('referenttype'));
+
+
+
 	});

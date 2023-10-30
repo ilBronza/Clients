@@ -3,7 +3,9 @@
 use IlBronza\Clients\Http\Controllers\CrudClientController;
 use IlBronza\Clients\Http\Controllers\CrudClienthashController;
 use IlBronza\Clients\Http\Controllers\CrudDestinationController;
+use IlBronza\Clients\Http\Controllers\CrudDestinationtypeController;
 use IlBronza\Clients\Http\Controllers\CrudReferentController;
+use IlBronza\Clients\Http\Controllers\Referents\CrudReferenttypeController;
 use IlBronza\Clients\Models\Client;
 use IlBronza\Clients\Models\Clienthash;
 use IlBronza\Clients\Models\Destination;
@@ -63,12 +65,14 @@ return [
 		'destinationtype' => [
 			'class' => Destinationtype::class,
 			'table' => 'clients__destinationtypes',
+			'controller' => CrudDestinationtypeController::class,
 			'defaultName' => 'default',
-			'legalName' => 'legal',
+			'legalName' => 'legal'
 		],
 		'referenttype' => [
 			'class' => Referenttype::class,
 			'table' => 'clients__referenttypes',
+			'controller' => CrudReferenttypeController::class,
 			'defaultName' => 'default'
 		],
 		'referenttypeReferent' => [
