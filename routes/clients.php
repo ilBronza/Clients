@@ -14,7 +14,7 @@ use App\Http\Controllers\TestController;
 */
 
 Route::group([
-	'middleware' => ['web', 'auth'],
+	'middleware' => ['web', 'auth', 'role:administrator'],
 	'prefix' => 'clients-management',
 	'as' => config('clients.routePrefix')
 	],

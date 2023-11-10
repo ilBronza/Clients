@@ -14,6 +14,7 @@ use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
 use IlBronza\Clients\Models\Destinationtype;
 use IlBronza\Clients\Models\DestinationtypeDestination;
 use IlBronza\Clients\Models\Referent;
+use Illuminate\Support\Collection;
 
 class Destination extends BaseModel
 {
@@ -103,6 +104,21 @@ class Destination extends BaseModel
 			Destinationtype::getProjectClassName(),
 			DestinationtypeDestination::make()->getTable()
 		);
+	}
+
+	public function getTypes()
+	{
+		return $this->types;
+	}
+
+	public function getTypesString() : string
+	{
+		$result = [];
+
+		foreach($this->getTypes() as $type)
+			$result[] = $type->getName();
+
+		return implode(", ", $result);
 	}
 
 	public function destinationtypeDestinations()

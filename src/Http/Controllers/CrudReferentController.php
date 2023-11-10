@@ -59,7 +59,7 @@ class CrudReferentController extends CRUD
                 'second_name' => 'flat',
                 'email' => 'flat',
                 'phone' => 'flat',
-                'types' => 'flat',
+                'types_string' => 'flat',
                 'mySelfDelete' => 'links.delete'
             ]
         ],
@@ -157,7 +157,8 @@ class CrudReferentController extends CRUD
 
     public function getIndexElements()
     {
-        return $this->getModelClass()::all();
+        return $this->getModelClass()::withTypesString()
+            ->get();
     }
 
     /**

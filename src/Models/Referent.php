@@ -60,6 +60,14 @@ class Referent extends BaseModel
 		);
 	}
 
+	public function scopeWithTypesString($query, string $separator = ' - ')
+	{
+		$query->addSelect([
+			'types_string' => ReferenttypeReferent::selectRaw("GROUP_CONCAT(type_slug SEPARATOR '{$separator}')")
+						->whereColumn('clients__referents.id', 'clients__referenttype_referents.referent_id')
+		]);
+	}
+
 	public function getTypes()
 	{
 		return $this->types;

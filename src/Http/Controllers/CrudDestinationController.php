@@ -120,8 +120,7 @@ class CrudDestinationController extends CRUD
         ini_set('max_execution_time', "120");
         ini_set('memory_limit', "-1");
 
-        return $this->getModelClass()::take(120000)
-            ->with('address', 'extraFields')
+        return $this->getModelClass()::with('address', 'extraFields')
             ->withTypesString()
             ->get();
     }
