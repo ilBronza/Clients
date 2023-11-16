@@ -3,10 +3,8 @@
 namespace IlBronza\Clients\Providers\RelationshipsManagers;
 
 use IlBronza\CRUD\Providers\RelationshipsManager\RelationshipsManager;
-use IlBronza\CRUD\Providers\RouterProvider\IbRouter;
 use IlBronza\Clients\Http\Controllers\CrudClienthashController;
 use IlBronza\Notes\Http\Controllers\CrudNoteController;
-use IlBronza\Products\Http\Controllers\Product\ProductIndexController;
 use IlBronza\Products\Models\Order;
 
 
