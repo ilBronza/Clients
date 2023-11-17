@@ -2,10 +2,10 @@
 
 namespace IlBronza\Clients\Models;
 
-use IlBronza\CRUD\Models\BaseModel;
+use IlBronza\CRUD\Models\BaseDestroyableModel;
 use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
 
-class DestinationtypeDestination extends BaseModel
+class DestinationtypeDestination extends BaseDestroyableModel
 {
 	use ClientsPackageBaseModelTrait;
 

@@ -10,6 +10,7 @@ class ShowClientParameters extends FieldsetParametersFile
     {
         return [
             'registry' => [
+                'translationPrefix' => 'clients::fields',
                 'fields' => [
                     'name' => ['text' => 'string|nullable|max:255'],
                     'slug' => [

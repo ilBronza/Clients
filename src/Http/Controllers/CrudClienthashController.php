@@ -31,6 +31,7 @@ class CrudClienthashController extends CRUD
     public static $tables = [
 
         'related' => [
+            'translationPrefix' => 'clients::fields',
             'fields' => 
             [
                 'created_at' => 'dates.datetime',

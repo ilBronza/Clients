@@ -16,7 +16,8 @@ use App\Http\Controllers\TestController;
 Route::group([
 	'middleware' => ['web', 'auth', 'role:administrator'],
 	'prefix' => 'clients-management',
-	'as' => config('clients.routePrefix')
+	'as' => config('clients.routePrefix'),
+	'routeTranslationPrefix' => 'clients::routes.',
 	],
 	function()
 	{

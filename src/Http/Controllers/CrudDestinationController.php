@@ -42,6 +42,7 @@ class CrudDestinationController extends CRUD
     public static $tables = [
 
         'index' => [
+            'translationPrefix' => 'clients::fields',
             'fields' => 
             [
                 'client_id' => [
@@ -57,6 +58,7 @@ class CrudDestinationController extends CRUD
             ]
         ],
         'related' => [
+            'translationPrefix' => 'clients::fields',
             'fields' => 
             [
                 'name' => 'flat',

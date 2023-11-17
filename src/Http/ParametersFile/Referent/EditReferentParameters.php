@@ -10,6 +10,7 @@ class EditReferentParameters extends FieldsetParametersFile
     {
         return [
             'personal_data' => [
+                'translationPrefix' => 'clients::fields',
                 'translatedLegend' => __('clients::referents.personalData'),
                 'fields' => [
                     'first_name' => ['text' => 'string|nullable|max:255'],
@@ -20,6 +21,7 @@ class EditReferentParameters extends FieldsetParametersFile
                 'width' => ['1-2@m']
             ],
             'general' => [
+                'translationPrefix' => 'clients::fields',
                 'fields' => [
                     // 'client' => [
                     //     'type' => 'select',

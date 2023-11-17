@@ -10,6 +10,7 @@ class HashParameters extends FieldsetParametersFile
     {
         return [
             'general' => [
+                'translationPrefix' => 'clients::fields',
                 'fields' => [
                     'valid_to' => ['datetime' => 'date|nullable'],
                     'permanent' => ['boolean' => 'boolean|required'],

@@ -41,6 +41,7 @@ class CrudReferentController extends CRUD
     public static $tables = [
 
         'index' => [
+            'translationPrefix' => 'clients::fields',
             'fields' => 
             [
                 'mySelfPrimary' => 'primary',
@@ -65,6 +66,7 @@ class CrudReferentController extends CRUD
         ],
 
         'related' => [
+            'translationPrefix' => 'clients::fields',
             'fields' => 
             [
                 'mySelfPrimary' => 'primary',

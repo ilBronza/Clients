@@ -10,6 +10,7 @@ class EditDestinationParameters extends FieldsetParametersFile
     {
         return [
             'personal_data' => [
+                'translationPrefix' => 'clients::fields',
                 'translatedLegend' => __('clients::destinations.personalData'),
                 'fields' => [
                     'first_name' => ['text' => 'string|nullable|max:255'],
@@ -20,6 +21,7 @@ class EditDestinationParameters extends FieldsetParametersFile
                 'width' => ['1-2@m']
             ],
             'general' => [
+                'translationPrefix' => 'clients::fields',
                 'fields' => [
                     'client' => [
                         'type' => 'select',

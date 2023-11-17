@@ -43,6 +43,7 @@ class CrudReferenttypeController extends CRUD
     public static $tables = [
 
         'index' => [
+            'translationPrefix' => 'clients::fields',
             'fields' => 
             [
                 'name' => 'flat',
@@ -51,6 +52,7 @@ class CrudReferenttypeController extends CRUD
             ]
         ],
         'related' => [
+            'translationPrefix' => 'clients::fields',
             'fields' => 
             [
                 'name' => 'flat',

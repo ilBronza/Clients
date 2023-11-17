@@ -10,6 +10,7 @@ class CreateDestinationParameters extends FieldsetParametersFile
     {
         return [
             'personal_data' => [
+                'translationPrefix' => 'clients::fields',
                 'fields' => [
                     'first_name' => ['text' => 'string|nullable|max:255'],
                     'second_name' => ['text' => 'string|nullable|max:255'],
@@ -19,6 +20,7 @@ class CreateDestinationParameters extends FieldsetParametersFile
                 'width' => ['1-2@m']
             ],
             'general' => [
+                'translationPrefix' => 'clients::fields',
                 'fields' => [
                     'client' => [
                         'type' => 'select',
