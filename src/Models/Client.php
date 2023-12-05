@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 
 class Client extends BaseModel
 {
+	public ? string $translationFolderPrefix = 'clients';
 	static $modelConfigPrefix = 'client';
 
 	protected $keyType = 'string';
@@ -168,7 +169,7 @@ class Client extends BaseModel
 	{
 		return Button::create([
 			'href' => route(config('clients.routePrefix') . 'clients.clienthashes.create', ['client' => $this]),
-			'text' => trans('clienthashes.create'),
+			'text' => 'clients::clienthashes.create',
 			'icon' => 'user'
 		]);
 	}
@@ -182,7 +183,7 @@ class Client extends BaseModel
 	{
 		return Button::create([
 			'href' => $this->getCreateDestinationUrl(),
-			'text' => trans('destinations.create'),
+			'text' => 'clients::destinations.create',
 			'icon' => 'location'
 		]);
 	}
@@ -196,7 +197,7 @@ class Client extends BaseModel
 	{
         return Button::create([
             'href' => route(config('clients.routePrefix') . 'clients.referents.create', ['client' => $this]),
-            'text' => trans('referents.create'),
+            'text' => 'clients::referents.create',
             'icon' => 'user'
         ]);
 	}

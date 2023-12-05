@@ -12,6 +12,7 @@ use IlBronza\Clients\Models\DestinationReferent;
 
 class Referent extends BaseModel
 {
+	public ? string $translationFolderPrefix = 'clients';
 	static $modelConfigPrefix = 'referent';
 
 	protected $keyType = 'string';

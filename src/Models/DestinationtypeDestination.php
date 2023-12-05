@@ -7,6 +7,7 @@ use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
 
 class DestinationtypeDestination extends BaseDestroyableModel
 {
+	public ? string $translationFolderPrefix = 'clients';
 	use ClientsPackageBaseModelTrait;
 
 	static $modelConfigPrefix = 'destinationtypeDestination';

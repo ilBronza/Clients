@@ -8,6 +8,7 @@ use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
 
 class Type extends BaseModel
 {
+	public ? string $translationFolderPrefix = 'clients';
 	public $incrementing = false;
 	protected $keyType = 'string';
 	protected $primaryKey = 'slug';

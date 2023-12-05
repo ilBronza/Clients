@@ -4,6 +4,8 @@ namespace IlBronza\Clients\Models;
 
 trait ClientsPackageBaseModelTrait
 {
+	public ? string $translationFolderPrefix = 'clients';
+
 	static function getProjectClassName()
 	{
 		return config('clients.models.' . static::getModelConfigPrefix() . '.class');

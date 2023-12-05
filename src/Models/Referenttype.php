@@ -9,6 +9,7 @@ use IlBronza\Clients\Models\Type;
 
 class Referenttype extends Type
 {
+	public ? string $translationFolderPrefix = 'clients';
 	use ClientsPackageBaseModelTrait;
 
 	static $modelConfigPrefix = 'referenttype';

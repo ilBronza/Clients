@@ -9,6 +9,7 @@ use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
 
 class Clienthash extends BaseModel
 {
+	public ? string $translationFolderPrefix = 'clients';
 	static $modelConfigPrefix = 'clienthash';
 
 	protected $keyType = 'string';

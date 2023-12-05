@@ -7,6 +7,7 @@ use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
 
 class DestinationReferent extends BaseModel
 {
+	public ? string $translationFolderPrefix = 'clients';
 	static $modelConfigPrefix = 'destinationReferent';
 
 	use ClientsPackageBaseModelTrait;

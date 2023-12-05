@@ -8,6 +8,7 @@ use IlBronza\Clients\Models\Type;
 
 class Destinationtype extends Type
 {
+	public ? string $translationFolderPrefix = 'clients';
 	static $modelConfigPrefix = 'destinationtype';
 
 	public function destinations()

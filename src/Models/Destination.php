@@ -18,6 +18,7 @@ use Illuminate\Support\Collection;
 
 class Destination extends BaseModel
 {
+	public ? string $translationFolderPrefix = 'clients';
 	static $modelConfigPrefix = 'destination';
 
 	static $deletingRelationships = [
@@ -150,6 +151,23 @@ class Destination extends BaseModel
 			);
 	}
 
+	public static function boot() {
+
+		parent::boot();
+
+		static::saved(function($model)
+		{
+			if(! $model->address_id)
+			{
+				if($address = $model->getAddress())
+				{
+					$model->address_id = $address->getKey();
+					$model->saveQuietly();
+				}
+			}
+		});
+	}
+
 	public function setName(string $name = null, bool $save = false)
 	{
 		return $this->_customSetter('name', $name, $save);
@@ -166,6 +184,11 @@ class Destination extends BaseModel
 
 		$this->assignType($type);
 		$this->removeTypeFromBrothers($type);
+	}
+
+	public function isDefault() : bool
+	{
+		return !! $this->types()->where('name', Destinationtype::getDefault()->getName())->first();
 	}
 
     public function setAsDefault()
