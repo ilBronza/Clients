@@ -20,7 +20,8 @@ class ClientRelationManager Extends RelationshipsManager
 
 			$relations['makingOrders'] = [
 				'controller' => config('products.models.order.controllers.index'),
-				'elementGetterMethod' => 'getMakingOrdersForShowRelation'
+				'elementGetterMethod' => 'getMakingOrdersForShowRelation',
+				'translatedTitle' => 'Commesse in corso'
 			];
 
 			$relations['orders'] = [

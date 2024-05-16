@@ -11,4 +11,7 @@ class DestinationtypeDestination extends BaseDestroyableModel
 	use ClientsPackageBaseModelTrait;
 
 	static $modelConfigPrefix = 'destinationtypeDestination';
+
+	static $deletingRelationships = [];
+
 }

@@ -4,9 +4,20 @@ namespace IlBronza\Clients\Models\Traits\Client;
 
 use IlBronza\Products\Models\Order;
 use IlBronza\Products\Models\Product\Product;
+use IlBronza\Warehouse\Models\Pallettype\Pallettype;
 
 trait ClientRelationsTrait
 {
+    public function pallettype()
+	{
+		return $this->belongsTo(Pallettype::getProjectClassName());
+	}
+
+	public function getPallettype() : ? Pallettype
+	{
+		return $this->pallettype;
+	}
+
 	public function makingOrders()
 	{
 		return $this->orders()->active()->notShipped();
