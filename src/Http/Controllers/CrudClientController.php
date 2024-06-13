@@ -2,7 +2,6 @@
 
 namespace IlBronza\Clients\Http\Controllers;
 
-use Illuminate\Support\Collection;
 use IlBronza\CRUD\CRUD;
 use IlBronza\CRUD\Traits\CRUDBelongsToManyTrait;
 use IlBronza\CRUD\Traits\CRUDCreateStoreTrait;
@@ -14,13 +13,16 @@ use IlBronza\CRUD\Traits\CRUDPlainIndexTrait;
 use IlBronza\CRUD\Traits\CRUDRelationshipTrait;
 use IlBronza\CRUD\Traits\CRUDShowTrait;
 use IlBronza\CRUD\Traits\CRUDUpdateEditorTrait;
-
 use IlBronza\Clients\Http\ParametersFile\Client\ShowClientParameters;
+use IlBronza\Clients\Http\Parameters\Fieldsets\ClientEditFieldsetsParameters;
 use IlBronza\Clients\Providers\RelationshipsManagers\ClientRelationManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class CrudClientController extends CRUD
 {
+    public $configModelClassName = 'client';
+
     public static $tables = [
 
         'index' => [
@@ -32,6 +34,7 @@ class CrudClientController extends CRUD
                 'mySelfSee' => 'links.see',
                 'name' => 'flat',
                 'slug' => 'flat',
+                'categories' => 'relations.belongsToMany',
                 'fiscal_name' => 'flat',
                 'fiscal_code' => 'flat',
                 'vat' => 'flat',
@@ -55,6 +58,9 @@ class CrudClientController extends CRUD
 
     use CRUDRelationshipTrait;
     use CRUDBelongsToManyTrait;
+
+    public $parametersFile = ClientEditFieldsetsParameters::class;
+
 
     public function setModelClass()
     {
@@ -91,8 +97,6 @@ class CrudClientController extends CRUD
      * to override show view use full view name
      **/
 
-    public $relationshipsManagerClass = ClientRelationManager::class;
-
     public function getExtendedShowButtons()
     {
         if(app('clients')->hasDestinations())
@@ -103,6 +107,11 @@ class CrudClientController extends CRUD
 
         if(app('clients')->hasClientPrivateArea())
             $this->showButtons[] = $this->modelInstance->getCreateHashButton();
+    }
+
+    public function getRelationshipsManagerClass()
+    {
+        return config("clients.models.{$this->configModelClassName}.relationshipsManagerClasses.show");
     }
 
     public function getModelLoadingRelations() : array
@@ -119,7 +128,11 @@ class CrudClientController extends CRUD
         //     $this->getModelLoadingRelations()
         // );
 
-        $query = $this->getModelClass()::with(['destinations', 'referents']);
+        $query = $this->getModelClass()::with([
+            'categories',
+            'destinations',
+            'referents'
+        ]);
 
         if($missingIds)
             $query->whereIn('id', $missingIds);

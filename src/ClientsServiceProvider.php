@@ -2,6 +2,9 @@
 
 namespace IlBronza\Clients;
 
+use IlBronza\Clients\Models\Client;
+use IlBronza\Products\Models\Sellables\Supplier;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
 class ClientsServiceProvider extends ServiceProvider
@@ -13,6 +16,10 @@ class ClientsServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Relation::morphMap([
+            'Client' => Client::getProjectClassname(),
+        ]);
+
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'clients');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'ilbronza');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
@@ -56,6 +63,7 @@ class ClientsServiceProvider extends ServiceProvider
      */
     protected function bootForConsole(): void
     {
+
         // Publishing the configuration file.
         $this->publishes([
             __DIR__.'/../config/clients.php' => config_path('clients.php'),

@@ -9,6 +9,7 @@ use IlBronza\Clients\Models\Client;
 use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
 use IlBronza\Clients\Models\Destination;
 use IlBronza\Clients\Models\DestinationReferent;
+use IlBronza\Clients\Models\Traits\InteractsWithDestinationTrait;
 
 class Referent extends BaseModel
 {
@@ -21,6 +22,8 @@ class Referent extends BaseModel
 	use CRUDUseUuidTrait;
 	use CRUDSluggableTrait;
 
+	use InteractsWithDestinationTrait;
+
 	static $deletingRelationships = [];
 
 	public function getNameAttribute()
@@ -31,11 +34,6 @@ class Referent extends BaseModel
 	public function getEmail()
 	{
 		return $this->email;
-	}
-
-	public function destination()
-	{
-		return $this->belongsTo(Destination::getProjectClassName());
 	}
 
 	public function destinations()

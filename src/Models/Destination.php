@@ -131,7 +131,7 @@ class Destination extends BaseModel
 
 	public function assignType(Destinationtype $type)
 	{
-		$this->types()->attach($type->getKey());
+		$this->types()->syncWithoutDetaching($type->getKey());
 	}
 
 	public function unassignType(Destinationtype $type)

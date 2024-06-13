@@ -21,6 +21,7 @@ class DestinationReferent extends BaseModel
 
 	public function destination()
 	{
+		dd('qua non abbiamo una belongsTo!?!=!!??!');
 		return $this->hasOne(
 			config('clients.models.destination.class')
 		);

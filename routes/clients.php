@@ -23,6 +23,10 @@ Route::group([
 	{
 		Route::resource('clients', Clients::getController('client'));
 
+		Route::get('clients/{client}', [Clients::getController('client', 'show'), 'show'])->name('clients.show');
+
+		Route::get('clients/{client}/edit', [Clients::getController('client', 'edit'), 'edit'])->name('clients.edit');
+
 		Route::get(
 			'clients/{client}/destinations/create',
 			[

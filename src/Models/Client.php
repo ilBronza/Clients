@@ -12,16 +12,22 @@ use IlBronza\Clients\Models\Destination;
 use IlBronza\Clients\Models\Destinationtype;
 use IlBronza\Clients\Models\Referent;
 use IlBronza\Clients\Models\Traits\Client\ClientRelationsTrait;
+use IlBronza\Notes\Traits\InteractsWithNotesTrait;
+use IlBronza\Products\Models\Interfaces\SupplierInterface;
+use IlBronza\Products\Models\Quotations\Project;
+use IlBronza\Products\Models\Traits\Sellable\InteractsWithSupplierTrait;
 use IlBronza\Ukn\Facades\Ukn;
 use Illuminate\Support\Facades\Log;
 
-class Client extends BaseModel
+class Client extends BaseModel implements SupplierInterface
 {
 	public ? string $translationFolderPrefix = 'clients';
 	static $modelConfigPrefix = 'client';
 
 	protected $keyType = 'string';
 
+	use InteractsWithNotesTrait;
+	use InteractsWithSupplierTrait;
 	use ClientsPackageBaseModelTrait;
 	use CRUDUseUuidTrait;
 	use CRUDSluggableTrait;

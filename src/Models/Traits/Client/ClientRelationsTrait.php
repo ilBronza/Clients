@@ -4,10 +4,22 @@ namespace IlBronza\Clients\Models\Traits\Client;
 
 use IlBronza\Products\Models\Order;
 use IlBronza\Products\Models\Product\Product;
+use IlBronza\Products\Models\Quotations\Project;
+use IlBronza\Products\Models\Quotations\Quotation;
 use IlBronza\Warehouse\Models\Pallettype\Pallettype;
 
 trait ClientRelationsTrait
 {
+	public function projects()
+	{
+		return $this->hasMany(Project::getProjectClassName());
+	}
+
+	public function quotations()
+	{
+		return $this->hasMany(Quotation::getProjectClassName());
+	}
+
     public function pallettype()
 	{
 		return $this->belongsTo(Pallettype::getProjectClassName());
