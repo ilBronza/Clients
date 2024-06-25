@@ -12,7 +12,7 @@ return [
   ],
 
   'clientsmanagerclients' => [
-    'index' => 'Lista Clienti',
+    'index' => 'Lista Aziende',
     'store' => 'Crea cliente',
     'create' => 'Crea cliente',
     'show' => 'Mostra cliente',

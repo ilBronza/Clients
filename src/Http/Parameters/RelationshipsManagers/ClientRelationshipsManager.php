@@ -50,10 +50,10 @@ class ClientRelationshipsManager Extends RelationshipsManager
 			$relations['projects'] = config('products.models.project.controllers.index');
 
 		if(config('products.sellables.enabled'))
-			$relations['quotations'] = config('products.models.quotation.controllers.index');
+			$relations['supplier'] = config('products.models.supplier.controllers.show');
 
 		if(app('clients')->hasDestinations())
-			$relations['destinations'] = config('clients.models.destination.controller');
+			$relations['destinations'] = config('clients.models.destination.controllers.index');
 
 		if(app('clients')->hasReferents())
 			$relations['referents'] = config('clients.models.referent.controller');

@@ -2,7 +2,7 @@
 
 return [
   'clients' => 'Clienti',
-  'list' => 'Lista clienti',
+  'list' => 'Lista aziende',
   'create' => 'Crea cliente',
   'deleted' => 'Archivio clienti',
   'import' => 'Importa',

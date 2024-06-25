@@ -30,7 +30,7 @@ Route::group([
 		Route::get(
 			'clients/{client}/destinations/create',
 			[
-				Clients::getController('destination'),
+				Clients::getController('destination', 'create'),
 				'createFromClient'
 			]
 		)->name('clients.destinations.create');
@@ -54,7 +54,22 @@ Route::group([
 
 		Route::resource('clienthashes', Clients::getController('clienthash'));
 
-		Route::resource('destinations', Clients::getController('destination'));
+
+		Route::group(['prefix' => 'destinations'], function()
+		{
+			Route::get('', [Clients::getController('destination', 'index'), 'index'])->name('destinations.index');
+			Route::get('create', [Clients::getController('destination', 'create'), 'create'])->name('destinations.create');
+			Route::post('', [Clients::getController('destination', 'store'), 'store'])->name('destinations.store');
+			Route::get('{destination}', [Clients::getController('destination', 'show'), 'show'])->name('destinations.show');
+			Route::get('{destination}/edit', [Clients::getController('destination', 'edit'), 'edit'])->name('destinations.edit');
+			Route::put('{destination}', [Clients::getController('destination', 'edit'), 'update'])->name('destinations.update');
+
+			Route::delete('{destination}/delete', [Clients::getController('destination', 'destroy'), 'destroy'])->name('destinations.destroy');
+		});
+
+
+
+		// Route::resource('destinations', Clients::getController('destination'));
 		Route::resource('referents', Clients::getController('referent'));
 		Route::resource('destinationtypes', Clients::getController('destinationtype'));
 		Route::resource('referenttypes', Clients::getController('referenttype'));

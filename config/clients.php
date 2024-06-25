@@ -1,11 +1,22 @@
 <?php
 
+use IlBronza\Clients\Http\Controllers\Client\ClientEditUpdateController;
+use IlBronza\Clients\Http\Controllers\Client\ClientShowController;
 use IlBronza\Clients\Http\Controllers\CrudClientController;
 use IlBronza\Clients\Http\Controllers\CrudClienthashController;
 use IlBronza\Clients\Http\Controllers\CrudDestinationController;
 use IlBronza\Clients\Http\Controllers\CrudDestinationtypeController;
 use IlBronza\Clients\Http\Controllers\CrudReferentController;
+use IlBronza\Clients\Http\Controllers\Destinations\DestinationCreateStoreController;
+use IlBronza\Clients\Http\Controllers\Destinations\DestinationDestroyController;
+use IlBronza\Clients\Http\Controllers\Destinations\DestinationEditUpdateController;
+use IlBronza\Clients\Http\Controllers\Destinations\DestinationIndexController;
+use IlBronza\Clients\Http\Controllers\Destinations\DestinationShowController;
 use IlBronza\Clients\Http\Controllers\Referents\CrudReferenttypeController;
+use IlBronza\Clients\Http\Parameters\Datatables\DestinationFieldsGroupParametersFile;
+use IlBronza\Clients\Http\Parameters\Fieldsets\ClientEditFieldsetsParameters;
+use IlBronza\Clients\Http\Parameters\Fieldsets\ClientShowFieldsetsParameters;
+use IlBronza\Clients\Http\Parameters\RelationshipsManagers\ClientRelationshipsManager;
 use IlBronza\Clients\Models\Client;
 use IlBronza\Clients\Models\Clienthash;
 use IlBronza\Clients\Models\Destination;
@@ -44,7 +55,20 @@ return [
 		'client' => [
 			'class' => Client::class,
 			'table' => 'clients__clients',
-			'controller' => CrudClientController::class
+            'parametersFiles' => [
+                'show' => ClientShowFieldsetsParameters::class,
+                'edit' => ClientEditFieldsetsParameters::class,
+                // 'show' => ProductShowFieldsetsParameters::class,
+                // 'teaser' => ProductShowFieldsetsParameters::class,
+            ],
+			'controllers' => [
+				'show' => ClientShowController::class,
+				'edit' => ClientEditUpdateController::class,
+			],
+            'relationshipsManagerClasses' => [
+                'show' => ClientRelationshipsManager::class
+            ],
+			'controller' => CrudClientController::class,
 		],
 
 		'clienthash' => [
@@ -56,7 +80,26 @@ return [
 		'destination' => [
 			'class' => Destination::class,
 			'table' => 'clients__destinations',
-			'controller' => CrudDestinationController::class
+			'controller' => CrudDestinationController::class,
+            'fieldsGroupsFiles' => [
+                'index' => DestinationFieldsGroupParametersFile::class
+            ],
+            'parametersFiles' => [
+                'create' => DestinationCreateStoreFieldsetsParameters::class,
+                'show' => DestinationShowFieldsetsParameters::class
+            ],
+            'relationshipsManagerClasses' => [
+                'show' => DestinationRelationManager::class
+            ],
+            'controllers' => [
+                'index' => DestinationIndexController::class,
+                'create' => DestinationCreateStoreController::class,
+                'store' => DestinationCreateStoreController::class,
+                'show' => DestinationShowController::class,
+                'edit' => DestinationEditUpdateController::class,
+                'update' => DestinationEditUpdateController::class,
+                'destroy' => DestinationDestroyController::class,
+            ]
 		],
 		'destinationtypeDestination' => [
 			'table' => 'clients__destinationtype_destinations',

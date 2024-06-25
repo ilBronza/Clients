@@ -139,6 +139,11 @@ class Destination extends BaseModel
 		$this->types()->detach($type->getKey());
 	}
 
+    public function getFlatDescriptionString()
+    {
+        return "{$this->name} - {$this->street}, {$this->city} ({$this->province})";
+    }
+
 	public function removeTypeFromBrothers(Destinationtype $type)
 	{
 		$brothers = $this->getBrothers(

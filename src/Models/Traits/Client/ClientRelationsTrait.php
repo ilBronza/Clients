@@ -15,7 +15,7 @@ trait ClientRelationsTrait
 		return $this->hasMany(Project::getProjectClassName());
 	}
 
-	public function quotations()
+	public function receivedQuotations()
 	{
 		return $this->hasMany(Quotation::getProjectClassName());
 	}
