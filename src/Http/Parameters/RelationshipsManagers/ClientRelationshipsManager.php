@@ -42,9 +42,12 @@ class ClientRelationshipsManager Extends RelationshipsManager
 		// 	$relations['hashes'] = CrudClienthashController::class;
 
 		// $this->getModel()
-		$relations['filecabinets'] = config('filecabinet.models.filecabinet.controllers.index');
 
-		$relations['dossiers'] = config('filecabinet.models.dossier.controllers.index');
+		if(config('filecabinets.enabled'))
+			$relations['filecabinets'] = config('filecabinet.models.filecabinet.controllers.index');
+
+		if(config('filecabinets.enabled'))
+			$relations['dossiers'] = config('filecabinet.models.dossier.controllers.index');
 
 		if(config('products.sellables.enabled'))
 			$relations['projects'] = config('products.models.project.controllers.index');

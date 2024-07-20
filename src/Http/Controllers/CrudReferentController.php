@@ -160,6 +160,7 @@ class CrudReferentController extends CRUD
     public function getIndexElements()
     {
         return $this->getModelClass()::withTypesString()
+            ->with('client')
             ->get();
     }
 

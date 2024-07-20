@@ -25,6 +25,9 @@ class DestinationIndexController extends DestinationCRUD
 
     public function getIndexElements()
     {
+        ini_set('max_execution_time', "180");
+        ini_set('memory_limit', "-1");
+
         return $this->getModelClass()::with(
             'address',
             'client',

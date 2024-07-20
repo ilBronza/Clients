@@ -82,7 +82,8 @@ return [
 			'table' => 'clients__destinations',
 			'controller' => CrudDestinationController::class,
             'fieldsGroupsFiles' => [
-                'index' => DestinationFieldsGroupParametersFile::class
+                'index' => DestinationFieldsGroupParametersFile::class,
+                'related' => DestinationFieldsGroupParametersFile::class,
             ],
             'parametersFiles' => [
                 'create' => DestinationCreateStoreFieldsetsParameters::class,

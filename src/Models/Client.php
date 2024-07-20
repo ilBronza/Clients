@@ -6,6 +6,7 @@ use IlBronza\Buttons\Button;
 use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Traits\CRUDSluggableTrait;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
+use IlBronza\Category\Traits\InteractsWithCategoryTrait;
 use IlBronza\Clients\Models\Clienthash;
 use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
 use IlBronza\Clients\Models\Destination;
@@ -25,6 +26,18 @@ class Client extends BaseModel implements SupplierInterface
 	static $modelConfigPrefix = 'client';
 
 	protected $keyType = 'string';
+
+	use InteractsWithCategoryTrait;
+
+	public function getCategoryModel() : string
+	{
+		return config('category.models.category.class');
+	}
+
+	public function getCategoriesCollection() : ? string
+	{
+		return null;
+	}
 
 	use InteractsWithNotesTrait;
 	use InteractsWithSupplierTrait;

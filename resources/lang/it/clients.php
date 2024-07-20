@@ -1,12 +1,25 @@
 <?php
 
 return [
-  'clients' => 'Clienti',
-  'list' => 'Lista aziende',
-  'create' => 'Crea cliente',
-  'deleted' => 'Archivio clienti',
-  'import' => 'Importa',
-  'goToList' => 'Vai alla lista',
-  'cardTitleCreate' => 'Crea cliente',
-  'cardIntroCreate :element' => 'Crea cliente'
+  'list' => 'Clienti',
+  'general' => 'Dati generali',
+  'first_name' => 'Nome',
+  'second_name' => 'Cognome',
+  'email' => 'Email',
+  'phone' => 'Telefono',
+  'destination' => 'Destino',
+  'destinations' => 'Destini',
+  'types' => 'Tipi',
+  'mySelfPrimary' => 'Chiave primaria',
+  'name' => 'Nome',
+  'slug' => 'Alias',
+  'fiscal_name' => 'Ragione sociale',
+  'fiscal_code' => 'Codice fiscale',
+  'vat' => 'P.iva',
+  'referents' => 'Referenti',
+  'created_at' => 'Creato il',
+  'categories' => 'Categorie',
+  'base' => 'Dati base',
+  'type' => 'Tipologia',
+  'client_id' => 'Id cliente',
 ];

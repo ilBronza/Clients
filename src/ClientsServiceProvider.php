@@ -3,6 +3,8 @@
 namespace IlBronza\Clients;
 
 use IlBronza\Clients\Models\Client;
+use IlBronza\Clients\Models\Destination;
+use IlBronza\Clients\Models\Referent;
 use IlBronza\Products\Models\Sellables\Supplier;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
@@ -18,6 +20,8 @@ class ClientsServiceProvider extends ServiceProvider
     {
         Relation::morphMap([
             'Client' => Client::getProjectClassname(),
+            'Destination' => Destination::getProjectClassname(),
+            'Referent' => Referent::getProjectClassname(),
         ]);
 
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'clients');
