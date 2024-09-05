@@ -1,6 +1,7 @@
 <?php
 
 use IlBronza\Clients\Http\Controllers\Client\ClientEditUpdateController;
+use IlBronza\Clients\Http\Controllers\Client\ClientLogoController;
 use IlBronza\Clients\Http\Controllers\Client\ClientShowController;
 use IlBronza\Clients\Http\Controllers\CrudClientController;
 use IlBronza\Clients\Http\Controllers\CrudClienthashController;
@@ -13,6 +14,7 @@ use IlBronza\Clients\Http\Controllers\Destinations\DestinationEditUpdateControll
 use IlBronza\Clients\Http\Controllers\Destinations\DestinationIndexController;
 use IlBronza\Clients\Http\Controllers\Destinations\DestinationShowController;
 use IlBronza\Clients\Http\Controllers\Referents\CrudReferenttypeController;
+use IlBronza\Clients\Http\Parameters\Datatables\ClientRelatedFieldsGroupParametersFile;
 use IlBronza\Clients\Http\Parameters\Datatables\DestinationFieldsGroupParametersFile;
 use IlBronza\Clients\Http\Parameters\Fieldsets\ClientEditFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\ClientShowFieldsetsParameters;
@@ -61,9 +63,13 @@ return [
                 // 'show' => ProductShowFieldsetsParameters::class,
                 // 'teaser' => ProductShowFieldsetsParameters::class,
             ],
+			'fieldsGroupsFiles' => [
+				'related' => ClientRelatedFieldsGroupParametersFile::class
+			],
 			'controllers' => [
 				'show' => ClientShowController::class,
 				'edit' => ClientEditUpdateController::class,
+				'logo' => ClientLogoController::class,
 			],
             'relationshipsManagerClasses' => [
                 'show' => ClientRelationshipsManager::class

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TestController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,8 @@ Route::group([
 	],
 	function()
 	{
+		Route::get('clients/logo/{client}/logo-fetcher', [Clients::getController('client', 'logo'), 'logoFetcher'])->name('clients.logoFetcher');
+
 		Route::resource('clients', Clients::getController('client'));
 
 		Route::get('clients/{client}', [Clients::getController('client', 'show'), 'show'])->name('clients.show');

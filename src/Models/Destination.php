@@ -8,40 +8,35 @@ use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Models\Casts\ExtraField;
 use IlBronza\CRUD\Traits\CRUDSluggableTrait;
 use IlBronza\CRUD\Traits\Model\CRUDBrotherhoodTrait;
+use IlBronza\CRUD\Traits\Model\CRUDModelExtraFieldsTrait;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
-use IlBronza\Clients\Models\Client;
-use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
-use IlBronza\Clients\Models\Destinationtype;
-use IlBronza\Clients\Models\DestinationtypeDestination;
-use IlBronza\Clients\Models\Referent;
-use Illuminate\Support\Collection;
 
 class Destination extends BaseModel
 {
-	public ? string $translationFolderPrefix = 'clients';
 	static $modelConfigPrefix = 'destination';
-
 	static $deletingRelationships = [
 		'address',
 		'destinationtypeDestinations',
 	];
-
+	public ?string $translationFolderPrefix = 'clients';
 	protected $keyType = 'string';
 
 	use ClientsPackageBaseModelTrait;
 
-    use InteractsWithAddressesTrait;
+	use CRUDModelExtraFieldsTrait;
+	use InteractsWithAddressesTrait;
 	use CRUDUseUuidTrait;
+
 	use CRUDSluggableTrait;
 
 	use CRUDBrotherhoodTrait;
 
 	protected $fillable = [
-		'name'
+		'name',
+		'address_id'
 	];
 
 	protected $casts = [
-		'street' => ExtraField::class . ':address',
 		'number' => ExtraField::class . ':address',
 		'zip' => ExtraField::class . ':address',
 		'town' => ExtraField::class . ':address',
@@ -49,20 +44,39 @@ class Destination extends BaseModel
 		'province' => ExtraField::class . ':address',
 		'region' => ExtraField::class . ':address',
 		'state' => ExtraField::class . ':address',
+		'street' => ExtraField::class . ':address',
 	];
+
+	public function getExtraFieldsClass() : ?string
+	{
+		return null;
+	}
+
+	public function address()
+	{
+		return $this->belongsTo(Address::getProjectClassName());
+	}
 
 	public function provideAddressModelForExtraFields()
 	{
-		if(! $this->address)
-			return $this->setRelation('address', $this->address()->create());
+		if (! $this->address)
+			$this->setRelation('address', $this->createDirectAddress());
 
 		return $this->address;
 	}
 
-    public function getAddressModelClassName() : string
-    {
-    	return Address::class;
-    }
+	public function createDirectAddress()
+	{
+		$this->addresses()->save($address = Address::getProjectClassName()::make());
+		$this->updateQuietly(['address_id' => $address->getKey()]);
+
+		return $address;
+	}
+
+	public function getAddressModelClassName() : string
+	{
+		return Address::class;
+	}
 
 	public function client()
 	{
@@ -76,7 +90,9 @@ class Destination extends BaseModel
 
 	public function referents()
 	{
-		return $this->hasMany(Referent::getProjectClassName());
+		return $this->belongsToMany(
+			Referent::getProjectClassName(), config('clients.models.destinationReferent.table')
+		);
 	}
 
 	public function referent()
@@ -84,27 +100,29 @@ class Destination extends BaseModel
 		return $this->hasOne(Referent::getProjectClassName())->where('type', config('clients.referents.default_type'));
 	}
 
-    public function getDescriptionString($separator = ' - ') : string
-    {
-        return "{$this->street}, {$this->number} - {$this->town} ({$this->city}) - {$this->zone}";
-    }
-
-    public function getShortDescriptionString($separator = ' - ') : string
-    {
-        return "{$this->town} {$this->city}";
-    }
-
-    public function getShortDescriptionAttribute()
-    {
-    	return $this->getShortDescriptionString();
-    }
-
-	public function types()
+	public function getDescriptionString($separator = ' - ') : string
 	{
-		return $this->belongsToMany(
-			Destinationtype::getProjectClassName(),
-			DestinationtypeDestination::make()->getTable()
-		);
+		return "{$this->street}, {$this->number} - {$this->town} ({$this->city}) - {$this->zone}";
+	}
+
+	public function getShortDescriptionAttribute()
+	{
+		return $this->getShortDescriptionString();
+	}
+
+	public function getShortDescriptionString($separator = ' - ') : string
+	{
+		return "{$this->town} {$this->city}";
+	}
+
+	public function getTypesString() : string
+	{
+		$result = [];
+
+		foreach ($this->getTypes() as $type)
+			$result[] = $type->getName();
+
+		return implode(", ", $result);
 	}
 
 	public function getTypes()
@@ -112,65 +130,16 @@ class Destination extends BaseModel
 		return $this->types;
 	}
 
-	public function getTypesString() : string
-	{
-		$result = [];
-
-		foreach($this->getTypes() as $type)
-			$result[] = $type->getName();
-
-		return implode(", ", $result);
-	}
-
 	public function destinationtypeDestinations()
 	{
 		return $this->hasMany(
 			DestinationtypeDestination::getProjectClassName()
-		);		
-	}
-
-	public function assignType(Destinationtype $type)
-	{
-		$this->types()->syncWithoutDetaching($type->getKey());
-	}
-
-	public function unassignType(Destinationtype $type)
-	{
-		$this->types()->detach($type->getKey());
-	}
-
-    public function getFlatDescriptionString()
-    {
-        return "{$this->name} - {$this->street}, {$this->city} ({$this->province})";
-    }
-
-	public function removeTypeFromBrothers(Destinationtype $type)
-	{
-		$brothers = $this->getBrothers(
-			'client_id'
 		);
-
-		foreach($brothers as $brother)
-			$brother->unassignType(
-				$type
-			);
 	}
 
-	public static function boot() {
-
-		parent::boot();
-
-		static::saved(function($model)
-		{
-			if(! $model->address_id)
-			{
-				if($address = $model->getAddress())
-				{
-					$model->address_id = $address->getKey();
-					$model->saveQuietly();
-				}
-			}
-		});
+	public function getFlatDescriptionString()
+	{
+		return "{$this->name} - {$this->street}, {$this->city} ({$this->province})";
 	}
 
 	public function setName(string $name = null, bool $save = false)
@@ -191,37 +160,87 @@ class Destination extends BaseModel
 		$this->removeTypeFromBrothers($type);
 	}
 
-	public function isDefault() : bool
+	public function assignType(Destinationtype $type)
 	{
-		return !! $this->types()->where('name', Destinationtype::getDefault()->getName())->first();
+		$this->types()->syncWithoutDetaching($type->getKey());
 	}
 
-    public function setAsDefault()
-    {
+	//	public static function boot() {
+	//
+	//		parent::boot();
+	//
+	//		static::saved(function($model)
+	//		{
+	//			if(! $model->address_id)
+	//			{
+	//				if($address = $model->getAddress())
+	//				{
+	//					$model->address_id = $address->getKey();
+	//					$model->saveQuietly();
+	//				}
+	//			}
+	//		});
+	//	}
+
+	public function types()
+	{
+		return $this->belongsToMany(
+			Destinationtype::getProjectClassName(), DestinationtypeDestination::make()->getTable()
+		);
+	}
+
+	public function removeTypeFromBrothers(Destinationtype $type)
+	{
+		$brothers = $this->getBrothers(
+			'client_id'
+		);
+
+		foreach ($brothers as $brother)
+			$brother->unassignType(
+				$type
+			);
+	}
+
+	public function unassignType(Destinationtype $type)
+	{
+		$this->types()->detach($type->getKey());
+	}
+
+	public function isDefault() : bool
+	{
+		return ! ! $this->types()->where('name', Destinationtype::getDefault()->getName())->first();
+	}
+
+	public function setAsDefault()
+	{
 		$type = Destinationtype::getDefault();
 
 		$this->assignType($type);
 		$this->removeTypeFromBrothers($type);
-    }
+	}
 
-    public function relationTypesSet(array $values = null)
-    {
-    	if(is_null($values))
-    		return ;
+	public function relationTypesSet(array $values = null)
+	{
+		if (is_null($values))
+			return;
 
-		if(in_array('default', $values))
+		if (in_array('default', $values))
 			$this->removeTypeFromBrothers(Destinationtype::getDefault());
 
-		if(in_array('legal', $values))
+		if (in_array('legal', $values))
 			$this->removeTypeFromBrothers(Destinationtype::getLegal());
-    }
+	}
 
 	public function scopeWithTypesString($query, string $separator = ' - ')
 	{
 		$query->addSelect([
-			'types_string' => DestinationtypeDestination::selectRaw("GROUP_CONCAT(type_slug SEPARATOR '{$separator}')")
-						->whereColumn('clients__destinations.id', 'clients__destinationtype_destinations.destination_id')
+			'types_string' => DestinationtypeDestination::selectRaw("GROUP_CONCAT(type_slug SEPARATOR '{$separator}')")->whereColumn('clients__destinations.id', 'clients__destinationtype_destinations.destination_id')
 		]);
+	}
+
+	public function scopeVenue($query)
+	{
+		return $query->where('venue', true);
 	}
 
 	public function setTown(string $value = null, bool $save = false)

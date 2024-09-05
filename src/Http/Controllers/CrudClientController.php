@@ -24,7 +24,6 @@ class CrudClientController extends CRUD
     public $configModelClassName = 'client';
 
     public static $tables = [
-
         'index' => [
             'translationPrefix' => 'clients::fields',
             'fields' => 

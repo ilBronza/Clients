@@ -3,40 +3,28 @@
 namespace IlBronza\Clients\Models;
 
 use IlBronza\Buttons\Button;
+use IlBronza\Category\Traits\InteractsWithCategoryTrait;
+use IlBronza\Clients\Models\Traits\Client\ClientRelationsTrait;
 use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Traits\CRUDSluggableTrait;
+use IlBronza\CRUD\Traits\IlBronzaPackages\CRUDLogoTrait;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
-use IlBronza\Category\Traits\InteractsWithCategoryTrait;
-use IlBronza\Clients\Models\Clienthash;
-use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
-use IlBronza\Clients\Models\Destination;
-use IlBronza\Clients\Models\Destinationtype;
-use IlBronza\Clients\Models\Referent;
-use IlBronza\Clients\Models\Traits\Client\ClientRelationsTrait;
 use IlBronza\Notes\Traits\InteractsWithNotesTrait;
 use IlBronza\Products\Models\Interfaces\SupplierInterface;
-use IlBronza\Products\Models\Quotations\Project;
 use IlBronza\Products\Models\Traits\Sellable\InteractsWithSupplierTrait;
 use IlBronza\Ukn\Facades\Ukn;
-use Illuminate\Support\Facades\Log;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Client extends BaseModel implements SupplierInterface
+class Client extends BaseModel implements SupplierInterface, HasMedia
 {
-	public ? string $translationFolderPrefix = 'clients';
 	static $modelConfigPrefix = 'client';
-
+	public ?string $translationFolderPrefix = 'clients';
 	protected $keyType = 'string';
-
-	use InteractsWithCategoryTrait;
 
 	public function getCategoryModel() : string
 	{
 		return config('category.models.category.class');
-	}
-
-	public function getCategoriesCollection() : ? string
-	{
-		return null;
 	}
 
 	use InteractsWithNotesTrait;
@@ -44,17 +32,21 @@ class Client extends BaseModel implements SupplierInterface
 	use ClientsPackageBaseModelTrait;
 	use CRUDUseUuidTrait;
 	use CRUDSluggableTrait;
+	use CRUDLogoTrait;
+	use InteractsWithCategoryTrait;
+
+	use InteractsWithMedia;
 
 	use ClientRelationsTrait;
 
-	public function getRouteBaseNamePrefix() : ? string
+	public function getCategoriesCollection() : ?string
 	{
-		return config('clients.routePrefix');
+		return null;
 	}
 
-	public function destinations()
+	public function getRouteBaseNamePrefix() : ?string
 	{
-		return $this->hasMany(Destination::getProjectClassName());
+		return config('clients.routePrefix');
 	}
 
 	public function getDestination() : Destination
@@ -62,39 +54,23 @@ class Client extends BaseModel implements SupplierInterface
 		return $this->getDefaultDestination();
 	}
 
-	public function getDestinations(array $relations = [])
+	public function getDefaultDestination() : ?Destination
 	{
-		if($this->relationLoaded('destinations'))
-			return $this->destinations;
+		if ($this->defaultDestination)
+			return $this->defaultDestination;
 
-		// Log::error('cachare questo e verificare in caso di modifica cliente se decachato');
+		if ($this->destinations()->count() != 1)
+			return null;
 
-		return $this->destinations()->with($relations)->get();
+		if (! $destination = $this->destinations()->first())
+			return $this->createDefaultDestination();
+
+		return $this->assignRandomDestinationAsDefault();
 	}
 
-	private function assignRandomDestinationAsDefault() : Destination
+	public function destinations()
 	{
-		$destination = $this->destinations->first();
-		$destination->setAsDefault();
-
-		Ukn::w(trans('clients::destinations.setAsDefaultBySystem', ['name' => $destination->getName()]));
-
-		return $destination;
-	}
-
-	public function createReferent(array $parameters = []) : Referent
-	{
-        $referent = Referent::getProjectClassName()::make();
-
-        $referent->client_id = $this->getKey();
-        $referent->first_name = $this->getName();
-
-        foreach($parameters as $parameter => $value)
-        	$referent->$parameter = $value;
-
-        $referent->save();
-
-        return $referent;
+		return $this->hasMany(Destination::getProjectClassName());
 	}
 
 	private function createDefaultDestination()
@@ -115,6 +91,26 @@ class Client extends BaseModel implements SupplierInterface
 		$destination->save();
 
 		return $destination;
+	}
+
+	private function assignRandomDestinationAsDefault() : Destination
+	{
+		$destination = $this->destinations->first();
+		$destination->setAsDefault();
+
+		Ukn::w(trans('clients::destinations.setAsDefaultBySystem', ['name' => $destination->getName()]));
+
+		return $destination;
+	}
+
+	public function getDestinations(array $relations = [])
+	{
+		if ($this->relationLoaded('destinations'))
+			return $this->destinations;
+
+		// Log::error('cachare questo e verificare in caso di modifica cliente se decachato');
+
+		return $this->destinations()->with($relations)->get();
 	}
 
 	public function defaultDestination()
@@ -141,37 +137,17 @@ class Client extends BaseModel implements SupplierInterface
 		});
 	}
 
-	public function getDefaultDestination() : ? Destination
+	public function getLegalDestination() : ?Destination
 	{
-		if($this->defaultDestination)
-			return $this->defaultDestination;
-
-		if($this->destinations()->count() != 1)
-			return null;
-
-		if(! $destination = $this->destinations()->first())
-			return $this->createDefaultDestination();
-
-		return $this->assignRandomDestinationAsDefault();
-	}
-
-	public function getLegalDestination() : ? Destination
-	{
-		if($this->legalDestination)
+		if ($this->legalDestination)
 			return $this->legalDestination;
 
-		if(! $destination = $this->getDefaultDestination())
+		if (! $destination = $this->getDefaultDestination())
 			return null;
 
 		$destination->setAsLegal();
 
 		return $destination;
-	}
-
-
-	public function referents()
-	{
-		return $this->hasMany(Referent::getProjectClassName());
 	}
 
 	public function getReferents()
@@ -193,11 +169,6 @@ class Client extends BaseModel implements SupplierInterface
 		]);
 	}
 
-	public function getCreateDestinationUrl()
-	{
-		return route(config('clients.routePrefix') . 'clients.destinations.create', ['client' => $this]);
-	}
-
 	public function getCreateDestinationButton() : Button
 	{
 		return Button::create([
@@ -207,6 +178,11 @@ class Client extends BaseModel implements SupplierInterface
 		]);
 	}
 
+	public function getCreateDestinationUrl()
+	{
+		return route(config('clients.routePrefix') . 'clients.destinations.create', ['client' => $this]);
+	}
+
 	public function getCreateReferentUrl()
 	{
 		return route(config('clients.routePrefix') . 'clients.referents.create', ['client' => $this]);
@@ -214,11 +190,29 @@ class Client extends BaseModel implements SupplierInterface
 
 	public function getCreateReferentButton() : Button
 	{
-        return Button::create([
-            'href' => route(config('clients.routePrefix') . 'clients.referents.create', ['client' => $this]),
-            'text' => 'clients::referents.create',
-            'icon' => 'user'
-        ]);
+		return Button::create([
+			'href' => route(config('clients.routePrefix') . 'clients.referents.create', ['client' => $this]),
+			'text' => 'clients::referents.create',
+			'icon' => 'user'
+		]);
+	}
+
+	public function addEmailsToReferentTypes(array $emails, array $types)
+	{
+		$referents = $this->referents()->with('types')->get();
+
+		foreach ($emails as $email)
+
+			if ($referent = $referents->firstWhere('email', $email))
+				$referent->addTypes($types);
+
+			else
+				$this->createReferentByEmailTypes($email, $types);
+	}
+
+	public function referents()
+	{
+		return $this->hasMany(Referent::getProjectClassName());
 	}
 
 	public function createReferentByEmailTypes(string $email, array $types = [])
@@ -230,17 +224,19 @@ class Client extends BaseModel implements SupplierInterface
 		$referent->addTypes($types);
 	}
 
-	public function addEmailsToReferentTypes(array $emails, array $types)
+	public function createReferent(array $parameters = []) : Referent
 	{
-		$referents = $this->referents()->with('types')->get();
+		$referent = Referent::getProjectClassName()::make();
 
-		foreach($emails as $email)
+		$referent->client_id = $this->getKey();
+		$referent->first_name = $this->getName();
 
-			if($referent = $referents->firstWhere('email', $email))
-				$referent->addTypes($types);
+		foreach ($parameters as $parameter => $value)
+			$referent->$parameter = $value;
 
-			else
-				$this->createReferentByEmailTypes($email, $types);
+		$referent->save();
+
+		return $referent;
 	}
 
 	public function getReferentsByTypes(array $types)
@@ -258,7 +254,7 @@ class Client extends BaseModel implements SupplierInterface
 	}
 
 	public function setVatAttribute($value)
-    {
-        $this->attributes['vat'] = str_pad($value, 11, '0', STR_PAD_LEFT);
-    }
+	{
+		$this->attributes['vat'] = str_pad($value, 11, '0', STR_PAD_LEFT);
+	}
 }

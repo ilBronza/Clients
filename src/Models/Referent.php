@@ -2,29 +2,25 @@
 
 namespace IlBronza\Clients\Models;
 
+use IlBronza\Clients\Models\Traits\InteractsWithDestinationTrait;
 use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Traits\CRUDSluggableTrait;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
-use IlBronza\Clients\Models\Client;
-use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
-use IlBronza\Clients\Models\Destination;
-use IlBronza\Clients\Models\DestinationReferent;
-use IlBronza\Clients\Models\Traits\InteractsWithDestinationTrait;
 
 class Referent extends BaseModel
 {
-	public ? string $translationFolderPrefix = 'clients';
 	static $modelConfigPrefix = 'referent';
-
-	protected $keyType = 'string';
+	static $deletingRelationships = [];
+	public ?string $translationFolderPrefix = 'clients';
 
 	use ClientsPackageBaseModelTrait;
 	use CRUDUseUuidTrait;
+
 	use CRUDSluggableTrait;
 
 	use InteractsWithDestinationTrait;
 
-	static $deletingRelationships = [];
+	protected $keyType = 'string';
 
 	public function getNameAttribute()
 	{
@@ -51,19 +47,10 @@ class Referent extends BaseModel
 		return $this->client;
 	}
 
-	public function types()
-	{
-		return $this->belongsToMany(
-			Referenttype::getProjectClassName(),
-			ReferenttypeReferent::make()->getTable(),
-		);
-	}
-
 	public function scopeWithTypesString($query, string $separator = ' - ')
 	{
 		$query->addSelect([
-			'types_string' => ReferenttypeReferent::selectRaw("GROUP_CONCAT(type_slug SEPARATOR '{$separator}')")
-						->whereColumn('clients__referents.id', 'clients__referenttype_referents.referent_id')
+			'types_string' => ReferenttypeReferent::selectRaw("GROUP_CONCAT(type_slug SEPARATOR '{$separator}')")->whereColumn('clients__referents.id', 'clients__referenttype_referents.referent_id')
 		]);
 	}
 
@@ -75,5 +62,12 @@ class Referent extends BaseModel
 	public function addTypes(array $types)
 	{
 		$this->types()->syncWithoutDetaching($types);
+	}
+
+	public function types()
+	{
+		return $this->belongsToMany(
+			Referenttype::getProjectClassName(), ReferenttypeReferent::make()->getTable(),
+		);
 	}
 }

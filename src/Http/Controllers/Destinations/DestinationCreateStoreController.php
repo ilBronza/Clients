@@ -10,40 +10,42 @@ use IlBronza\Ukn\Facades\Ukn;
 
 class DestinationCreateStoreController extends DestinationCRUD
 {
-    use CRUDCreateStoreTrait;
-    use CRUDShowTrait;
-    use CRUDRelationshipTrait;
+	use CRUDCreateStoreTrait;
+	use CRUDShowTrait;
+	use CRUDRelationshipTrait;
 
-    public $allowedMethods = ['create', 'store', 'createFromClient'];
+	public $returnBack = true;
 
-    public function getGenericParametersFile() : ? string
-    {
-        return config('clients.models.destination.parametersFiles.create');
-    }
+	public $allowedMethods = ['create', 'store', 'createFromClient'];
 
-    public function getRelationshipsManagerClass()
-    {
-        return config("products.models.{$this->configModelClassName}.relationshipsManagerClasses.show");
-    }
+	public function getGenericParametersFile() : ?string
+	{
+		return config('clients.models.destination.parametersFiles.create');
+	}
 
-    public function createFromClient(int|string $client)
-    {
-        $client = Client::getProjectClassname()::find($client);
+	public function getRelationshipsManagerClass()
+	{
+		return config("products.models.{$this->configModelClassName}.relationshipsManagerClasses.show");
+	}
 
-        $destination = $this->getModelClass()::make();
-        $destination->client_id = $client->getKey();
-        $destination->name = $client->getName();
-        $destination->save();
+	public function createFromClient(int|string $client)
+	{
+		$client = Client::getProjectClassName()::find($client);
 
-        Ukn::s(__('clients::destinations.createdForClient', ['client' => $client->getName()]));
+		$destination = $this->getModelClass()::make();
+		$destination->client_id = $client->getKey();
+		$destination->name = $client->getName();
+		$destination->save();
 
-        return redirect()->to($destination->getEditUrl());
-    }
+		Ukn::s(__('clients::destinations.createdForClient', ['client' => $client->getName()]));
 
-    public function show(string $destination)
-    {
-        $destination = $this->findModel($destination);
+		return redirect()->to($destination->getEditUrl());
+	}
 
-        return $this->_show($destination);
-    }
+	public function show(string $destination)
+	{
+		$destination = $this->findModel($destination);
+
+		return $this->_show($destination);
+	}
 }

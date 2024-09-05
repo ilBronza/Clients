@@ -5,29 +5,14 @@ namespace IlBronza\Clients\Models;
 use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
 
-class Clienthash extends BaseModel
+class Destinatable extends BaseModel
 {
-	static $modelConfigPrefix = 'clienthash';
+	static $modelConfigPrefix = 'destinatable';
 	public ?string $translationFolderPrefix = 'clients';
 	protected $keyType = 'string';
-
-	protected $dates = [
-		'valid_to',
-		'used_at'
-	];
 
 	use ClientsPackageBaseModelTrait;
 	use CRUDUseUuidTrait;
 
 	protected $keyType = 'string';
-
-	public function client()
-	{
-		return $this->belongsTo(Client::getProjectClassName());
-	}
-
-	public function getClient() : Client
-	{
-		return $this->client;
-	}
 }

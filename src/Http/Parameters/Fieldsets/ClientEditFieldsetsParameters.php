@@ -9,6 +9,17 @@ class ClientEditFieldsetsParameters extends FieldsetParametersFile
     public function _getFieldsetsParameters() : array
     {
         return [
+			'logo' => [
+				'showLegend' => false,
+				'fields' => [],
+				'view' => [
+					'name' => 'crud::utilities.logo.logo',
+					'parameters' => [
+						'logoModelInstance' => $this->getModel()
+					]
+				],
+				'width' => ['medium@m']
+			],
             'base' => [
                 'fields' => [
                     'name' => ['text' => 'string|nullable|max:255'],
@@ -28,9 +39,44 @@ class ClientEditFieldsetsParameters extends FieldsetParametersFile
                         'relation' => 'categories'
                     ],
                 ],
-                'width' => ['xlarge@m']
-            ]
-        ];
+                'width' => ['large@m']
+            ],
+			'contacts' => [
+				'showLegend' => false,
+				'fields' => [],
+				'view' => [
+					'name' => 'contacts::contacts._fetcherModelContacts',
+					'parameters' => [
+						'model' => $this->getModel()
+					]
+				],
+				'width' => ['medium']
+			],
+			'documents' => [
+				'fields' => [],
+				'view' => [
+					'name' => 'filecabinet::fetchers._modelDossiersByCategory',
+					'parameters' => [
+						'categorySlug' => 'documenti-aziendali',
+						'model' => $this->getModel()
+					]
+				],
+				'width' => ['large']
+				//				'fields' => $documentsFields,
+				//				'width' => ['large']
+			],
+			'notes' => [
+				'fields' => [],
+				'view' => [
+					'name' => 'notes::notes',
+					'parameters' => [
+						'modelInstance' => $this->getModel(),
+					],
+				],
+				'width' => ['xlarge']
+			],
+
+		];
     }
 }
 

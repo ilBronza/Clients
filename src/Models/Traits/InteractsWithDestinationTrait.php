@@ -11,6 +11,15 @@ trait InteractsWithDestinationTrait
 		return $this->belongsTo(Destination::getProjectClassName());
 	}
 
+	public function destinations()
+	{
+		return $this->morphToMany(
+			Destination::getProjectClassName(),
+			'destinatable',
+			config('clients.models.destinatable.table'),
+		);
+	}
+
     public function getDestination() : ? Destination
     {
         if(! $this->destination_id)

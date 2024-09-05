@@ -19,7 +19,8 @@ class DestinationShowFieldsetsParameters extends FieldsetParametersFile
                         'relation' => 'client',
                         'disabled' => true
                     ],
-                    'name' => ['text' => 'string|nullable|max:255'],
+					'name' => ['text' => 'string|nullable|max:255'],
+					'venue' => ['boolean' => 'boolean|nullable'],
                     'types' => [
                         'type' => 'select',
                         'multiple' => true,

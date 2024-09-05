@@ -12,9 +12,9 @@ class DestinationRelationshipsManager Extends RelationshipsManager
 		return [
 			'show' => [
 				'relations' => [
-					'client' => config('clients.models.client.controllers.show'),
-					'types' => config('clients.models.destinationtype.controller'),
-					'referents' => config('clients.models.referent.controller')
+//					'client' => config('clients.models.client.controllers.show'),
+//					'types' => config('clients.models.destinationtype.controller'),
+//					'referents' => config('clients.models.referent.controller')
 				]
 			]
 		];

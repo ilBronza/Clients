@@ -1,7 +1,7 @@
 <?php
 
 return [
-  'list' => 'Clienti',
+  'list' => 'Aziende',
   'general' => 'Dati generali',
   'first_name' => 'Nome',
   'second_name' => 'Cognome',
@@ -21,5 +21,5 @@ return [
   'categories' => 'Categorie',
   'base' => 'Dati base',
   'type' => 'Tipologia',
-  'client_id' => 'Id cliente',
+  'client_id' => 'Id azienda',
 ];
