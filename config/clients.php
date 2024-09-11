@@ -140,12 +140,6 @@ return [
 		]
 	],
 
-	'controllers' => [
-		'clientController' => 'ELIMI_NARE__QUI_ZXC',
-		'destinationController' => 'ELIMI_NARE__QUI_ASD',
-		'referentController' => 'ELIMI_NARE__QUI_QWE'
-	],
-
     'routePrefix' => 'clientsmanager',
 
 	'destinationReferent' => [
