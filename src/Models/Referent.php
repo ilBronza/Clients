@@ -6,14 +6,17 @@ use IlBronza\Clients\Models\Traits\InteractsWithDestinationTrait;
 use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Traits\CRUDSluggableTrait;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
+use IlBronza\CRUD\Traits\Model\PackagedModelsTrait;
 
 class Referent extends BaseModel
 {
+	static $packageConfigPrefix = 'clients';
 	static $modelConfigPrefix = 'referent';
 	static $deletingRelationships = [];
 	public ?string $translationFolderPrefix = 'clients';
 
-	use ClientsPackageBaseModelTrait;
+//	use ClientsPackageBaseModelTrait;
+	use PackagedModelsTrait;
 	use CRUDUseUuidTrait;
 
 	use CRUDSluggableTrait;

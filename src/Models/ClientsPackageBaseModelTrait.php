@@ -4,26 +4,26 @@ namespace IlBronza\Clients\Models;
 
 trait ClientsPackageBaseModelTrait
 {
-	public ? string $translationFolderPrefix = 'clients';
+//	public ? string $translationFolderPrefix = 'clients';
 
-	static function getProjectClassName()
-	{
-		return config('clients.models.' . static::getModelConfigPrefix() . '.class');
-	}
+//	static function getProjectClassName()
+//	{
+//		return config('clients.models.' . static::getModelConfigPrefix() . '.class');
+//	}
 
-	public function getRouteBaseNamePrefix() : ? string
-	{
-		return config('clients.routePrefix');
-	}
+//	public function getRouteBaseNamePrefix() : ? string
+//	{
+//		return config('clients.routePrefix');
+//	}
 
-	static function getModelConfigPrefix()
-	{
-		return static::$modelConfigPrefix;
-	}
+//	static function getModelConfigPrefix()
+//	{
+//		return static::$modelConfigPrefix;
+//	}
 
-	public function getTable()
-	{
-		return config("clients.models.{$this->getModelConfigPrefix()}.table");
-	}
+//	public function getTable()
+//	{
+//		return config("clients.models.{$this->getModelConfigPrefix()}.table");
+//	}
 
 }

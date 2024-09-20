@@ -2,18 +2,17 @@
 
 namespace IlBronza\Clients\Models;
 
-use IlBronza\CRUD\Models\BaseModel;
+use IlBronza\CRUD\Models\PackagedBaseModel;
 use IlBronza\CRUD\Traits\CRUDSluggableTrait;
 use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
 
-class Type extends BaseModel
+class Type extends PackagedBaseModel
 {
 	public ? string $translationFolderPrefix = 'clients';
 	public $incrementing = false;
 	protected $keyType = 'string';
 	protected $primaryKey = 'slug';
 
-	use ClientsPackageBaseModelTrait;
 	use CRUDSluggableTrait;
 
 	public function getForeignKey()

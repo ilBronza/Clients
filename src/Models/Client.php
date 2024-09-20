@@ -9,6 +9,7 @@ use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Traits\CRUDSluggableTrait;
 use IlBronza\CRUD\Traits\IlBronzaPackages\CRUDLogoTrait;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
+use IlBronza\CRUD\Traits\Model\PackagedModelsTrait;
 use IlBronza\Notes\Traits\InteractsWithNotesTrait;
 use IlBronza\Products\Models\Interfaces\SupplierInterface;
 use IlBronza\Products\Models\Traits\Sellable\InteractsWithSupplierTrait;
@@ -18,6 +19,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Client extends BaseModel implements SupplierInterface, HasMedia
 {
+	static $packageConfigPrefix = 'clients';
 	static $modelConfigPrefix = 'client';
 	public ?string $translationFolderPrefix = 'clients';
 	protected $keyType = 'string';
@@ -27,9 +29,10 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 		return config('category.models.category.class');
 	}
 
+	use PackagedModelsTrait;
 	use InteractsWithNotesTrait;
 	use InteractsWithSupplierTrait;
-	use ClientsPackageBaseModelTrait;
+//	use ClientsPackageBaseModelTrait;
 	use CRUDUseUuidTrait;
 	use CRUDSluggableTrait;
 	use CRUDLogoTrait;

@@ -10,9 +10,11 @@ use IlBronza\CRUD\Traits\CRUDSluggableTrait;
 use IlBronza\CRUD\Traits\Model\CRUDBrotherhoodTrait;
 use IlBronza\CRUD\Traits\Model\CRUDModelExtraFieldsTrait;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
+use IlBronza\CRUD\Traits\Model\PackagedModelsTrait;
 
 class Destination extends BaseModel
 {
+	static $packageConfigPrefix = 'clients';
 	static $modelConfigPrefix = 'destination';
 	static $deletingRelationships = [
 		'address',
@@ -22,6 +24,7 @@ class Destination extends BaseModel
 	protected $keyType = 'string';
 
 	use ClientsPackageBaseModelTrait;
+	use PackagedModelsTrait;
 
 	use CRUDModelExtraFieldsTrait;
 	use InteractsWithAddressesTrait;
@@ -185,7 +188,8 @@ class Destination extends BaseModel
 	public function types()
 	{
 		return $this->belongsToMany(
-			Destinationtype::getProjectClassName(), DestinationtypeDestination::make()->getTable()
+			Destinationtype::getProjectClassName(),
+			DestinationtypeDestination::make()->getTable(),
 		);
 	}
 

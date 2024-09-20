@@ -83,6 +83,11 @@ return [
 			'controller' => CrudClienthashController::class
 		],
 
+		'destinatable' => [
+			'class' => Destinatable::class,
+			'table' => 'clients__destinatable',
+		],
+
 		'destination' => [
 			'class' => Destination::class,
 			'table' => 'clients__destinations',
