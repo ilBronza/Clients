@@ -5,6 +5,8 @@ namespace IlBronza\Clients\Http\Parameters\RelationshipsManagers;
 use IlBronza\CRUD\Providers\RelationshipsManager\RelationshipsManager;
 use IlBronza\Notes\Http\Controllers\CrudNoteController;
 
+use function config;
+
 class ClientRelationshipsManager Extends RelationshipsManager
 {
 	public  function getAllRelationsParameters() : array
@@ -42,6 +44,9 @@ class ClientRelationshipsManager Extends RelationshipsManager
 		// 	$relations['hashes'] = CrudClienthashController::class;
 
 		// $this->getModel()
+
+		if(config('operators.enabled', true))
+			$relations['operators'] = config('operators.models.operator.controllers.index');
 
 		if(config('filecabinets.enabled'))
 			$relations['filecabinets'] = config('filecabinet.models.filecabinet.controllers.index');

@@ -14,7 +14,10 @@ class DestinationFieldsGroupParametersFile extends FieldsGroupParametersFile
             [
                 'mySelfPrimary' => 'primary',
                 'mySelfEdit' => 'links.edit',
-                'mySelfSee' => 'links.seeName',
+                'mySelfSee' => [
+					'type' => 'links.seeName',
+	                'width' => '255px'
+                ],
 
                 'street' => 'flat',
                 'number' => 'flat',
@@ -25,16 +28,13 @@ class DestinationFieldsGroupParametersFile extends FieldsGroupParametersFile
                 'region' => 'flat',
                 'state' => 'flat',
 
+	            'venue' => [
+					'type' => 'editor.toggle',
+		            'nullable' => true,
+	            ],
 
                 'client' => 'relations.belongsTo',
                 'types' => 'relations.belongsToMany',
-
-                'name' => 'flat',
-                'plate' => 'flat',
-                'registered_at' => 'flat',
-
-                'initial_km' => 'flat',
-                'current_km' => 'flat',
 
                 'mySelfDelete' => 'links.delete'
             ]
