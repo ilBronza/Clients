@@ -5,17 +5,21 @@ namespace IlBronza\Clients\Models;
 use IlBronza\Buttons\Button;
 use IlBronza\Category\Traits\InteractsWithCategoryTrait;
 use IlBronza\Clients\Models\Traits\Client\ClientRelationsTrait;
+use IlBronza\Contacts\Models\Traits\InteractsWithContact;
 use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Traits\CRUDSluggableTrait;
 use IlBronza\CRUD\Traits\IlBronzaPackages\CRUDLogoTrait;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
 use IlBronza\CRUD\Traits\Model\PackagedModelsTrait;
 use IlBronza\Notes\Traits\InteractsWithNotesTrait;
+use IlBronza\Payments\Models\Traits\InteractsWithPaymenttypes;
 use IlBronza\Products\Models\Interfaces\SupplierInterface;
 use IlBronza\Products\Models\Traits\Sellable\InteractsWithSupplierTrait;
 use IlBronza\Ukn\Facades\Ukn;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+
+use function config;
 
 class Client extends BaseModel implements SupplierInterface, HasMedia
 {
@@ -24,11 +28,8 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 	public ?string $translationFolderPrefix = 'clients';
 	protected $keyType = 'string';
 
-	public function getCategoryModel() : string
-	{
-		return config('category.models.category.class');
-	}
-
+	use InteractsWithContact;
+	use InteractsWithPaymenttypes;
 	use PackagedModelsTrait;
 	use InteractsWithNotesTrait;
 	use InteractsWithSupplierTrait;
@@ -41,6 +42,11 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 	use InteractsWithMedia;
 
 	use ClientRelationsTrait;
+
+	public function getCategoryModel() : string
+	{
+		return config('category.models.category.class');
+	}
 
 	public function getCategoriesCollection() : ?string
 	{
@@ -253,6 +259,9 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 
 	public function getVatAttribute($value)
 	{
+		if(! $value)
+			return $value;
+
 		return str_pad($value, 11, '0', STR_PAD_LEFT);
 	}
 

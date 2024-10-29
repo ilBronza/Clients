@@ -60,6 +60,11 @@ class Destination extends BaseModel
 		return $this->belongsTo(Address::getProjectClassName());
 	}
 
+	public function getAddressFullString() : ? string
+	{
+		return $this->getAddress()?->getFullString();
+	}
+
 	public function provideAddressModelForExtraFields()
 	{
 		if (! $this->address)
@@ -71,7 +76,10 @@ class Destination extends BaseModel
 	public function createDirectAddress()
 	{
 		$this->addresses()->save($address = Address::getProjectClassName()::make());
-		$this->updateQuietly(['address_id' => $address->getKey()]);
+
+		$this->address_id = $address->getKey();
+
+		static::query()->where('id', $this->getKey())->update(['address_id' => $this->address_id]);
 
 		return $address;
 	}

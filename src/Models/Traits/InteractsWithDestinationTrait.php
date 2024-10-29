@@ -28,7 +28,7 @@ trait InteractsWithDestinationTrait
         if($this->relationLoaded('destination'))
             return $this->destination;
 
-        return Destination::getProjectClassName()::findCached($this->destination_id);
+        return Destination::getProjectClassName()::find($this->destination_id);
     }
 
 }

@@ -16,7 +16,7 @@ class DestinationCreateStoreController extends DestinationCRUD
 
 	public $returnBack = true;
 
-	public $allowedMethods = ['create', 'store', 'createFromClient'];
+	public $allowedMethods = ['create', 'store', 'createFromClient', 'createFromQuotation'];
 
 	public function getGenericParametersFile() : ?string
 	{
@@ -36,6 +36,28 @@ class DestinationCreateStoreController extends DestinationCRUD
 		$destination->client_id = $client->getKey();
 		$destination->name = $client->getName();
 		$destination->save();
+
+		Ukn::s(__('clients::destinations.createdForClient', ['client' => $client->getName()]));
+
+		return redirect()->to($destination->getEditUrl());
+	}
+
+	public function createFromQuotation(int|string $quotation)
+	{
+		$quotationClass = config('products.models.quotation.class');
+
+		$quotation = $quotationClass::find($quotation);
+
+		$client = $quotation->client;
+
+		$destination = $this->getModelClass()::make();
+		$destination->client_id = $client->getKey();
+		$destination->venue = true;
+		$destination->name = 'New Venue for ' . $quotation->getName();
+		$destination->save();
+
+		$quotation->destination_id = $destination->getKey();
+		$quotation->save();
 
 		Ukn::s(__('clients::destinations.createdForClient', ['client' => $client->getName()]));
 

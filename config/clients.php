@@ -1,8 +1,10 @@
 <?php
 
-use IlBronza\Clients\Http\Controllers\Client\ClientEditUpdateController;
-use IlBronza\Clients\Http\Controllers\Client\ClientLogoController;
-use IlBronza\Clients\Http\Controllers\Client\ClientShowController;
+use IlBronza\Clients\Http\Controllers\Clients\ClientCreateStoreController;
+use IlBronza\Clients\Http\Controllers\Clients\ClientEditUpdateController;
+use IlBronza\Clients\Http\Controllers\Clients\ClientIndexController;
+use IlBronza\Clients\Http\Controllers\Clients\ClientLogoController;
+use IlBronza\Clients\Http\Controllers\Clients\ClientShowController;
 use IlBronza\Clients\Http\Controllers\CrudClientController;
 use IlBronza\Clients\Http\Controllers\CrudClienthashController;
 use IlBronza\Clients\Http\Controllers\CrudDestinationController;
@@ -16,6 +18,7 @@ use IlBronza\Clients\Http\Controllers\Destinations\DestinationShowController;
 use IlBronza\Clients\Http\Controllers\Referents\CrudReferenttypeController;
 use IlBronza\Clients\Http\Parameters\Datatables\ClientRelatedFieldsGroupParametersFile;
 use IlBronza\Clients\Http\Parameters\Datatables\DestinationFieldsGroupParametersFile;
+use IlBronza\Clients\Http\Parameters\Fieldsets\ClientCreateFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\ClientEditFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\ClientShowFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\RelationshipsManagers\ClientRelationshipsManager;
@@ -57,23 +60,27 @@ return [
 		'client' => [
 			'class' => Client::class,
 			'table' => 'clients__clients',
-            'parametersFiles' => [
-                'show' => ClientShowFieldsetsParameters::class,
-                'edit' => ClientEditFieldsetsParameters::class,
-                // 'show' => ProductShowFieldsetsParameters::class,
-                // 'teaser' => ProductShowFieldsetsParameters::class,
-            ],
+			'parametersFiles' => [
+				'create' => ClientCreateFieldsetsParameters::class,
+				'show' => ClientShowFieldsetsParameters::class,
+				'edit' => ClientEditFieldsetsParameters::class,
+				// 'show' => ProductShowFieldsetsParameters::class,
+				// 'teaser' => ProductShowFieldsetsParameters::class,
+			],
 			'fieldsGroupsFiles' => [
 				'related' => ClientRelatedFieldsGroupParametersFile::class
 			],
 			'controllers' => [
+				'index' => ClientIndexController::class,
+				'create' => ClientCreateStoreController::class,
+				'store' => ClientCreateStoreController::class,
 				'show' => ClientShowController::class,
 				'edit' => ClientEditUpdateController::class,
 				'logo' => ClientLogoController::class,
 			],
-            'relationshipsManagerClasses' => [
-                'show' => ClientRelationshipsManager::class
-            ],
+			'relationshipsManagerClasses' => [
+				'show' => ClientRelationshipsManager::class
+			],
 			'controller' => CrudClientController::class,
 		],
 
@@ -92,26 +99,26 @@ return [
 			'class' => Destination::class,
 			'table' => 'clients__destinations',
 			'controller' => CrudDestinationController::class,
-            'fieldsGroupsFiles' => [
-                'index' => DestinationFieldsGroupParametersFile::class,
-                'related' => DestinationFieldsGroupParametersFile::class,
-            ],
-            'parametersFiles' => [
-                'create' => DestinationCreateStoreFieldsetsParameters::class,
-                'show' => DestinationShowFieldsetsParameters::class
-            ],
-            'relationshipsManagerClasses' => [
-                'show' => DestinationRelationManager::class
-            ],
-            'controllers' => [
-                'index' => DestinationIndexController::class,
-                'create' => DestinationCreateStoreController::class,
-                'store' => DestinationCreateStoreController::class,
-                'show' => DestinationShowController::class,
-                'edit' => DestinationEditUpdateController::class,
-                'update' => DestinationEditUpdateController::class,
-                'destroy' => DestinationDestroyController::class,
-            ]
+			'fieldsGroupsFiles' => [
+				'index' => DestinationFieldsGroupParametersFile::class,
+				'related' => DestinationFieldsGroupParametersFile::class,
+			],
+			'parametersFiles' => [
+				'create' => DestinationCreateStoreFieldsetsParameters::class,
+				'show' => DestinationShowFieldsetsParameters::class
+			],
+			'relationshipsManagerClasses' => [
+				'show' => DestinationRelationManager::class
+			],
+			'controllers' => [
+				'index' => DestinationIndexController::class,
+				'create' => DestinationCreateStoreController::class,
+				'store' => DestinationCreateStoreController::class,
+				'show' => DestinationShowController::class,
+				'edit' => DestinationEditUpdateController::class,
+				'update' => DestinationEditUpdateController::class,
+				'destroy' => DestinationDestroyController::class,
+			]
 		],
 		'destinationtypeDestination' => [
 			'table' => 'clients__destinationtype_destinations',
@@ -145,7 +152,7 @@ return [
 		]
 	],
 
-    'routePrefix' => 'clientsmanager',
+	'routePrefix' => 'clientsmanager',
 
 	'destinationReferent' => [
 		'table' => 'destination_referents'

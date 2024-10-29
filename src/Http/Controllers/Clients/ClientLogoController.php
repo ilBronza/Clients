@@ -1,6 +1,6 @@
 <?php
 
-namespace IlBronza\Clients\Http\Controllers\Client;
+namespace IlBronza\Clients\Http\Controllers\Clients;
 
 use IlBronza\CRUD\Http\Controllers\Traits\ControllerLogoTrait;
 

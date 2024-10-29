@@ -17,6 +17,9 @@ class ClientRelationshipsManager Extends RelationshipsManager
 		{
 			app('products');
 
+			if(config('products.sellables.enabled'))
+				$relations['sellableSupplier'] = config('products.models.sellableSupplier.controllers.index');
+
 			$relations['makingOrders'] = [
 				'controller' => config('products.models.order.controllers.index'),
 				// 'elementGetterMethod' => 'getMakingOrdersForShowRelation',

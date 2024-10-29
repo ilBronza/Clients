@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class DestinationEditUpdateController extends DestinationCRUD
 {
     use CRUDEditUpdateTrait;
+	public $returnBack = true;
 
     public $allowedMethods = ['edit', 'update'];
 
