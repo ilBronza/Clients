@@ -13,23 +13,31 @@ class ClientRelationshipsManager Extends RelationshipsManager
 	{
 		$relations = [];
 
-		try
-		{
-			app('products');
-
 			if(config('products.sellables.enabled'))
-				$relations['sellableSupplier'] = config('products.models.sellableSupplier.controllers.index');
+			{
+				if($this->getModel()->isSupplier())
+				{
+					//SellableSupplierIndexController
+					$relations['sellableSuppliers'] = [
+						'controller' => config('products.models.sellableSupplier.controllers.index'),
+						 	'elementGetterMethod' => 'getSellableSuppliers',
+						'buttonsMethods' => [
+							'getCreateSellableButton',
+						],
+					];
+				}
+			}
 
-			$relations['makingOrders'] = [
-				'controller' => config('products.models.order.controllers.index'),
-				// 'elementGetterMethod' => 'getMakingOrdersForShowRelation',
-				'translatedTitle' => 'Commesse in corso'
-			];
-
-			$relations['orders'] = [
-				'controller' => config('products.models.order.controllers.index'),
-				// 'elementGetterMethod' => 'getOrdersForShowRelation'
-			];
+//			$relations['makingOrders'] = [
+//				'controller' => config('products.models.order.controllers.index'),
+//				// 'elementGetterMethod' => 'getMakingOrdersForShowRelation',
+//				'translatedTitle' => 'Commesse in corso'
+//			];
+//
+//			$relations['orders'] = [
+//				'controller' => config('products.models.order.controllers.index'),
+//				// 'elementGetterMethod' => 'getOrdersForShowRelation'
+//			];
 
 			// $relations['products'] = [
 			// 	'controller' => config('products.models.product.controllers.index'),
@@ -37,22 +45,17 @@ class ClientRelationshipsManager Extends RelationshipsManager
 			// 	'fieldsGroupsNames' => ['clientRelated']
 			// ];
 
-		}
-		catch(\Exception $e)
-		{
-			
-		}
 
 		// if(app('clients')->hasClientPrivateArea())
 		// 	$relations['hashes'] = CrudClienthashController::class;
 
 		// $this->getModel()
 
-		if(config('operators.enabled', true))
-			$relations['operators'] = config('operators.models.operator.controllers.index');
-
-		if(config('filecabinets.enabled'))
-			$relations['filecabinets'] = config('filecabinet.models.filecabinet.controllers.index');
+//		if(config('operators.enabled', true))
+//			$relations['operators'] = config('operators.models.operator.controllers.index');
+//
+//		if(config('filecabinets.enabled'))
+//			$relations['filecabinets'] = config('filecabinet.models.filecabinet.controllers.index');
 
 		if(config('filecabinets.enabled'))
 			$relations['dossiers'] = config('filecabinet.models.dossier.controllers.index');
@@ -60,29 +63,16 @@ class ClientRelationshipsManager Extends RelationshipsManager
 		if(config('products.sellables.enabled'))
 			$relations['projects'] = config('products.models.project.controllers.index');
 
-		if(config('products.sellables.enabled'))
-			$relations['supplier'] = config('products.models.supplier.controllers.show');
-
+//		if(config('products.sellables.enabled'))
+//			$relations['supplier'] = config('products.models.supplier.controllers.show');
+//
 		if(app('clients')->hasDestinations())
 			$relations['destinations'] = config('clients.models.destination.controllers.index');
 
 		if(app('clients')->hasReferents())
 			$relations['referents'] = config('clients.models.referent.controller');
-		try
-		{
-			app('products');
 
-
-
-			$relations['notes'] = CrudNoteController::class;
-
-		}
-		catch(\Exception $e)
-		{
-			
-		}
-
-
+		$relations['notes'] = CrudNoteController::class;
 
 		return [
 			'show' => [

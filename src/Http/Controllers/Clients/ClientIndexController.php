@@ -5,6 +5,8 @@ namespace IlBronza\Clients\Http\Controllers\Clients;
 use IlBronza\CRUD\Traits\CRUDIndexTrait;
 use IlBronza\CRUD\Traits\CRUDPlainIndexTrait;
 
+use function config;
+
 class ClientIndexController extends ClientCRUD
 {
 	use CRUDPlainIndexTrait;
@@ -14,6 +16,7 @@ class ClientIndexController extends ClientCRUD
 
 	public function getIndexFieldsArray()
 	{
+		//ClientIndexFieldsGroupParametersFile
 		return config('clients.models.client.fieldsGroupsFiles.index')::getFieldsGroup();
 	}
 
@@ -29,8 +32,8 @@ class ClientIndexController extends ClientCRUD
 
 		$query = $this->getModelClass()::with([
 			'categories',
-			'destinations',
-			'referents'
+			'defaultDestination.address',
+			'categories'
 		]);
 
 		return $query->get();

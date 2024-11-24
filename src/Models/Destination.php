@@ -111,6 +111,42 @@ class Destination extends BaseModel
 		return $this->hasOne(Referent::getProjectClassName())->where('type', config('clients.referents.default_type'));
 	}
 
+	public function getStreetAddress() : ? string
+	{
+		if(! $this->getStreet())
+			return null;
+
+		if(! $this->getNumber())
+			return $this->getStreet();
+
+		return "{$this->getStreet()}, {$this->getNumber()}";
+	}
+
+	public function getStreet() : ? string
+	{
+		return $this->street;
+	}
+
+	public function getProvince() : ? string
+	{
+		return $this->province;
+	}
+
+	public function getState() : ? string
+	{
+		return $this->state;
+	}
+
+	public function getCity() : ? string
+	{
+		return $this->city;
+	}
+
+	public function getNumber() : ? string
+	{
+		return $this->number;
+	}
+
 	public function getDescriptionString($separator = ' - ') : string
 	{
 		return "{$this->street}, {$this->number} - {$this->town} ({$this->city}) - {$this->zone}";

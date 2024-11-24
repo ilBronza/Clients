@@ -5,6 +5,7 @@ namespace IlBronza\Clients\Models;
 use IlBronza\Buttons\Button;
 use IlBronza\Category\Traits\InteractsWithCategoryTrait;
 use IlBronza\Clients\Models\Traits\Client\ClientRelationsTrait;
+use IlBronza\Clients\Models\Traits\InteractsWithDestinationTrait;
 use IlBronza\Contacts\Models\Traits\InteractsWithContact;
 use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Traits\CRUDSluggableTrait;
@@ -20,6 +21,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 use function config;
+use function PHPUnit\Framework\isNull;
 
 class Client extends BaseModel implements SupplierInterface, HasMedia
 {
@@ -29,6 +31,7 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 	protected $keyType = 'string';
 
 	use InteractsWithContact;
+	use InteractsWithDestinationTrait;
 	use InteractsWithPaymenttypes;
 	use PackagedModelsTrait;
 	use InteractsWithNotesTrait;
@@ -120,30 +123,6 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 		// Log::error('cachare questo e verificare in caso di modifica cliente se decachato');
 
 		return $this->destinations()->with($relations)->get();
-	}
-
-	public function defaultDestination()
-	{
-		return $this->hasOne(
-			Destination::getProjectClassName()
-		)->whereHas('destinationtypeDestinations', function ($query)
-		{
-			$type = Destinationtype::getDefault();
-
-			$query->where('type_slug', $type->getKey());
-		});
-	}
-
-	public function legalDestination()
-	{
-		return $this->hasOne(
-			Destination::getProjectClassName()
-		)->whereHas('destinationtypeDestinations', function ($query)
-		{
-			$type = Destinationtype::getLegal();
-
-			$query->where('type_slug', $type->getKey());
-		});
 	}
 
 	public function getLegalDestination() : ?Destination
@@ -259,8 +238,8 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 
 	public function getVatAttribute($value)
 	{
-		if(! $value)
-			return $value;
+		if(is_null($value))
+			return null;
 
 		return str_pad($value, 11, '0', STR_PAD_LEFT);
 	}

@@ -14,6 +14,7 @@ class DestinationEditUpdateController extends DestinationCRUD
 
     public function getGenericParametersFile() : ? string
     {
+        //DestinationCreateStoreFieldsetsParameters
         return config('clients.models.destination.parametersFiles.create');
     }
 

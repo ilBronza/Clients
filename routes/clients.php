@@ -26,6 +26,8 @@ Route::group([
 
 		Route::resource('clients', Clients::getController('client'));
 
+		Route::get('clients', [Clients::getController('client', 'index'), 'index'])->name('clients.index');
+
 		Route::get('clients/create', [Clients::getController('client', 'create'), 'create'])->name('clients.create');
 		Route::post('clients', [Clients::getController('client', 'store'), 'store'])->name('clients.store');
 		Route::get('clients/{client}', [Clients::getController('client', 'show'), 'show'])->name('clients.show');

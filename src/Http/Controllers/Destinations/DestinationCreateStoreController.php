@@ -8,6 +8,10 @@ use IlBronza\CRUD\Traits\CRUDShowTrait;
 use IlBronza\Clients\Models\Client;
 use IlBronza\Ukn\Facades\Ukn;
 
+use function __;
+use function config;
+use function redirect;
+
 class DestinationCreateStoreController extends DestinationCRUD
 {
 	use CRUDCreateStoreTrait;
@@ -16,7 +20,7 @@ class DestinationCreateStoreController extends DestinationCRUD
 
 	public $returnBack = true;
 
-	public $allowedMethods = ['create', 'store', 'createFromClient', 'createFromQuotation'];
+	public $allowedMethods = ['create', 'store', 'createFromClient', 'createFromQuotation', 'createFromOrder'];
 
 	public function getGenericParametersFile() : ?string
 	{
@@ -58,6 +62,28 @@ class DestinationCreateStoreController extends DestinationCRUD
 
 		$quotation->destination_id = $destination->getKey();
 		$quotation->save();
+
+		Ukn::s(__('clients::destinations.createdForClient', ['client' => $client->getName()]));
+
+		return redirect()->to($destination->getEditUrl());
+	}
+
+	public function createFromOrder(int|string $order)
+	{
+		$orderClass = config('products.models.order.class');
+
+		$order = $orderClass::find($order);
+
+		$client = $order->client;
+
+		$destination = $this->getModelClass()::make();
+		$destination->client_id = $client->getKey();
+		$destination->venue = true;
+		$destination->name = 'New Venue for ' . $order->getName();
+		$destination->save();
+
+		$order->destination_id = $destination->getKey();
+		$order->save();
 
 		Ukn::s(__('clients::destinations.createdForClient', ['client' => $client->getName()]));
 
