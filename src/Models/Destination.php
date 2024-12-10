@@ -60,15 +60,22 @@ class Destination extends BaseModel
 		return $this->belongsTo(Address::getProjectClassName());
 	}
 
-	public function getAddressFullString() : ? string
+	public function getAddressModelClassName() : string
+	{
+		return Address::class;
+	}
+
+	public function getAddressFullString() : ?string
 	{
 		return $this->getAddress()?->getFullString();
 	}
 
 	public function provideAddressModelForExtraFields()
 	{
-		if (! $this->address)
-			$this->setRelation('address', $this->createDirectAddress());
+		if (($this->relationLoaded('address')) && ($this->address))
+			return $this->address;
+
+		$this->setRelation('address', $this->createDirectAddress());
 
 		return $this->address;
 	}
@@ -82,11 +89,6 @@ class Destination extends BaseModel
 		static::query()->where('id', $this->getKey())->update(['address_id' => $this->address_id]);
 
 		return $address;
-	}
-
-	public function getAddressModelClassName() : string
-	{
-		return Address::class;
 	}
 
 	public function client()
@@ -111,38 +113,38 @@ class Destination extends BaseModel
 		return $this->hasOne(Referent::getProjectClassName())->where('type', config('clients.referents.default_type'));
 	}
 
-	public function getStreetAddress() : ? string
+	public function getStreetAddress() : ?string
 	{
-		if(! $this->getStreet())
+		if (! $this->getStreet())
 			return null;
 
-		if(! $this->getNumber())
+		if (! $this->getNumber())
 			return $this->getStreet();
 
 		return "{$this->getStreet()}, {$this->getNumber()}";
 	}
 
-	public function getStreet() : ? string
+	public function getStreet() : ?string
 	{
 		return $this->street;
 	}
 
-	public function getProvince() : ? string
+	public function getProvince() : ?string
 	{
 		return $this->province;
 	}
 
-	public function getState() : ? string
+	public function getState() : ?string
 	{
 		return $this->state;
 	}
 
-	public function getCity() : ? string
+	public function getCity() : ?string
 	{
 		return $this->city;
 	}
 
-	public function getNumber() : ? string
+	public function getNumber() : ?string
 	{
 		return $this->number;
 	}
@@ -232,8 +234,7 @@ class Destination extends BaseModel
 	public function types()
 	{
 		return $this->belongsToMany(
-			Destinationtype::getProjectClassName(),
-			DestinationtypeDestination::make()->getTable(),
+			Destinationtype::getProjectClassName(), DestinationtypeDestination::make()->getTable(),
 		);
 	}
 
