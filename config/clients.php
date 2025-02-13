@@ -1,5 +1,7 @@
 <?php
 
+use IlBronza\Clients\Http\Controllers\Clienthashes\CrudClienthashCreateController;
+use IlBronza\Clients\Http\Controllers\Clients\ClientByOperatorController;
 use IlBronza\Clients\Http\Controllers\Clients\ClientCreateStoreController;
 use IlBronza\Clients\Http\Controllers\Clients\ClientEditUpdateController;
 use IlBronza\Clients\Http\Controllers\Clients\ClientIndexController;
@@ -16,11 +18,13 @@ use IlBronza\Clients\Http\Controllers\Destinations\DestinationEditUpdateControll
 use IlBronza\Clients\Http\Controllers\Destinations\DestinationIndexController;
 use IlBronza\Clients\Http\Controllers\Destinations\DestinationShowController;
 use IlBronza\Clients\Http\Controllers\Referents\CrudReferenttypeController;
+use IlBronza\Clients\Http\Parameters\Datatables\ClientIndexFieldsGroupParametersFile;
 use IlBronza\Clients\Http\Parameters\Datatables\ClientRelatedFieldsGroupParametersFile;
 use IlBronza\Clients\Http\Parameters\Datatables\DestinationFieldsGroupParametersFile;
 use IlBronza\Clients\Http\Parameters\Fieldsets\ClientCreateFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\ClientEditFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\ClientShowFieldsetsParameters;
+use IlBronza\Clients\Http\Parameters\Fieldsets\DestinationCreateStoreFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\RelationshipsManagers\ClientRelationshipsManager;
 use IlBronza\Clients\Models\Client;
 use IlBronza\Clients\Models\Clienthash;
@@ -31,8 +35,12 @@ use IlBronza\Clients\Models\DestinationtypeDestination;
 use IlBronza\Clients\Models\Referent;
 use IlBronza\Clients\Models\Referenttype;
 use IlBronza\Clients\Models\ReferenttypeReferent;
+use IlBronza\Clients\Providers\Helpers\ClientHashHelper;
 
 return [
+	'userArea' => [
+		'enabled' => false,
+	],
 	'privateArea' => [
 		'enabled' => false
 	],
@@ -68,26 +76,36 @@ return [
 				// 'teaser' => ProductShowFieldsetsParameters::class,
 			],
 			'fieldsGroupsFiles' => [
+				'index' => ClientIndexFieldsGroupParametersFile::class,
 				'related' => ClientRelatedFieldsGroupParametersFile::class
 			],
 			'controllers' => [
 				'index' => ClientIndexController::class,
+				'byOperator' => ClientByOperatorController::class,
 				'create' => ClientCreateStoreController::class,
 				'store' => ClientCreateStoreController::class,
 				'show' => ClientShowController::class,
 				'edit' => ClientEditUpdateController::class,
+				'update' => ClientEditUpdateController::class,
 				'logo' => ClientLogoController::class,
 			],
 			'relationshipsManagerClasses' => [
 				'show' => ClientRelationshipsManager::class
 			],
+			//TODO ELIMINARE
 			'controller' => CrudClientController::class,
 		],
 
 		'clienthash' => [
 			'class' => Clienthash::class,
 			'table' => 'clients__hashes',
-			'controller' => CrudClienthashController::class
+			'controller' => CrudClienthashController::class,
+			'helpers' => [
+				'creator' => ClientHashHelper::class
+			],
+			'controllers' => [
+				'create' => CrudClienthashCreateController::class,
+			]
 		],
 
 		'destinatable' => [

@@ -9,19 +9,21 @@ class ClientEditFieldsetsParameters extends FieldsetParametersFile
     public function _getFieldsetsParameters() : array
     {
         return [
-			'logo' => [
-				'showLegend' => false,
-				'fields' => [],
-				'view' => [
-					'name' => 'crud::utilities.logo.logo',
-					'parameters' => [
-						'logoModelInstance' => $this->getModel()
-					]
-				],
-				'width' => ['medium@m']
-			],
+//			'logo' => [
+//				'showLegend' => false,
+//				'fields' => [],
+//				'view' => [
+//					'name' => 'crud::utilities.logo.logo',
+//					'parameters' => [
+//						'logoModelInstance' => $this->getModel()
+//					]
+//				],
+//				'width' => ['medium@m']
+//			],
             'base' => [
+	            'translationPrefix' => 'clients::fields',
                 'fields' => [
+					'company_site_slug' => ['text' => 'string|nullable|max:8'],
                     'name' => ['text' => 'string|nullable|max:255'],
                     'slug' => [
                         'type' => 'text',
@@ -30,7 +32,9 @@ class ClientEditFieldsetsParameters extends FieldsetParametersFile
                     ],
                     'fiscal_name' => ['text' => 'string|nullable|max:255'],
                     'fiscal_code' => ['text' => 'string|nullable|max:255'],
-                    'vat' => ['text' => 'string|nullable|max:255'],
+	                'vat' => ['text' => 'string|nullable|max:255'],
+	                'tmp_cciia' => ['text' => 'string|nullable|max:255'],
+	                'tmp_eu' => ['boolean' => 'bool|required'],
                     'categories' => [
                         'type' => 'select',
                         'multiple' => true,
@@ -41,8 +45,21 @@ class ClientEditFieldsetsParameters extends FieldsetParametersFile
                 ],
                 'width' => ['large@m']
             ],
-			'contacts' => [
-				'showLegend' => false,
+	        'address' => [
+		        'translationPrefix' => 'addresses::fields',
+		        'fields' => [
+			        'street' => ['text' => 'string|nullable|max:255'],
+			        'number' => ['text' => 'string|nullable|max:255'],
+			        'city' => ['text' => 'string|nullable|max:255'],
+			        'zip' => ['text' => 'string|nullable|max:255'],
+			        'province' => ['text' => 'string|nullable|max:255'],
+			        'town' => ['text' => 'string|nullable|max:255'],
+			        'region' => ['text' => 'string|nullable|max:255'],
+			        'state' => ['text' => 'string|nullable|max:255'],
+		        ],
+		        'width' => ['medium']
+	        ],
+	        'contacts' => [
 				'fields' => [],
 				'view' => [
 					'name' => 'contacts::contacts._fetcherModelContacts',
@@ -52,19 +69,33 @@ class ClientEditFieldsetsParameters extends FieldsetParametersFile
 				],
 				'width' => ['medium']
 			],
-			'documents' => [
-				'fields' => [],
-				'view' => [
-					'name' => 'filecabinet::fetchers._modelDossiersByCategory',
-					'parameters' => [
-						'categorySlug' => 'documenti-aziendali',
-						'model' => $this->getModel()
-					]
-				],
-				'width' => ['large']
-				//				'fields' => $documentsFields,
-				//				'width' => ['large']
-			],
+////	        'documents' => [
+////		        'fields' => [],
+////		        'view' => [
+////			        'name' => 'filecabinet::fetchers._modelDossiersByCategory',
+////			        'parameters' => [
+////				        'categorySlug' => 'documenti-aziendali',
+////				        'model' => $this->getModel()
+////			        ]
+////		        ],
+////		        'width' => ['large']
+////		        //				'fields' => $documentsFields,
+////		        //				'width' => ['large']
+////	        ],
+	        'bank' => [
+		        'showLegend' => false,
+		        'fields' => [],
+		        'view' => [
+			        'name' => 'filecabinet::fetchers._modelDossierByForm',
+			        'parameters' => [
+				        'formSlug' => 'bank-account',
+				        'model' => $this->getModel()
+			        ]
+		        ],
+		        'width' => ['large']
+		        //				'fields' => $documentsFields,
+		        //				'width' => ['large']
+	        ],
 			'notes' => [
 				'fields' => [],
 				'view' => [

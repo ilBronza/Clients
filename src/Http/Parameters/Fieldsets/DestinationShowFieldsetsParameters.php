@@ -9,7 +9,7 @@ class DestinationShowFieldsetsParameters extends FieldsetParametersFile
     public function _getFieldsetsParameters() : array
     {
         return [
-            'default' => [
+            'general' => [
                 'translationPrefix' => 'clients::fields',
                 'fields' => [
                     'client_id' => [

@@ -44,6 +44,7 @@ class Destination extends BaseModel
 		'zip' => ExtraField::class . ':address',
 		'town' => ExtraField::class . ':address',
 		'city' => ExtraField::class . ':address',
+		'belfiore' => ExtraField::class . ':address',
 		'province' => ExtraField::class . ':address',
 		'region' => ExtraField::class . ':address',
 		'state' => ExtraField::class . ':address',

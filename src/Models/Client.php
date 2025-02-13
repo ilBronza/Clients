@@ -8,6 +8,7 @@ use IlBronza\Clients\Models\Traits\Client\ClientRelationsTrait;
 use IlBronza\Clients\Models\Traits\InteractsWithDestinationTrait;
 use IlBronza\Contacts\Models\Traits\InteractsWithContact;
 use IlBronza\CRUD\Models\BaseModel;
+use IlBronza\CRUD\Models\Casts\ExtraField;
 use IlBronza\CRUD\Traits\CRUDSluggableTrait;
 use IlBronza\CRUD\Traits\IlBronzaPackages\CRUDLogoTrait;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
@@ -21,7 +22,6 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 use function config;
-use function PHPUnit\Framework\isNull;
 
 class Client extends BaseModel implements SupplierInterface, HasMedia
 {
@@ -30,13 +30,27 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 	public ?string $translationFolderPrefix = 'clients';
 	protected $keyType = 'string';
 
+	protected $casts = [
+		'company_site_slug' => ExtraField::class,
+
+		'street' => ExtraField::class . ':address',
+		'number' => ExtraField::class . ':address',
+		'zip' => ExtraField::class . ':address',
+		'town' => ExtraField::class . ':address',
+		'city' => ExtraField::class . ':address',
+		'province' => ExtraField::class . ':address',
+		'region' => ExtraField::class . ':address',
+		'state' => ExtraField::class . ':address',
+	];
+
 	use InteractsWithContact;
 	use InteractsWithDestinationTrait;
 	use InteractsWithPaymenttypes;
 	use PackagedModelsTrait;
 	use InteractsWithNotesTrait;
 	use InteractsWithSupplierTrait;
-//	use ClientsPackageBaseModelTrait;
+
+	//	use ClientsPackageBaseModelTrait;
 	use CRUDUseUuidTrait;
 	use CRUDSluggableTrait;
 	use CRUDLogoTrait;
@@ -66,6 +80,11 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 		return $this->getDefaultDestination();
 	}
 
+	public function destinations()
+	{
+		return $this->hasMany(Destination::getProjectClassName());
+	}
+
 	public function getDefaultDestination() : ?Destination
 	{
 		if ($this->defaultDestination)
@@ -78,41 +97,6 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 			return $this->createDefaultDestination();
 
 		return $this->assignRandomDestinationAsDefault();
-	}
-
-	public function destinations()
-	{
-		return $this->hasMany(Destination::getProjectClassName());
-	}
-
-	private function createDefaultDestination()
-	{
-		$destination = $this->createDestination();
-
-		$destination->setAsDefault();
-
-		return $destination;
-	}
-
-	public function createDestination() : Destination
-	{
-		$destination = $this->destinations()->make([
-			'name' => $this->getName()
-		]);
-
-		$destination->save();
-
-		return $destination;
-	}
-
-	private function assignRandomDestinationAsDefault() : Destination
-	{
-		$destination = $this->destinations->first();
-		$destination->setAsDefault();
-
-		Ukn::w(trans('clients::destinations.setAsDefaultBySystem', ['name' => $destination->getName()]));
-
-		return $destination;
 	}
 
 	public function getDestinations(array $relations = [])
@@ -238,7 +222,7 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 
 	public function getVatAttribute($value)
 	{
-		if(is_null($value))
+		if (is_null($value))
 			return null;
 
 		return str_pad($value, 11, '0', STR_PAD_LEFT);
@@ -247,5 +231,15 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 	public function setVatAttribute($value)
 	{
 		$this->attributes['vat'] = str_pad($value, 11, '0', STR_PAD_LEFT);
+	}
+
+	private function assignRandomDestinationAsDefault() : Destination
+	{
+		$destination = $this->destinations->first();
+		$destination->setAsDefault();
+
+		Ukn::w(trans('clients::destinations.setAsDefaultBySystem', ['name' => $destination->getName()]));
+
+		return $destination;
 	}
 }

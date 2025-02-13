@@ -9,25 +9,24 @@ class ClientIndexFieldsGroupParametersFile extends FieldsGroupParametersFile
 	static function getFieldsGroup() : array
 	{
 		return [
-            'translationPrefix' => 'clients::fields',
-            'fields' => 
-            [
-	            'mySelfPrimary' => 'primary',
-	            'mySelfEdit' => 'links.edit',
-	            'mySelfSee' => 'links.see',
-	            'name' => 'flat',
-	            'categories' => 'relations.belongsToMany',
-	            'fiscal_name' => 'flat',
-	            'fiscal_code' => 'flat',
-	            'vat' => 'flat',
-	            'default_street_address' => 'flat',
-	            'default_city' => 'flat',
-	            'default_province' => 'flat',
-	            'default_state' => 'flat',
-//	            'destinations' => 'relations.hasMany',
-	            'referents' => 'relations.hasMany',
-	            'mySelfDelete' => 'links.delete'
-            ]
-        ];
+			'translationPrefix' => 'clients::fields',
+			'fields' => [
+				'mySelfPrimary' => 'primary',
+				'mySelfEdit' => 'links.edit',
+				'mySelfSee' => 'links.see',
+				'name' => 'flat',
+				'categories' => 'relations.belongsToMany',
+				'fiscal_name' => 'flat',
+				'fiscal_code' => 'flat',
+				'vat' => 'flat',
+				'address.street' => 'flat',
+				'address.city' => 'flat',
+				'address.province' => 'flat',
+				'address.state' => 'flat',
+				//	            'destinations' => 'relations.hasMany',
+				'referents' => 'relations.hasMany',
+				'mySelfDelete' => 'links.delete'
+			]
+		];
 	}
 }

@@ -42,7 +42,12 @@ trait ClientRelationsTrait
 
 	public function orders()
 	{
-		return $this->hasMany(Order::getProjectClassName());
+		return $this->hasMany(Order::gpc());
+	}
+
+	public function quotations()
+	{
+		return $this->hasMany(Quotation::gpc());
 	}
 
 	public function getOrders() : ? Order

@@ -15,7 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([
-	'middleware' => ['web', 'auth', 'role:administrator'],
+	'middleware' => [
+		'web',
+		'auth',
+		'role:administrator'
+	],
 	'prefix' => 'clients-management',
 	'as' => config('clients.routePrefix'),
 	'routeTranslationPrefix' => 'clients::routes.',
@@ -28,11 +32,21 @@ Route::group([
 
 		Route::get('clients', [Clients::getController('client', 'index'), 'index'])->name('clients.index');
 
+		//ClientByOperatorIndexController
+		Route::get('clients-by-operator/{operator}', [Clients::getController('client', 'byOperator'), 'index'])->name('clients.byOperator')->withoutMiddleware('role:administrator')->middleware('auth', 'role:areaManager|administrator');
+
 		Route::get('clients/create', [Clients::getController('client', 'create'), 'create'])->name('clients.create');
 		Route::post('clients', [Clients::getController('client', 'store'), 'store'])->name('clients.store');
-		Route::get('clients/{client}', [Clients::getController('client', 'show'), 'show'])->name('clients.show');
+		Route::get('clients/{client}', [Clients::getController('client', 'show'), 'show'])->name('clients.show')->withoutMiddleware('role:administrator')->middleware('auth', 'role:areaManager|administrator');
 
+		//ClientEditUpdateController
 		Route::get('clients/{client}/edit', [Clients::getController('client', 'edit'), 'edit'])->name('clients.edit');
+
+//		Route::get('clients/{client}/edit', function($client) {
+//			dd('asd');
+//		})->name('clients.edit');
+		
+		Route::put('clients/{client}', [Clients::getController('client', 'update'), 'update'])->name('clients.update');
 
 		Route::get(
 			'clients/{client}/destinations/create',
@@ -50,13 +64,8 @@ Route::group([
 			]
 		)->name('clients.referents.create');
 
-		Route::get(
-			'clients/{client}/clienthashes/create',
-			[
-				Clients::getController('clienthash'),
-				'createFromClient'
-			]
-		)->name('clients.clienthashes.create');
+		//CrudClienthashController
+		Route::post('clients/clienthashes/send', [Clients::getController('clienthash', 'create'), 'send'])->name('clients.clienthashes.send');
 
 
 		Route::resource('clienthashes', Clients::getController('clienthash'));

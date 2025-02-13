@@ -22,6 +22,7 @@ return [
 		'clienthashes.create' => 'Crea hash',
 		'destinations.create' => 'Crea destino',
 		'referents.create' => 'Crea referente',
+		'byOperator' => 'Aziende per operatore'
 	],
 
 	'clientsmanagerdestinations' => [
@@ -62,5 +63,11 @@ return [
 		'update' => 'Modifica tipo referente',
 		'destroy' => 'Elimina tipo referente',
 		'edit' => 'Modifica tipo referente',
+	],
+	'suppliers' => [
+		'index' => 'Lista fornitori',
+	],
+	'ibProductsclients' => [
+		'index' => 'Aziende'
 	]
 ];

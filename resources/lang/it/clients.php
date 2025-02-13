@@ -23,4 +23,9 @@ return [
 	'type' => 'Tipologia',
 	'suppliers' => 'Fornitori',
 	'client_id' => 'Id azienda',
+	'cardTitleShow' => 'Mostra azienda',
+	'clients' => 'Clienti',
+	'client' => 'Cliente',
+	'cardTitleEdit' => 'Modifica',
+	'allCompanies' => 'Tutte le aziende'
 ];

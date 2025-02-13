@@ -15,11 +15,8 @@ return [
 	'zone' => 'Zona',
 	'fiscal_name' => 'Ragione sociale',
 	'fiscal_code' => 'Codice fiscale',
-
-	'default_street_address' => 'Via/piazza',
-	'default_city' => 'Città',
-	'default_province' => 'Prov',
-	'default_state' => 'Nazione',
+	'rea' => 'REA',
+	'istat_code' => 'Istat',
 
 	'vat' => 'P.iva',
 	'referents' => 'Referenti',
@@ -28,4 +25,14 @@ return [
 	'base' => 'Dati base',
 	'type' => 'Tipologia',
 	'client_id' => 'Id azienda',
+
+	'address.street' => 'Via/Piazza',
+	'address.city' => 'Città',
+	'address.province' => 'Provincia',
+	'address.state' => 'Stato',
+
+	'rag_soc1' => 'Ragione sociale',
+	'rag_soc2' => 'Ragione sociale 2nd',
+
+	'mySelfContacts.contacts' => 'Contatti'
 ];
