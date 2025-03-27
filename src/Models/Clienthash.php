@@ -15,9 +15,9 @@ class Clienthash extends BaseModel
 	public ?string $translationFolderPrefix = 'clients';
 	protected $keyType = 'string';
 
-	protected $dates = [
-		'valid_to',
-		'used_at'
+	protected $casts = [
+		'valid_to' => 'datetime',
+		'used_at' => 'datetime'
 	];
 
 	use ClientsPackageBaseModelTrait;

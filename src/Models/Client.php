@@ -4,6 +4,7 @@ namespace IlBronza\Clients\Models;
 
 use IlBronza\Buttons\Button;
 use IlBronza\Category\Traits\InteractsWithCategoryTrait;
+use IlBronza\Clients\Models\Scopes\ClientAreaManagerScope;
 use IlBronza\Clients\Models\Traits\Client\ClientRelationsTrait;
 use IlBronza\Clients\Models\Traits\InteractsWithDestinationTrait;
 use IlBronza\Contacts\Models\Traits\InteractsWithContact;
@@ -18,11 +19,11 @@ use IlBronza\Payments\Models\Traits\InteractsWithPaymenttypes;
 use IlBronza\Products\Models\Interfaces\SupplierInterface;
 use IlBronza\Products\Models\Traits\Sellable\InteractsWithSupplierTrait;
 use IlBronza\Ukn\Facades\Ukn;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-use function config;
-
+#[ScopedBy([ClientAreaManagerScope::class])]
 class Client extends BaseModel implements SupplierInterface, HasMedia
 {
 	static $packageConfigPrefix = 'clients';

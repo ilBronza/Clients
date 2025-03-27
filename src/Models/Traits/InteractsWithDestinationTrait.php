@@ -6,6 +6,7 @@ use IlBronza\Addresses\Models\Address;
 use IlBronza\Clients\Models\Destination;
 use IlBronza\Clients\Models\Destinationtype;
 
+use function d;
 use function dd;
 
 trait InteractsWithDestinationTrait

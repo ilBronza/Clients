@@ -13,6 +13,8 @@ class Type extends PackagedBaseModel
 	protected $keyType = 'string';
 	protected $primaryKey = 'slug';
 
+	protected $fillable = ['name'];
+
 	use CRUDSluggableTrait;
 
 	public function getForeignKey()
@@ -37,7 +39,10 @@ class Type extends PackagedBaseModel
 			3600,
 			function()
 			{
-				return static::where('name', static::getDefaultName())->first();
+				if ($default = static::where('name', static::getDefaultName())->first())
+					return $default;
+
+				return static::create(['name' => static::getDefaultName()]);
 			}
 		);
 	}

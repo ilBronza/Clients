@@ -33,7 +33,7 @@ Route::group([
 		Route::get('clients', [Clients::getController('client', 'index'), 'index'])->name('clients.index');
 
 		//ClientByOperatorIndexController
-		Route::get('clients-by-operator/{operator}', [Clients::getController('client', 'byOperator'), 'index'])->name('clients.byOperator')->withoutMiddleware('role:administrator')->middleware('auth', 'role:areaManager|administrator');
+		Route::get('clients-by-operator/{operator?}', [Clients::getController('client', 'byOperator'), 'index'])->name('clients.byOperator')->withoutMiddleware('role:administrator')->middleware('auth', 'role:areaManager|administrator');
 
 		Route::get('clients/create', [Clients::getController('client', 'create'), 'create'])->name('clients.create');
 		Route::post('clients', [Clients::getController('client', 'store'), 'store'])->name('clients.store');

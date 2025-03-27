@@ -1,6 +1,18 @@
 <?php
 
 return [
+	'clients' => [
+		'index' => 'Lista clienti',
+		'store' => 'Crea cliente',
+		'create' => 'Crea cliente',
+		'show' => 'Mostra cliente',
+		'update' => 'Modifica cliente',
+		'destroy' => 'Elimina cliente',
+		'edit' => 'Modifica cliente',
+		'byOperator' => 'Clienti per operatore'
+	],
+
+
 	'clientsmanagerclienthashes' => [
 		'index' => 'Hash di accesso',
 		'store' => 'Crea Hash',

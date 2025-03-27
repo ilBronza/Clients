@@ -12,6 +12,8 @@ use IlBronza\CRUD\Traits\Model\CRUDModelExtraFieldsTrait;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
 use IlBronza\CRUD\Traits\Model\PackagedModelsTrait;
 
+use function implode;
+
 class Destination extends BaseModel
 {
 	static $packageConfigPrefix = 'clients';
@@ -74,6 +76,10 @@ class Destination extends BaseModel
 	public function provideAddressModelForExtraFields()
 	{
 		if (($this->relationLoaded('address')) && ($this->address))
+			return $this->address;
+
+
+		if($this->address)
 			return $this->address;
 
 		$this->setRelation('address', $this->createDirectAddress());
@@ -152,7 +158,40 @@ class Destination extends BaseModel
 
 	public function getDescriptionString($separator = ' - ') : string
 	{
-		return "{$this->street}, {$this->number} - {$this->town} ({$this->city}) - {$this->zone}";
+		$streetPieces = [];
+
+		if($this->street)
+			$streetPieces[] = $this->street;
+
+		if($this->number)
+			$streetPieces[] = $this->number;
+
+		$street = implode(" ", $streetPieces);
+
+		$citiesPieces = [];
+
+		if($this->town)
+			$citiesPieces[] = $this->town;
+
+		if($this->city)
+			$citiesPieces[] = $this->city;
+
+		$cities = implode(' ', $citiesPieces);
+
+		$pieces = [];
+
+		if($street)
+			$pieces[] = $street;
+
+		if($cities)
+			$pieces[] = $cities;
+
+		if($this->zone)
+			$pieces[] = $this->zone;
+
+		return implode(" - ", $pieces);
+
+//		return "{$this->street}, {$this->number} - {$this->town} ({$this->city}) - {$this->zone}";
 	}
 
 	public function getShortDescriptionAttribute()

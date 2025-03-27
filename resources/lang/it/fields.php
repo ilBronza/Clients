@@ -34,5 +34,10 @@ return [
 	'rag_soc1' => 'Ragione sociale',
 	'rag_soc2' => 'Ragione sociale 2nd',
 
+	'pallettype_id' => 'Pallet',
+	'defaultDestination.address.street' => 'Via',
+	'defaultDestination.address.city' => 'Città',
+	'defaultDestination.address.province' => 'Provincia',
+
 	'mySelfContacts.contacts' => 'Contatti'
 ];
