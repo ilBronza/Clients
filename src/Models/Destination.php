@@ -78,7 +78,6 @@ class Destination extends BaseModel
 		if (($this->relationLoaded('address')) && ($this->address))
 			return $this->address;
 
-
 		if($this->address)
 			return $this->address;
 
