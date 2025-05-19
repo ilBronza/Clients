@@ -30,6 +30,7 @@ return [
 	'address.city' => 'Città',
 	'address.province' => 'Provincia',
 	'address.state' => 'Stato',
+	'region' => 'Regione',
 
 	'rag_soc1' => 'Ragione sociale',
 	'rag_soc2' => 'Ragione sociale 2nd',
