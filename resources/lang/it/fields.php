@@ -40,5 +40,6 @@ return [
 	'defaultDestination.address.city' => 'Città',
 	'defaultDestination.address.province' => 'Provincia',
 
-	'mySelfContacts.contacts' => 'Contatti'
+	'mySelfContacts.contacts' => 'Contatti',
+	'mySelfWorkersCount' => 'Lavoratori'
 ];

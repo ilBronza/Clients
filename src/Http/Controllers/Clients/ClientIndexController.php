@@ -29,15 +29,15 @@ class ClientIndexController extends ClientCRUD
 		return config('clients.models.client.fieldsGroupsFiles.related')::getFieldsGroup();
 	}
 
-	public function addPostFieldsToTable()
-	{
-		if(config('clients.userArea.enabled', false))
-			$this->getTable()->createPostButton([
-				'href' => app('clients')->route('clients.clienthashes.send'),
-				'text' => 'clients.sendHash',
-				'icon' => 'right-to-bracket'
-			]);
-	}
+//	public function addPostFieldsToTable()
+//	{
+//		if(config('clients.userArea.enabled', false))
+//			$this->getTable()->createPostButton([
+//				'href' => app('clients')->route('clients.clienthashes.send'),
+//				'text' => 'clients.sendHash',
+//				'icon' => 'right-to-bracket'
+//			]);
+//	}
 
 	public function getIndexElements()
 	{
