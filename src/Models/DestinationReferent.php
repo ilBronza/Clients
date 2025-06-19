@@ -12,6 +12,11 @@ class DestinationReferent extends BaseModel
 
 	use ClientsPackageBaseModelTrait;
 
+	public function getTable()
+	{
+		return 'clients__destination_referent';
+	}
+
 	public function referent()
 	{
 		return $this->hasOne(
