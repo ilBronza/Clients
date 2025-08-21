@@ -4,10 +4,10 @@ namespace IlBronza\Clients\Providers\DatatablesFields\Destination;
 
 use IlBronza\Datatables\DatatablesFields\DatatableFieldFlat;
 
-class DatatableFieldCity extends DatatableFieldFlat
+class DatatableFieldProvince extends DatatableFieldFlat
 {
 	public function transformValue($value)
 	{
-		return $value?->getCity();
+		return $value?->getProvince();
 	}
 }

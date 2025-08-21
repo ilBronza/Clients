@@ -169,11 +169,11 @@ class Destination extends BaseModel
 
 		$citiesPieces = [];
 
-		if($this->town)
-			$citiesPieces[] = $this->town;
+		if($this->getTown())
+			$citiesPieces[] = $this->getTown();
 
-		if($this->city)
-			$citiesPieces[] = $this->city;
+		if($this->getCity())
+			$citiesPieces[] = $this->getCity();
 
 		$cities = implode(' ', $citiesPieces);
 
@@ -200,7 +200,12 @@ class Destination extends BaseModel
 
 	public function getShortDescriptionString($separator = ' - ') : string
 	{
-		return "{$this->town} {$this->city}";
+		return "{$this->getTown()} {$this->getCity()}";
+	}
+
+	public function getTown() : ?string
+	{
+		return $this->town;
 	}
 
 	public function getTypesString() : string
@@ -227,7 +232,7 @@ class Destination extends BaseModel
 
 	public function getFlatDescriptionString()
 	{
-		return "{$this->name} - {$this->street}, {$this->city} ({$this->province})";
+		return "{$this->name} - {$this->street}, {$this->getCity()} ({$this->province})";
 	}
 
 	public function setName(string $name = null, bool $save = false)

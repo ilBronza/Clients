@@ -32,7 +32,7 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 	protected $keyType = 'string';
 
 	protected $casts = [
-		'company_site_slug' => ExtraField::class,
+//		'company_site_slug' => ExtraField::class,
 
 		'street' => ExtraField::class . ':address',
 		'number' => ExtraField::class . ':address',
@@ -242,5 +242,15 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 		Ukn::w(trans('clients::destinations.setAsDefaultBySystem', ['name' => $destination->getName()]));
 
 		return $destination;
+	}
+
+	public function scopeAsClient($query)
+	{
+		return $query->where('is_client', true);
+	}
+
+	public function scopeAsSupplier($query)
+	{
+		return $query->where('is_supplier', true);
 	}
 }

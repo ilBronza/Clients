@@ -25,6 +25,13 @@ return [
 	'base' => 'Dati base',
 	'type' => 'Tipologia',
 	'client_id' => 'Id azienda',
+	'company' => 'Azienda',
+	'supplier' => 'Fornitore',
+	'client' => 'Cliente',
+
+	'is_supplier' => 'Fornitore',
+	'is_client' => 'Cliente',
+
 
 	'address.street' => 'Via/Piazza',
 	'address.city' => 'Città',

@@ -84,7 +84,7 @@ trait InteractsWithDestinationTrait
 			return $this->address;
 
 		if(! $destination = $this->getDefaultDestination())
-			dd('creare la default destination');
+			$destination = $this->createDefaultDestination();
 
 		if($address = $destination->getAddress())
 			return $address;

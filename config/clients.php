@@ -64,6 +64,14 @@ return [
 	// 	'class' => Destination::class
 	// ],
 
+
+	'datatableFieldWidths' => [
+		'client' => [
+			'datatableFieldClient' => '16em',
+			'datatableFieldVat' => '8em'
+		]
+	],
+
 	'models' => [
 		'client' => [
 			'class' => Client::class,
