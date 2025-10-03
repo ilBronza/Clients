@@ -32,7 +32,7 @@ return [
 	'is_supplier' => 'Fornitore',
 	'is_client' => 'Cliente',
 
-
+	'address.street_string' => 'Via/Piazza - civico',
 	'address.street' => 'Via/Piazza',
 	'address.city' => 'Città',
 	'address.province' => 'Provincia',

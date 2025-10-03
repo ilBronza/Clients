@@ -18,7 +18,7 @@ Route::group([
 	'middleware' => [
 		'web',
 		'auth',
-		'role:administrator|clientsManager'
+		'role:administrator|clientsManager|areaManager'
 	],
 	'prefix' => 'clients-management',
 	'as' => config('clients.routePrefix'),
