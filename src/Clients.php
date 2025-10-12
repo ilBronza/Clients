@@ -18,7 +18,7 @@ class Clients implements RoutedObjectInterface
             return;
 
         $button = $menu->provideButton([
-                'text' => 'generals.settings',
+                'text' => 'menu::menu.settings',
                 'name' => 'settings',
                 'icon' => 'gear',
                 'roles' => ['administrator']

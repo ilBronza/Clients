@@ -20,6 +20,8 @@ class ShowClientParameters extends FieldsetParametersFile
                     ],
                     'fiscal_name' => ['text' => 'string|required|max:255'],
                     'fiscal_code' => ['text' => 'string|nullable|max:255'],
+                    'is_client' => ['booleanCheckbox' => 'boolean|nullable'],
+                    'is_supplier' => ['booleanCheckbox' => 'boolean|nullable'],
                 ],
                 'width' => ['1-2@m']
             ]

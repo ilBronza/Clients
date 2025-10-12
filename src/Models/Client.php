@@ -2,18 +2,19 @@
 
 namespace IlBronza\Clients\Models;
 
+use IlBronza\Addresses\Models\Address;
 use IlBronza\Buttons\Button;
-use IlBronza\Category\Traits\InteractsWithCategoryTrait;
-use IlBronza\Clients\Models\Scopes\ClientAreaManagerScope;
-use IlBronza\Clients\Models\Traits\Client\ClientRelationsTrait;
-use IlBronza\Clients\Models\Traits\InteractsWithDestinationTrait;
-use IlBronza\Contacts\Models\Traits\InteractsWithContact;
 use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Models\Casts\ExtraField;
 use IlBronza\CRUD\Traits\CRUDSluggableTrait;
 use IlBronza\CRUD\Traits\IlBronzaPackages\CRUDLogoTrait;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
 use IlBronza\CRUD\Traits\Model\PackagedModelsTrait;
+use IlBronza\Category\Traits\InteractsWithCategoryTrait;
+use IlBronza\Clients\Models\Scopes\ClientAreaManagerScope;
+use IlBronza\Clients\Models\Traits\Client\ClientRelationsTrait;
+use IlBronza\Clients\Models\Traits\InteractsWithDestinationTrait;
+use IlBronza\Contacts\Models\Traits\InteractsWithContact;
 use IlBronza\Notes\Traits\InteractsWithNotesTrait;
 use IlBronza\Payments\Models\Traits\InteractsWithPaymenttypes;
 use IlBronza\Products\Models\Interfaces\SupplierInterface;
@@ -253,4 +254,33 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 	{
 		return $query->where('is_supplier', true);
 	}
+
+	static function getOwnerCompany()
+	{
+		return cache()->remember(
+			'getOwnerCompany', 3600, function ()
+		{
+			if(! config('clients.ownCompanyName'))
+				throw new \Exception('Please compile ownCompanyName on clients config');
+
+			if ($client = static::withoutGlobalScopes([Vnl25Scope::class])->where('name', config('clients.ownCompanyName'))->first())
+				return $client;
+
+			$client = static::make();
+			$client->name = config('clients.ownCompanyName');
+
+			$client->save();
+
+			return $client;
+		}
+		);
+	}
+
+	public function address()
+	{
+		return $this->morphOne(
+			Address::gpc(), 'addressable'
+		)->where('type', 'default');
+	}
+
 }
