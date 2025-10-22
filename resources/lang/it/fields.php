@@ -17,6 +17,17 @@ return [
 	'fiscal_code' => 'Codice fiscale',
 	'rea' => 'REA',
 	'istat_code' => 'Istat',
+	'mySelfSee' => 'Mostra',
+	'street' => 'Indirizzo',
+	'number' => 'Civico',
+	'zip' => 'CAP',
+	'town' => 'Frazione',
+	'city' => 'Comune',
+	'province' => 'Provincia',
+	'state' => 'Stato',
+	'types_string' => 'Tipo Stringa',
+	
+	
 
 	'vat' => 'P.iva',
 	'referents' => 'Referenti',
