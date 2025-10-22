@@ -34,7 +34,21 @@ class Clients implements RoutedObjectInterface
             'name' => 'clients.index',
             'icon' => 'list',
             'text' => 'clients::clients.list',
-            'href' => IbRouter::route($this, 'clients.index')
+            'href' => IbRouter::route($this, 'clients.index'),
+            'children' => [
+                [
+                    'name' => 'clients.clients',
+                    'icon' => 'building',
+                    'text' => 'clients::clients.clients',
+                    'href' => IbRouter::route($this, 'clients.clients.index'),
+                ],
+                [
+                    'name' => 'clients.suppliers',
+                    'icon' => 'industry',
+                    'text' => 'clients::clients.suppliers',
+                    'href' => IbRouter::route($this, 'clients.suppliers.index'),
+                ]
+            ]
         ]);
 
         $destinationsButton = $menu->createButton([

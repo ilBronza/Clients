@@ -32,6 +32,11 @@ Route::group([
 
 		Route::get('clients', [Clients::getController('client', 'index'), 'index'])->name('clients.index');
 
+		Route::get('clients-as-clients', [Clients::getController('client', 'asClientIndex'), 'index'])->name('clients.clients.index');
+
+		Route::get('clients-as-suppliers', [Clients::getController('client', 'asSupplierIndex'), 'index'])->name('clients.suppliers.index');
+
+
 		//ClientByOperatorIndexController
 		Route::get('clients-by-operator/{operator?}', [Clients::getController('client', 'byOperator'), 'index'])->name('clients.byOperator')->withoutMiddleware('role:administrator')->middleware('auth', 'role:clientsManager|areaManager|administrator');
 

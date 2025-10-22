@@ -1,6 +1,8 @@
 <?php
 
 use IlBronza\Clients\Http\Controllers\Clienthashes\CrudClienthashCreateController;
+use IlBronza\Clients\Http\Controllers\Clients\ClientAsClientIndexController;
+use IlBronza\Clients\Http\Controllers\Clients\ClientAsSupplierIndexController;
 use IlBronza\Clients\Http\Controllers\Clients\ClientByOperatorController;
 use IlBronza\Clients\Http\Controllers\Clients\ClientCreateStoreController;
 use IlBronza\Clients\Http\Controllers\Clients\ClientEditUpdateController;
@@ -27,6 +29,8 @@ use IlBronza\Clients\Http\Parameters\Fieldsets\ClientShowFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\DestinationCreateStoreFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\RelationshipsManagers\ClientRelationshipsManager;
 use IlBronza\Clients\Models\Client;
+use IlBronza\Clients\Models\ClientAsClient;
+use IlBronza\Clients\Models\ClientAsSupplier;
 use IlBronza\Clients\Models\Clienthash;
 use IlBronza\Clients\Models\Destination;
 use IlBronza\Clients\Models\DestinationReferent;
@@ -75,6 +79,8 @@ return [
 	'models' => [
 		'client' => [
 			'class' => Client::class,
+			'asClient' => ClientAsClient::class,
+			'asSupplier' => ClientAsSupplier::class,
 			'table' => 'clients__clients',
 			'parametersFiles' => [
 				'create' => ClientCreateFieldsetsParameters::class,
@@ -88,6 +94,8 @@ return [
 				'related' => ClientRelatedFieldsGroupParametersFile::class
 			],
 			'controllers' => [
+				'asClientIndex' => ClientAsClientIndexController::class,
+				'asSupplierIndex' => ClientAsSupplierIndexController::class,
 				'index' => ClientIndexController::class,
 				'byOperator' => ClientByOperatorController::class,
 				'create' => ClientCreateStoreController::class,

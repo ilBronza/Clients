@@ -80,10 +80,10 @@ class ClientRelationshipsManager Extends RelationshipsManager
 //		if(config('operators.enabled', true))
 //			$relations['operators'] = config('operators.models.operator.controllers.index');
 //
-//		if(config('filecabinets.enabled'))
-//			$relations['filecabinets'] = config('filecabinet.models.filecabinet.controllers.index');
+		if(config('clients.filecabinets.enabled'))
+			$relations['filecabinets'] = config('filecabinet.models.filecabinet.controllers.index');
 
-//		if(config('filecabinets.enabled'))
+		if(config('clients.filecabinets.enabled'))
 			$relations['dossiers'] = config('filecabinet.models.dossier.controllers.index');
 
 //		if(config('products.sellables.enabled'))

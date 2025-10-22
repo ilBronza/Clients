@@ -24,9 +24,13 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
+use IlBronza\CRUD\Traits\Model\CRUDModelExtraFieldsTrait;
+
 #[ScopedBy([ClientAreaManagerScope::class])]
 class Client extends BaseModel implements SupplierInterface, HasMedia
 {
+	use CRUDModelExtraFieldsTrait;
+
 	static $packageConfigPrefix = 'clients';
 	static $modelConfigPrefix = 'client';
 	public ?string $translationFolderPrefix = 'clients';
@@ -61,6 +65,31 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 	use InteractsWithMedia;
 
 	use ClientRelationsTrait;
+
+	public function getExtraFieldsClass() : ? string
+	{
+		return null;
+	}
+
+	public function provideAddressModelForExtraFields() : Address
+	{
+		if ($this->relationLoaded('address') && ($this->address))
+			return $this->address;
+
+		if ($address = $this->address()->first())
+		{
+			$this->setRelation('address', $address);
+
+			return $address;
+		}
+
+		$address = Address::gpc()::make();
+		$address->type = 'default';
+
+		$this->address()->save($address);
+
+		return $address;
+	}
 
 	public function getCategoryModel() : string
 	{

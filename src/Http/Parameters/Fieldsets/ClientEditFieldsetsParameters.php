@@ -23,7 +23,7 @@ class ClientEditFieldsetsParameters extends FieldsetParametersFile
             'base' => [
 	            'translationPrefix' => 'clients::fields',
                 'fields' => [
-					'company_site_slug' => ['text' => 'string|nullable|max:8'],
+					// 'company_site_slug' => ['text' => 'string|nullable|max:8'],
                     'name' => ['text' => 'string|nullable|max:255'],
                     'slug' => [
                         'type' => 'text',
@@ -33,8 +33,8 @@ class ClientEditFieldsetsParameters extends FieldsetParametersFile
                     'fiscal_name' => ['text' => 'string|nullable|max:255'],
                     'fiscal_code' => ['text' => 'string|nullable|max:255'],
 	                'vat' => ['text' => 'string|nullable|max:255'],
-	                'tmp_cciia' => ['text' => 'string|nullable|max:255'],
-	                'tmp_eu' => ['boolean' => 'bool|required'],
+	                // 'tmp_cciia' => ['text' => 'string|nullable|max:255'],
+	                // 'tmp_eu' => ['boolean' => 'bool|required'],
                     'categories' => [
                         'type' => 'select',
                         'multiple' => true,
@@ -57,7 +57,7 @@ class ClientEditFieldsetsParameters extends FieldsetParametersFile
 			        'region' => ['text' => 'string|nullable|max:255'],
 			        'state' => ['text' => 'string|nullable|max:255'],
 		        ],
-		        'width' => ['medium']
+		        'width' => ['large']
 	        ],
 	        'contacts' => [
 				'fields' => [],
@@ -67,7 +67,7 @@ class ClientEditFieldsetsParameters extends FieldsetParametersFile
 						'model' => $this->getModel()
 					]
 				],
-				'width' => ['medium']
+				'width' => ['large']
 			],
 ////	        'documents' => [
 ////		        'fields' => [],
