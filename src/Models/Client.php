@@ -36,6 +36,10 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 	public ?string $translationFolderPrefix = 'clients';
 	protected $keyType = 'string';
 
+	static $deletingRelationships = [
+		'address',
+	];
+
 	protected $casts = [
 //		'company_site_slug' => ExtraField::class,
 

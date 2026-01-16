@@ -42,6 +42,22 @@ use IlBronza\Clients\Models\ReferenttypeReferent;
 use IlBronza\Clients\Providers\Helpers\ClientHashHelper;
 
 return [
+
+	'datatableFieldWidths' => [
+		'destination' => [
+			'datatableFieldShort' => '12em',
+			'datatableFieldProvince' => '3em',
+			'datatableFieldClient' => '18em',
+			'datatableFieldVat' => '8em',
+			'datatableFieldCity' => '14em',
+			'datatableFieldZone' => '2em'
+		],
+		'client' => [
+			'datatableFieldVat' => '7em',
+			'datatableFieldClient' => '12em'
+		]
+	],
+
 	'userArea' => [
 		'enabled' => false,
 	],
@@ -68,13 +84,6 @@ return [
 	// 	'class' => Destination::class
 	// ],
 
-
-	'datatableFieldWidths' => [
-		'client' => [
-			'datatableFieldClient' => '16em',
-			'datatableFieldVat' => '8em'
-		]
-	],
 
 	'models' => [
 		'client' => [

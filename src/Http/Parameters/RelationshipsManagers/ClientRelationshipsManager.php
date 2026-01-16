@@ -4,13 +4,12 @@ namespace IlBronza\Clients\Http\Parameters\RelationshipsManagers;
 
 use IlBronza\CRUD\Providers\RelationshipsManager\RelationshipsManager;
 use IlBronza\Notes\Http\Controllers\CrudNoteController;
-
 use IlBronza\Products\Http\Controllers\Providers\FieldsGroups\OrderrowFieldsGroupParametersFile;
+use IlBronza\Products\Http\Controllers\Providers\FieldsGroups\QuotationrowFieldsGroupParametersFile;
 use IlBronza\Products\Http\Controllers\Providers\FieldsGroups\SellableSupplierBySupplierFieldsGroupParametersFile;
-
 use IlBronza\Products\Models\Orders\Orderrow;
+use IlBronza\Products\Models\Quotations\Quotationrow;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-
 use function app;
 use function config;
 
@@ -45,20 +44,29 @@ class ClientRelationshipsManager Extends RelationshipsManager
 
 		if(config('products.sellables.enabled'))
 		{
-			$relations['quotations'] = [
-				'controller' => config('products.models.quotation.controllers.index'),
-				// 'elementGetterMethod' => 'getOrdersForShowRelation'
-			];
+			// $relations['quotations'] = [
+			// 	'controller' => config('products.models.quotation.controllers.index'),
+			// 	// 'elementGetterMethod' => 'getOrdersForShowRelation'
+			// ];
 
 //			$relations['orders'] = [
 //				'controller' => config('products.models.order.controllers.index'),
 //				'elementGetterMethod' => 'getOrdersForShowRelation'
 //			];
 
+			$relations['quotationrows'] = [
+				'relationType' => 'HasMany',
+				'relatedModelClass' => Quotationrow::gpc(),
+				'relatedModel' => Quotationrow::gpc()::make(),
+				'fieldsGroupsParametersFile' => QuotationrowFieldsGroupParametersFile::class,
+				'controller' => config('products.models.quotationrow.controllers.index'),
+				'elementGetterMethod' => 'getQuotationrowsForShowRelation'
+			];
+
 			$relations['orderrows'] = [
 				'relationType' => 'HasMany',
 				'relatedModelClass' => Orderrow::gpc(),
-				'relatedModel' => ORderrow::gpc()::make(),
+				'relatedModel' => Orderrow::gpc()::make(),
 				'fieldsGroupsParametersFile' => OrderrowFieldsGroupParametersFile::class,
 				'controller' => config('products.models.orderrow.controllers.index'),
 				'elementGetterMethod' => 'getOrderrowsForShowRelation'

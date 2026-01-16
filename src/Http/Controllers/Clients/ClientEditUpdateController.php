@@ -2,9 +2,9 @@
 
 namespace IlBronza\Clients\Http\Controllers\Clients;
 
+use IlBronza\Addresses\Helpers\CoordinatesProviderHelper;
 use IlBronza\CRUD\Traits\CRUDEditUpdateTrait;
 use Illuminate\Http\Request;
-
 use function config;
 use function dd;
 
@@ -22,6 +22,12 @@ class ClientEditUpdateController extends ClientCRUD
 	public function edit(string $client)
 	{
 		$client = $this->findModel($client);
+
+		foreach($client->getDestinations() as $destination)
+			dd(CoordinatesProviderHelper::getWhereMissingAddresses(
+			));
+
+		dd();
 
 		return $this->_edit($client);
 	}

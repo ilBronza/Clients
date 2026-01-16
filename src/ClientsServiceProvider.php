@@ -5,17 +5,14 @@ namespace IlBronza\Clients;
 use IlBronza\Clients\Models\Client;
 use IlBronza\Clients\Models\Destination;
 use IlBronza\Clients\Models\Referent;
-use IlBronza\Products\Models\Sellables\Supplier;
-use Illuminate\Contracts\Foundation\CachesConfiguration;
+use IlBronza\CRUD\Traits\IlBronzaPackages\IlBronzaServiceProviderPackagesTrait;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
-use function array_merge;
-use function array_replace_recursive;
-use function dd;
-
 class ClientsServiceProvider extends ServiceProvider
 {
+	use IlBronzaServiceProviderPackagesTrait;
+
 	/**
 	 * Perform post-registration booting of services.
 	 *
@@ -46,19 +43,6 @@ class ClientsServiceProvider extends ServiceProvider
 	 *
 	 * @return void
 	 */
-
-	protected function mergeConfigFrom($path, $key)
-	{
-		if (! ($this->app instanceof CachesConfiguration && $this->app->configurationIsCached())) {
-			$config = $this->app->make('config');
-
-			$config->set($key, array_replace_recursive(
-				require $path, $config->get($key, [])
-			));
-		}
-	}
-
-
 
 	public function register() : void
 	{

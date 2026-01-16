@@ -33,8 +33,8 @@ class ClientEditFieldsetsParameters extends FieldsetParametersFile
                     'fiscal_name' => ['text' => 'string|nullable|max:255'],
                     'fiscal_code' => ['text' => 'string|nullable|max:255'],
 	                'vat' => ['text' => 'string|nullable|max:255'],
-	                // 'tmp_cciia' => ['text' => 'string|nullable|max:255'],
-	                // 'tmp_eu' => ['boolean' => 'bool|required'],
+	                'is_client' => ['booleanCheckbox' => 'boolean|nullable'],
+	                'is_supplier' => ['booleanCheckbox' => 'boolean|nullable'],
                     'categories' => [
                         'type' => 'select',
                         'multiple' => true,

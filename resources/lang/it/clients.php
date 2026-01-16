@@ -1,6 +1,7 @@
 <?php
 
 return [
+	'create' => 'Crea azienda',
 	'list' => 'Aziende',
 	'general' => 'Dati generali',
 	'first_name' => 'Nome',
@@ -25,7 +26,7 @@ return [
 	'client_id' => 'Id azienda',
 	'cardTitleShow' => 'Mostra azienda',
 	'clients' => 'Clienti',
-	'client' => 'Cliente',
+	'client' => 'Azienda',
 	'cardTitleEdit' => 'Modifica',
 	'allCompanies' => 'Tutte le aziende'
 ];
