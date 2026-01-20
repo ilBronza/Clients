@@ -17,6 +17,17 @@ return [
 	'fiscal_code' => 'Codice fiscale',
 	'rea' => 'REA',
 	'istat_code' => 'Istat',
+	'mySelfSee' => 'Mostra',
+	'street' => 'Indirizzo',
+	'number' => 'Civico',
+	'zip' => 'CAP',
+	'town' => 'Frazione',
+	'city' => 'Comune',
+	'province' => 'Provincia',
+	'state' => 'Stato',
+	'types_string' => 'Tipo Stringa',
+	
+	
 
 	'vat' => 'P.iva',
 	'referents' => 'Referenti',
@@ -48,5 +59,12 @@ return [
 	'defaultDestination.address.province' => 'Provincia',
 
 	'mySelfContacts.contacts' => 'Contatti',
-	'mySelfWorkersCount' => 'Lavoratori'
+	'mySelfWorkersCount' => 'Lavoratori',
+
+	'finishing_id' => 'Tipo di finitura',
+    'to_warn' => 'Avviso',
+
+    'rts_code' => 'Codice RTS',
+    'types_string' => 'Tipo Stringa',
+    'address' => ['zip' => 'CAP', 'town' => 'Frazione', 'region' => 'Regione', 'number' => 'Numero',] ,
 ];

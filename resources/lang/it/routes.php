@@ -24,6 +24,12 @@ return [
 	],
 
 	'clientsmanagerclients' => [
+		'clients' => [
+			'index' => 'Indice Clienti'
+		],
+		'suppliers' => [
+			'index' => 'Fornitori'
+		],
 		'index' => 'Lista Aziende',
 		'store' => 'Crea azienda',
 		'create' => 'Crea azienda',
