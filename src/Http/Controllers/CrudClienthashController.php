@@ -12,7 +12,7 @@ use IlBronza\CRUD\Traits\CRUDPlainIndexTrait;
 use IlBronza\CRUD\Traits\CRUDRelationshipTrait;
 use IlBronza\Clients\Http\ParametersFile\Hash\HashParameters;
 use IlBronza\Clients\Models\Client;
-use IlBronza\Ukn\Facades\Ukn;
+use IlBronza\Ukn\Ukn;
 use Illuminate\Http\Request;
 
 class CrudClienthashController extends CRUD

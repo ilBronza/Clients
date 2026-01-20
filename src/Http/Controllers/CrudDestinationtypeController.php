@@ -15,7 +15,7 @@ use IlBronza\CRUD\Traits\CRUDShowTrait;
 use IlBronza\CRUD\Traits\CRUDUpdateEditorTrait;
 use IlBronza\Clients\Http\ParametersFile\CrudDestinationtypeParameters;
 use IlBronza\Clients\Models\Destinationtype;
-use IlBronza\Ukn\Facades\Ukn;
+use IlBronza\Ukn\Ukn;
 use Illuminate\Http\Request;
 
 class CrudDestinationtypeController extends CRUD

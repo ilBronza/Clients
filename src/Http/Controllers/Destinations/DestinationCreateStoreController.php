@@ -6,7 +6,7 @@ use IlBronza\CRUD\Traits\CRUDCreateStoreTrait;
 use IlBronza\CRUD\Traits\CRUDRelationshipTrait;
 use IlBronza\CRUD\Traits\CRUDShowTrait;
 use IlBronza\Clients\Models\Client;
-use IlBronza\Ukn\Facades\Ukn;
+use IlBronza\Ukn\Ukn;
 
 use function __;
 use function config;

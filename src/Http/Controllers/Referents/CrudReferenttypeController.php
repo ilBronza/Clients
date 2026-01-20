@@ -15,7 +15,7 @@ use IlBronza\CRUD\Traits\CRUDShowTrait;
 use IlBronza\CRUD\Traits\CRUDUpdateEditorTrait;
 use IlBronza\Clients\Http\ParametersFile\CrudReferenttypeParameters;
 use IlBronza\Clients\Models\Referenttype;
-use IlBronza\Ukn\Facades\Ukn;
+use IlBronza\Ukn\Ukn;
 use Illuminate\Http\Request;
 
 class CrudReferenttypeController extends CRUD

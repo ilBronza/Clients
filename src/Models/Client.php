@@ -19,7 +19,7 @@ use IlBronza\Notes\Traits\InteractsWithNotesTrait;
 use IlBronza\Payments\Models\Traits\InteractsWithPaymenttypes;
 use IlBronza\Products\Models\Interfaces\SupplierInterface;
 use IlBronza\Products\Models\Traits\Sellable\InteractsWithSupplierTrait;
-use IlBronza\Ukn\Facades\Ukn;
+use IlBronza\Ukn\Ukn;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
