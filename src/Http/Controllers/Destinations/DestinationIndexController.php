@@ -15,12 +15,12 @@ class DestinationIndexController extends DestinationCRUD
 
     public function getIndexFieldsArray()
     {
-        return config('clients.models.destination.fieldsGroupsFiles.index')::getFieldsGroup();
+        return config('clients.models.destination.fieldsGroupsFiles.index')::getTracedFieldsGroup();
     }
 
     public function getRelatedFieldsArray()
     {
-        return config('clients.models.destination.fieldsGroupsFiles.related')::getFieldsGroup();
+        return config('clients.models.destination.fieldsGroupsFiles.related')::getTracedFieldsGroup();
     }
 
     public function getIndexElements()

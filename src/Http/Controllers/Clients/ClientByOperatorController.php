@@ -14,7 +14,7 @@ class ClientByOperatorController extends ClientIndexController
 	public function getIndexFieldsArray()
 	{
 		//ClientByOperatorFieldsGroupParametersFile
-		return config('clients.models.client.fieldsGroupsFiles.byOperator')::getFieldsGroup();
+		return config('clients.models.client.fieldsGroupsFiles.byOperator')::getTracedFieldsGroup();
 	}
 
 	public function getIndexElements()

@@ -27,6 +27,7 @@ use IlBronza\Clients\Http\Parameters\Fieldsets\ClientCreateFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\ClientEditFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\ClientShowFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\DestinationCreateStoreFieldsetsParameters;
+use IlBronza\Clients\Http\Parameters\Fieldsets\DestinationShowFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\RelationshipsManagers\ClientRelationshipsManager;
 use IlBronza\Clients\Models\Client;
 use IlBronza\Clients\Models\ClientAsClient;

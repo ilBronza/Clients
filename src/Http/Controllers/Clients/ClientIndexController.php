@@ -21,12 +21,12 @@ class ClientIndexController extends ClientCRUD
 	public function getIndexFieldsArray()
 	{
 		//ClientIndexFieldsGroupParametersFile
-		return config('clients.models.client.fieldsGroupsFiles.index')::getFieldsGroup();
+		return config('clients.models.client.fieldsGroupsFiles.index')::getTracedFieldsGroup();
 	}
 
 	public function getRelatedFieldsArray()
 	{
-		return config('clients.models.client.fieldsGroupsFiles.related')::getFieldsGroup();
+		return config('clients.models.client.fieldsGroupsFiles.related')::getTracedFieldsGroup();
 	}
 
 //	public function addPostFieldsToTable()

@@ -2,6 +2,7 @@
 
 return [
 	'create' => 'Crea azienda',
+	'index' => 'Clienti',
 	'list' => 'Aziende',
 	'general' => 'Dati generali',
 	'first_name' => 'Nome',

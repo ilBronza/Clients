@@ -35,6 +35,8 @@ class DestinationFieldsGroupParametersFile extends FieldsGroupParametersFile
 
                 'client' => 'relations.belongsTo',
                 'types' => 'relations.belongsToMany',
+                'mySelfLatitude' => 'addresses::coordinates.latitude',
+                'mySelfLongitude' => 'addresses::coordinates.longitude',
 
                 'mySelfDelete' => 'links.delete'
             ]
