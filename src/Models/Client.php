@@ -316,4 +316,8 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 		)->where('type', 'default');
 	}
 
+	public function getCostCoefficient() : float
+	{
+		return $this->cost_coefficient ?? 1;
+	}
 }

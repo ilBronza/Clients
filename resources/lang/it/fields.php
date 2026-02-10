@@ -67,4 +67,6 @@ return [
     'rts_code' => 'Codice RTS',
     'types_string' => 'Tipo Stringa',
     'address' => ['zip' => 'CAP', 'town' => 'Frazione', 'region' => 'Regione', 'number' => 'Numero',] ,
+
+    'cost_coefficient' => 'Coefficiente costi'
 ];

@@ -42,6 +42,7 @@ class ClientEditFieldsetsParameters extends FieldsetParametersFile
                         'rules' => 'nullable|exists:' . config('category.models.category.table') . ',id',
                         'relation' => 'categories'
                     ],
+                    'cost_coefficient' => ['number' => 'numeric|nullable|min:0'],
                 ],
                 'width' => ['large@m']
             ],

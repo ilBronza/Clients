@@ -20,6 +20,9 @@ class DatatableFieldZone extends DatatableFieldFlat
 		if ($value->live_destination_zone)
 			return $value->live_destination_zone;
 
+		if (array_key_exists('live_destination_zone', $value->getAttributes()))
+			return null;
+		
 		Log::critical('usa lo scope live destination zone. ' . request()->fullUrl());
 
 		if ($destination = $value->getDestination())

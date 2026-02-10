@@ -23,11 +23,11 @@ class ClientEditUpdateController extends ClientCRUD
 	{
 		$client = $this->findModel($client);
 
-		foreach($client->getDestinations() as $destination)
-			dd(CoordinatesProviderHelper::getWhereMissingAddresses(
-			));
+		// foreach($client->getDestinations() as $destination)
+		// 	dd(CoordinatesProviderHelper::getWhereMissingAddresses(
+		// 	));
 
-		dd();
+		// dd();
 
 		return $this->_edit($client);
 	}
