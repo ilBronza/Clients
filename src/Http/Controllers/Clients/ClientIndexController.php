@@ -50,6 +50,7 @@ class ClientIndexController extends ClientCRUD
 			'categories',
 			'defaultDestination.address',
 			'categories',
+			'referents',
 			'contacts',
 			'address'
 		]);

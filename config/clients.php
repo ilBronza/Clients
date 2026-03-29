@@ -15,6 +15,7 @@ use IlBronza\Clients\Http\Controllers\CrudDestinationController;
 use IlBronza\Clients\Http\Controllers\CrudDestinationtypeController;
 use IlBronza\Clients\Http\Controllers\CrudReferentController;
 use IlBronza\Clients\Http\Controllers\Destinations\DestinationCreateStoreController;
+use IlBronza\Clients\Http\Controllers\Destinations\DestinationDeleteMediaController;
 use IlBronza\Clients\Http\Controllers\Destinations\DestinationDestroyController;
 use IlBronza\Clients\Http\Controllers\Destinations\DestinationEditUpdateController;
 use IlBronza\Clients\Http\Controllers\Destinations\DestinationIndexController;
@@ -27,8 +28,10 @@ use IlBronza\Clients\Http\Parameters\Fieldsets\ClientCreateFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\ClientEditFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\ClientShowFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\DestinationCreateStoreFieldsetsParameters;
+use IlBronza\Clients\Http\Parameters\Fieldsets\DestinationEditFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\DestinationShowFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\RelationshipsManagers\ClientRelationshipsManager;
+use IlBronza\Clients\Http\Parameters\RelationshipsManagers\DestinationRelationshipsManager;
 use IlBronza\Clients\Models\Client;
 use IlBronza\Clients\Models\ClientAsClient;
 use IlBronza\Clients\Models\ClientAsSupplier;
@@ -149,12 +152,14 @@ return [
 			],
 			'parametersFiles' => [
 				'create' => DestinationCreateStoreFieldsetsParameters::class,
+				'edit' => DestinationEditFieldsetsParameters::class,
 				'show' => DestinationShowFieldsetsParameters::class
 			],
 			'relationshipsManagerClasses' => [
-				'show' => DestinationRelationManager::class
+				'show' => DestinationRelationshipsManager::class
 			],
 			'controllers' => [
+				'deleteMedia' => DestinationDeleteMediaController::class,
 				'index' => DestinationIndexController::class,
 				'create' => DestinationCreateStoreController::class,
 				'store' => DestinationCreateStoreController::class,

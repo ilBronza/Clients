@@ -11,10 +11,12 @@ use IlBronza\CRUD\Traits\Model\CRUDBrotherhoodTrait;
 use IlBronza\CRUD\Traits\Model\CRUDModelExtraFieldsTrait;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
 use IlBronza\CRUD\Traits\Model\PackagedModelsTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 use function implode;
 
-class Destination extends BaseModel
+class Destination extends BaseModel implements HasMedia
 {
 	static $packageConfigPrefix = 'clients';
 	static $modelConfigPrefix = 'destination';
@@ -27,6 +29,7 @@ class Destination extends BaseModel
 
 	use ClientsPackageBaseModelTrait;
 	use PackagedModelsTrait;
+	use InteractsWithMedia;
 
 	use CRUDModelExtraFieldsTrait;
 	use InteractsWithAddressesTrait;
@@ -38,7 +41,8 @@ class Destination extends BaseModel
 
 	protected $fillable = [
 		'name',
-		'address_id'
+		'address_id',
+		'emotional_image'
 	];
 
 	protected $casts = [
@@ -348,5 +352,10 @@ class Destination extends BaseModel
 	// 					->whereColumn('clients__destinations.id', 'clients__destinationtype_destinations.destination_id')
 	// 	]);
 	// }
+
+	public function getClientName() : string
+	{
+		return $this->getName();
+	}
 
 }

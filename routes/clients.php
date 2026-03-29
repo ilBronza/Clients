@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| contains the "web" middleware group. Now creclients.destrate something great!
 |
 */
 
@@ -78,6 +78,7 @@ Route::group([
 
 		Route::group(['prefix' => 'destinations'], function()
 		{
+			Route::get('delete-media/{destination}/{media}', [Clients::getController('destination', 'deleteMedia'), 'deleteMedia'])->name('destinations.deleteMedia');
 			Route::get('', [Clients::getController('destination', 'index'), 'index'])->name('destinations.index');
 			Route::get('create', [Clients::getController('destination', 'create'), 'create'])->name('destinations.create');
 			Route::post('', [Clients::getController('destination', 'store'), 'store'])->name('destinations.store');

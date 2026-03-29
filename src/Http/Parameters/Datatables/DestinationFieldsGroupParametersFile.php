@@ -27,6 +27,7 @@ class DestinationFieldsGroupParametersFile extends FieldsGroupParametersFile
                 'province' => 'flat',
                 'region' => 'flat',
                 'state' => 'flat',
+                'rootFilecabinets' => 'filecabinet::filecabinets.filecabinetsStatus',
 
 	            'venue' => [
 					'type' => 'editor.toggle',

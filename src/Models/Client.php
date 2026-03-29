@@ -8,6 +8,7 @@ use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Models\Casts\ExtraField;
 use IlBronza\CRUD\Traits\CRUDSluggableTrait;
 use IlBronza\CRUD\Traits\IlBronzaPackages\CRUDLogoTrait;
+use IlBronza\CRUD\Traits\Model\CRUDModelExtraFieldsTrait;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
 use IlBronza\CRUD\Traits\Model\PackagedModelsTrait;
 use IlBronza\Category\Traits\InteractsWithCategoryTrait;
@@ -21,10 +22,9 @@ use IlBronza\Products\Models\Interfaces\SupplierInterface;
 use IlBronza\Products\Models\Traits\Sellable\InteractsWithSupplierTrait;
 use IlBronza\Ukn\Ukn;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
+use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-
-use IlBronza\CRUD\Traits\Model\CRUDModelExtraFieldsTrait;
 
 #[ScopedBy([ClientAreaManagerScope::class])]
 class Client extends BaseModel implements SupplierInterface, HasMedia
@@ -59,6 +59,11 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 	use PackagedModelsTrait;
 	use InteractsWithNotesTrait;
 	use InteractsWithSupplierTrait;
+
+	public function getPossibleSellables() : Collection
+	{
+		return collect();
+	}
 
 	//	use ClientsPackageBaseModelTrait;
 	use CRUDUseUuidTrait;

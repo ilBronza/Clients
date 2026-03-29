@@ -8,6 +8,24 @@ class DestinationShowFieldsetsParameters extends FieldsetParametersFile
 {
     public function _getFieldsetsParameters() : array
     {
+        $point = null;
+        $addressEditUrl = null;
+
+        if(($model = $this->getModel())&&($model->exists))
+        {
+            if ($coordinates = $model->getCoordinates())
+                $point = [
+                    'lat' => $coordinates->getLat(),
+                    'lng' => $coordinates->getLong(),
+                    'label' => $model->name ?? $model->getAddress()?->getFullString(),
+                ];
+
+            $address = $model->address;
+
+            if ($address && $address->exists)
+                $addressEditUrl = $address->getEditUrl();
+        }
+
         return [
             'general' => [
                 'translationPrefix' => 'clients::fields',
@@ -35,6 +53,10 @@ class DestinationShowFieldsetsParameters extends FieldsetParametersFile
                         'rules' => 'array|nullable|exists:' . config('clients.models.referent.table') . ',slug',
                         'relation' => 'referents'
                     ],
+                    'emotional_image' => [
+                        'type' => 'file',
+                        'rules' => 'nullable',
+                    ],
                 ],
                 'width' => ['xlarge@m']
             ],
@@ -49,6 +71,19 @@ class DestinationShowFieldsetsParameters extends FieldsetParametersFile
                     'province' => ['text' => 'string|nullable|max:255'],
                     'region' => ['text' => 'string|nullable|max:255'],
                     'state' => ['text' => 'string|nullable|max:255'],
+                ],
+                'width' => ['xlarge@m']
+            ],
+            'map' => [
+                'translatedLegend' => __('clients::fields.map'),
+                'showLegend' => true,
+                'fields' => [],
+                'view' => [
+                    'name' => 'addresses::maps.point',
+                    'parameters' => [
+                        'point' => $point,
+                        'addressEditUrl' => $addressEditUrl,
+                    ]
                 ],
                 'width' => ['xlarge@m']
             ]
