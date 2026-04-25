@@ -18,7 +18,7 @@ Route::group([
 	'middleware' => [
 		'web',
 		'auth',
-		'role:administrator|clientsManager|areaManager'
+		'clients.roles'
 	],
 	'prefix' => 'clients-management',
 	'as' => config('clients.routePrefix'),
@@ -38,11 +38,11 @@ Route::group([
 
 
 		//ClientByOperatorIndexController
-		Route::get('clients-by-operator/{operator?}', [Clients::getController('client', 'byOperator'), 'index'])->name('clients.byOperator')->withoutMiddleware('role:administrator')->middleware('auth', 'role:clientsManager|areaManager|administrator');
+		Route::get('clients-by-operator/{operator?}', [Clients::getController('client', 'byOperator'), 'index'])->name('clients.byOperator');
 
 		Route::get('clients/create', [Clients::getController('client', 'create'), 'create'])->name('clients.create');
 		Route::post('clients', [Clients::getController('client', 'store'), 'store'])->name('clients.store');
-		Route::get('clients/{client}', [Clients::getController('client', 'show'), 'show'])->name('clients.show')->withoutMiddleware('role:administrator')->middleware('auth', 'role:clientsManager|areaManager|administrator');
+		Route::get('clients/{client}', [Clients::getController('client', 'show'), 'show'])->name('clients.show');
 
 		//ClientEditUpdateController
 		Route::get('clients/{client}/edit', [Clients::getController('client', 'edit'), 'edit'])->name('clients.edit');

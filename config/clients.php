@@ -203,6 +203,15 @@ return [
 
 	'routePrefix' => 'clientsmanager',
 
+	'defaultRoles' => [
+		'administrator',
+		'clientsManager',
+		'areaManager',
+	],
+
+	'routeRoles' => [
+	],
+
 	'destinationReferent' => [
 		'table' => 'destination_referents'
 	]

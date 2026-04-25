@@ -2,6 +2,7 @@
 
 namespace IlBronza\Clients;
 
+use IlBronza\Clients\Http\Middleware\ClientsMiddlewareRolesPermissions;
 use IlBronza\Clients\Models\Client;
 use IlBronza\Clients\Models\Destination;
 use IlBronza\Clients\Models\Referent;
@@ -30,6 +31,8 @@ class ClientsServiceProvider extends ServiceProvider
 		// $this->loadViewsFrom(__DIR__.'/../resources/views', 'ilbronza');
 		$this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 		$this->loadRoutesFrom(__DIR__ . '/../routes/clients.php');
+
+		$this->app['router']->aliasMiddleware('clients.roles', ClientsMiddlewareRolesPermissions::class);
 
 		// Publishing is only necessary when using the CLI.
 		if ($this->app->runningInConsole())

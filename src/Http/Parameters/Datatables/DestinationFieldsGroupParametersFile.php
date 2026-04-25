@@ -8,15 +8,15 @@ class DestinationFieldsGroupParametersFile extends FieldsGroupParametersFile
 {
 	static function getFieldsGroup() : array
 	{
-		return [
+        $result = [
             'translationPrefix' => 'clients::fields',
             'fields' => 
             [
                 'mySelfPrimary' => 'primary',
                 'mySelfEdit' => 'links.edit',
                 'mySelfSee' => [
-					'type' => 'links.seeName',
-	                'width' => '255px'
+                    'type' => 'links.seeName',
+                    'width' => '255px'
                 ],
 
                 'street' => 'flat',
@@ -29,10 +29,10 @@ class DestinationFieldsGroupParametersFile extends FieldsGroupParametersFile
                 'state' => 'flat',
                 'rootFilecabinets' => 'filecabinet::filecabinets.filecabinetsStatus',
 
-	            'venue' => [
-					'type' => 'editor.toggle',
-		            'nullable' => true,
-	            ],
+                'venue' => [
+                    'type' => 'editor.toggle',
+                    'nullable' => true,
+                ],
 
                 'client' => 'relations.belongsTo',
                 'types' => 'relations.belongsToMany',
@@ -42,5 +42,18 @@ class DestinationFieldsGroupParametersFile extends FieldsGroupParametersFile
                 'mySelfDelete' => 'links.delete'
             ]
         ];
+
+        if(! config('addresses.usesGoogleCoordinates'))
+        {
+            unset($result['fields']['mySelfLatitude']);
+            unset($result['fields']['mySelfLongitude']);
+        }
+
+        if(! config('addresses.usesFilesCabinets'))
+        {
+            unset($result['fields']['rootFilecabinets']);
+        }
+
+		return $result;
 	}
 }

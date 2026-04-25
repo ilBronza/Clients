@@ -80,6 +80,11 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 		return null;
 	}
 
+	public function mustAutomaticallyUpdatePrices() : ? bool
+	{
+		return false;
+	}
+
 	public function provideAddressModelForExtraFields() : Address
 	{
 		if ($this->relationLoaded('address') && ($this->address))
@@ -324,5 +329,10 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 	public function getCostCoefficient() : float
 	{
 		return $this->cost_coefficient ?? 1;
+	}
+
+	public function getRevenueCoefficient() : float
+	{
+		return $this->getCostCoefficient();
 	}
 }
