@@ -77,6 +77,11 @@ class Destination extends BaseModel implements HasMedia
 		return $this->getAddress()?->getFullString();
 	}
 
+	public function getFormattedFullString() : ? string
+	{
+		return $this->getAddress()?->getFormattedFullString();
+	}
+
 	public function provideAddressModelForExtraFields()
 	{
 		if (($this->relationLoaded('address')) && ($this->address))

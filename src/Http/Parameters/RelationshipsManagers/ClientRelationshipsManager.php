@@ -103,6 +103,9 @@ class ClientRelationshipsManager Extends RelationshipsManager
 		if(app('clients')->hasDestinations())
 			$relations['destinations'] = config('clients.models.destination.controllers.index');
 
+		if(method_exists($this->getModel(), 'projects'))
+			$relations['projects'] = config('products.models.project.controllers.index');
+
 		if(config('filecabinets.enabled'))
 			$relations['dossiers'] = config('filecabinet.models.dossier.controllers.index');
 
