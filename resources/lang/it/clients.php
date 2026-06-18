@@ -1,7 +1,7 @@
 <?php
 
 return [
-	'create' => 'Crea azienda',
+	'create' => 'Crea',
 	'index' => 'Clienti',
 	'list' => 'Aziende',
 	'general' => 'Dati generali',
@@ -29,5 +29,5 @@ return [
 	'clients' => 'Clienti',
 	'client' => 'Azienda',
 	'cardTitleEdit' => 'Modifica',
-	'allCompanies' => 'Tutte le aziende'
+	'allCompanies' => 'Tutti'
 ];
