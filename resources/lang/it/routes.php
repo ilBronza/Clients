@@ -9,10 +9,8 @@ return [
 		'update' => 'Modifica cliente',
 		'destroy' => 'Elimina cliente',
 		'edit' => 'Modifica cliente',
-		'byOperator' => 'Clienti per operatore'
+		'byOperator' => 'Clienti per operatore',
 	],
-
-
 	'clientsmanagerclienthashes' => [
 		'index' => 'Hash di accesso',
 		'store' => 'Crea Hash',
@@ -22,13 +20,12 @@ return [
 		'destroy' => 'Elimina Hash',
 		'edit' => 'Modifica Hash',
 	],
-
 	'clientsmanagerclients' => [
 		'clients' => [
-			'index' => 'Indice Clienti'
+			'index' => 'Indice Clienti',
 		],
 		'suppliers' => [
-			'index' => 'Fornitori'
+			'index' => 'Fornitori',
 		],
 		'index' => 'Lista Aziende',
 		'store' => 'Crea azienda',
@@ -40,9 +37,18 @@ return [
 		'clienthashes.create' => 'Crea hash',
 		'destinations.create' => 'Crea destino',
 		'referents.create' => 'Crea referente',
-		'byOperator' => 'Aziende per operatore'
+		'byOperator' => 'Aziende per operatore',
 	],
-
+	'clientsmanagerclientsclienthashes' => [
+		'send' => 'Send — hash cliente',
+	],
+	'clientsmanagerclientsdestinations' => [
+		'create' => 'Crea destino',
+	],
+	'clientsmanagerclientslogoFetcher' => 'Logo cliente',
+	'clientsmanagerclientsreferents' => [
+		'create' => 'Crea referente',
+	],
 	'clientsmanagerdestinations' => [
 		'index' => 'Indice destini',
 		'store' => 'Crea destino',
@@ -52,7 +58,7 @@ return [
 		'destroy' => 'Elimina destino',
 		'edit' => 'Modifica destino',
 	],
-
+	'clientsmanagerdestinationsdeleteMedia' => 'Elimina media — destino',
 	'clientsmanagerdestinationtypes' => [
 		'index' => 'Indice tipi destino',
 		'store' => 'Crea tipo destino',
@@ -62,7 +68,6 @@ return [
 		'destroy' => 'Elimina tipo destino',
 		'edit' => 'Modifica tipo destino',
 	],
-
 	'clientsmanagerreferents' => [
 		'index' => 'Lista referenti',
 		'store' => 'Crea referente',
@@ -72,7 +77,6 @@ return [
 		'destroy' => 'Elimina referente',
 		'edit' => 'Modifica referente',
 	],
-
 	'clientsmanagerreferenttypes' => [
 		'index' => 'Indice tipi referente',
 		'store' => 'Crea tipo referente',
@@ -82,10 +86,10 @@ return [
 		'destroy' => 'Elimina tipo referente',
 		'edit' => 'Modifica tipo referente',
 	],
+	'ibProductsclients' => [
+		'index' => 'Aziende',
+	],
 	'suppliers' => [
 		'index' => 'Lista fornitori',
 	],
-	'ibProductsclients' => [
-		'index' => 'Aziende'
-	]
 ];
