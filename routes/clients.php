@@ -28,8 +28,6 @@ Route::group([
 	{
 		Route::get('clients/logo/{client}/logo-fetcher', [Clients::getController('client', 'logo'), 'logoFetcher'])->name('clients.logoFetcher');
 
-		Route::resource('clients', Clients::getController('client'));
-
 		Route::get('clients', [Clients::getController('client', 'index'), 'index'])->name('clients.index');
 
 		Route::get('clients-as-clients', [Clients::getController('client', 'asClientIndex'), 'index'])->name('clients.clients.index');
@@ -52,6 +50,8 @@ Route::group([
 //		})->name('clients.edit');
 		
 		Route::put('clients/{client}', [Clients::getController('client', 'update'), 'update'])->name('clients.update');
+
+		Route::delete('clients/{client}', [Clients::getController('client'), 'destroy'])->name('clients.destroy');
 
 		Route::get(
 			'clients/{client}/destinations/create',
