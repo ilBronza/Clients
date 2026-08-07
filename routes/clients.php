@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
+use IlBronza\Clients\Clients;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ Route::group([
 	],
 	'prefix' => 'clients-management',
 	'as' => config('clients.routePrefix'),
-	'routeTranslationPrefix' => 'clients::routes.',
+	'routeTranslationPrefix' => Clients::getRouteTranslationPrefix(),
 	],
 	function()
 	{
