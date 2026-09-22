@@ -8,4 +8,9 @@ return array (
   'cardIntroEdit' => 'Modifica destino',
   'cardTitleEdit' => 'Modifica destino',
   'createdForClient' => 'Nuovo destino creato per :client',
+
+  'cardTitleShow' => 'Dettagli destinazione',
+  'cardIntroShow' => 'Informazioni sulla destinazione',
+  'cardTitleCreate' => 'Crea destinazione',
+  'cardIntroCreate' => 'Inserisci i dati della destinazione',
 );

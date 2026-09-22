@@ -29,5 +29,12 @@ return [
 	'clients' => 'Clienti',
 	'client' => 'Azienda',
 	'cardTitleEdit' => 'Modifica',
-	'allCompanies' => 'Tutti'
+	'allCompanies' => 'Tutti',
+
+  'cardIntroShow' => 'Informazioni sul cliente',
+  'cardIntroEdit' => 'Modifica i dati del cliente',
+  'cardTitleCreate' => 'Crea cliente',
+  'cardIntroCreate' => 'Inserisci i dati del cliente',
+  'referent' => 'Referente',
+  'titles.show' => 'Dettagli :element',
 ];

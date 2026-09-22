@@ -78,4 +78,10 @@ return [
     'cost_coefficient' => 'Coefficiente costi',
     'mySelfLatitude' => 'Latitudine',
     'mySelfLongitude' => 'Longitudine',
+
+  'default' => 'Predefinito',
+  'company_site_slug' => 'Slug sito aziendale',
+  'tmp_cciia' => 'Codice CCIAA',
+  'tmp_eu' => 'Codice UE',
+  'regulate_production_tolerance' => 'Tolleranza di produzione',
 ];
