@@ -110,6 +110,11 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 		return config('category.models.category.class');
 	}
 
+	public function getLogoDisk() : string
+	{
+		return config('media-library.disk_name');
+	}
+
 	public function getCategoriesCollection() : ?string
 	{
 		return null;

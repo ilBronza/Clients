@@ -28,6 +28,8 @@ Route::group([
 	function()
 	{
 		Route::get('clients/logo/{client}/logo-fetcher', [Clients::getController('client', 'logo'), 'logoFetcher'])->name('clients.logoFetcher');
+		Route::get('clients/{client}/logo-upload', [Clients::getController('client', 'logo'), 'logoUploadForm'])->name('clients.logoUploadForm');
+		Route::put('clients/{client}/logo-upload', [Clients::getController('client', 'logo'), 'logoUpdate'])->name('clients.logoUpdate');
 
 		Route::get('clients', [Clients::getController('client', 'index'), 'index'])->name('clients.index');
 

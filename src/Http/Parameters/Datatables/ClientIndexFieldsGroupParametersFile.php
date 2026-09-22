@@ -15,6 +15,8 @@ class ClientIndexFieldsGroupParametersFile extends FieldsGroupParametersFile
 				'mySelfEdit' => 'links.edit',
 				'mySelfSee' => 'links.see',
 				'name' => 'flat',
+				'first_color' => 'editor.color',
+				'second_color' => 'editor.color',
 				'categories' => 'relations.belongsToMany',
 				'cost_coefficient' => 'editor.numeric',
 				'fiscal_name' => 'flat',

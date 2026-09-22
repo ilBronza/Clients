@@ -28,7 +28,7 @@ class ClientsServiceProvider extends ServiceProvider
 		]);
 
 		$this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'clients');
-		// $this->loadViewsFrom(__DIR__.'/../resources/views', 'ilbronza');
+		$this->loadViewsFrom(__DIR__ . '/../resources/views', 'clients');
 		$this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 		$this->loadRoutesFrom(__DIR__ . '/../routes/clients.php');
 

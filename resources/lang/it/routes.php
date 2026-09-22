@@ -46,6 +46,8 @@ return [
 		'create' => 'Crea destino',
 	],
 	'clientsmanagerclientslogoFetcher' => 'Logo cliente',
+	'clientsmanagerclientslogoUploadForm' => 'Carica logo cliente',
+	'clientsmanagerclientslogoUpdate' => 'Aggiorna logo cliente',
 	'clientsmanagerclientsreferents' => [
 		'create' => 'Crea referente',
 	],

@@ -9,17 +9,20 @@ class ClientEditFieldsetsParameters extends FieldsetParametersFile
     public function _getFieldsetsParameters() : array
     {
         return [
-//			'logo' => [
-//				'showLegend' => false,
-//				'fields' => [],
-//				'view' => [
-//					'name' => 'crud::utilities.logo.logo',
-//					'parameters' => [
-//						'logoModelInstance' => $this->getModel()
-//					]
-//				],
-//				'width' => ['medium@m']
-//			],
+			'styles' => [
+				'translationPrefix' => 'clients::fields',
+				'fields' => [
+					'first_color' => ['color' => 'string|nullable|max:8'],
+					'second_color' => ['color' => 'string|nullable|max:8'],
+				],
+				'view' => [
+					'name' => 'clients::utilities.logo.logo',
+					'parameters' => [
+						'logoModelInstance' => $this->getModel(),
+					],
+				],
+				'width' => ['medium@m'],
+			],
             'base' => [
 	            'translationPrefix' => 'clients::fields',
                 'fields' => [
@@ -45,7 +48,7 @@ class ClientEditFieldsetsParameters extends FieldsetParametersFile
                     'cost_coefficient' => ['number' => 'numeric|nullable|min:0'],
                 ],
                 'width' => ['large@m']
-            ],
+			],
 	        'address' => [
 		        'translationPrefix' => 'addresses::fields',
 		        'fields' => [
@@ -111,4 +114,3 @@ class ClientEditFieldsetsParameters extends FieldsetParametersFile
 		];
     }
 }
-

@@ -32,7 +32,14 @@ class ClientCreateFieldsetsParameters extends FieldsetParametersFile
 					],
 				],
 				'width' => ['large@m']
+			],
+			'styles' => [
+				'translationPrefix' => 'clients::fields',
+				'fields' => [
+					'first_color' => ['color' => 'string|nullable|max:8'],
+					'second_color' => ['color' => 'string|nullable|max:8'],
+				],
+				'width' => ['large@m'],
 			]
 		];
 	}}
-
