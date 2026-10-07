@@ -12,7 +12,7 @@ class CrudDestinationtypeParameters extends FieldsetParametersFile
             'general' => [
                 'translationPrefix' => 'clients::fields',
                 'fields' => [
-                    'name' => ['text' => 'string|nullable|max:255']
+                    'name' => ['text' => 'string|required|max:255']
                 ],
                 'width' => ['1-2@m']
             ],

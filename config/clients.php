@@ -31,6 +31,9 @@ use IlBronza\Clients\Http\Parameters\Fieldsets\DestinationCreateStoreFieldsetsPa
 use IlBronza\Clients\Http\Parameters\Fieldsets\DestinationEditFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\DestinationShowFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\RelationshipsManagers\ClientRelationshipsManager;
+use IlBronza\Clients\Http\ParametersFile\CrudDestinationtypeParameters;
+use IlBronza\Clients\Http\ParametersFile\CrudReferenttypeParameters;
+use IlBronza\Clients\Http\ParametersFile\Referent\EditReferentParameters;
 use IlBronza\Clients\Http\Parameters\RelationshipsManagers\DestinationRelationshipsManager;
 use IlBronza\Clients\Models\Client;
 use IlBronza\Clients\Models\ClientAsClient;
@@ -46,6 +49,10 @@ use IlBronza\Clients\Models\ReferenttypeReferent;
 use IlBronza\Clients\Providers\Helpers\ClientHashHelper;
 
 return [
+
+	'validation' => [
+		'rejectDuplicateFiscalIdentifiers' => true,
+	],
 
 	'datatableFieldWidths' => [
 		'destination' => [
@@ -177,6 +184,11 @@ return [
 			'class' => Destinationtype::class,
 			'table' => 'clients__destinationtypes',
 			'controller' => CrudDestinationtypeController::class,
+			'parametersFiles' => [
+				'create' => CrudDestinationtypeParameters::class,
+				'edit' => CrudDestinationtypeParameters::class,
+				'show' => CrudDestinationtypeParameters::class,
+			],
 			'defaultName' => 'default',
 			'legalName' => 'legal'
 		],
@@ -184,6 +196,11 @@ return [
 			'class' => Referenttype::class,
 			'table' => 'clients__referenttypes',
 			'controller' => CrudReferenttypeController::class,
+			'parametersFiles' => [
+				'create' => CrudReferenttypeParameters::class,
+				'edit' => CrudReferenttypeParameters::class,
+				'show' => CrudReferenttypeParameters::class,
+			],
 			'defaultName' => 'default'
 		],
 		'referenttypeReferent' => [
@@ -193,7 +210,11 @@ return [
 		'referent' => [
 			'class' => Referent::class,
 			'table' => 'clients__referents',
-			'controller' => CrudReferentController::class
+			'controller' => CrudReferentController::class,
+			'parametersFiles' => [
+				'edit' => EditReferentParameters::class,
+				'show' => EditReferentParameters::class,
+			],
 		],
 		'destinationReferent' => [
 			'class' => DestinationReferent::class,

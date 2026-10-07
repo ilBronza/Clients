@@ -15,7 +15,7 @@ class EditReferentParameters extends FieldsetParametersFile
                 'fields' => [
                     'first_name' => ['text' => 'string|nullable|max:255'],
                     'second_name' => ['text' => 'string|nullable|max:255'],
-                    'email' => ['text' => 'string|required|max:255'],
+                    'email' => ['email' => 'email:rfc|required|max:255'],
                     'phone' => ['text' => 'string|nullable|max:255'],
                 ],
                 'width' => ['1-2@m']

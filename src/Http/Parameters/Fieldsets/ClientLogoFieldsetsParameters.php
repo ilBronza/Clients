@@ -6,6 +6,7 @@ use IlBronza\Form\Helpers\FieldsetsProvider\FieldsetParametersFile;
 
 class ClientLogoFieldsetsParameters extends FieldsetParametersFile
 {
+	public const UPLOAD_RULES = 'image|mimes:jpg,jpeg,png,gif,webp|max:5120';
 	public function _getFieldsetsParameters() : array
 	{
 		return [
@@ -20,7 +21,7 @@ class ClientLogoFieldsetsParameters extends FieldsetParametersFile
 						'disk' => [
 							'method' => 'getLogoDisk',
 						],
-						'rules' => 'file|nullable|max:5120',
+						'rules' => 'nullable|' . self::UPLOAD_RULES,
 					],
 				],
 				'width' => ['medium@m'],

@@ -9,6 +9,8 @@ use IlBronza\Clients\Models\Referent;
 use IlBronza\CRUD\Traits\IlBronzaPackages\IlBronzaServiceProviderPackagesTrait;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
+use IlBronza\Clients\Validation\FiscalIdentifierValidator;
 
 class ClientsServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,7 @@ class ClientsServiceProvider extends ServiceProvider
 		]);
 
 		$this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'clients');
+		Validator::extend('clients_unique_fiscal', FiscalIdentifierValidator::class . '@validate', trans('clients::validation.duplicate_fiscal_identifier'));
 		$this->loadViewsFrom(__DIR__ . '/../resources/views', 'clients');
 		$this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 		$this->loadRoutesFrom(__DIR__ . '/../routes/clients.php');

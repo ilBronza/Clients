@@ -6,6 +6,7 @@ use IlBronza\CRUD\Http\Controllers\Traits\ControllerLogoTrait;
 use IlBronza\CRUD\Traits\CRUDEditUpdateTrait;
 use IlBronza\Clients\Http\Parameters\Fieldsets\ClientLogoFieldsetsParameters;
 use Illuminate\Http\Request;
+use IlBronza\CRUD\Helpers\CrudRequestHelper;
 
 class ClientLogoController extends ClientCRUD
 {
@@ -51,6 +52,14 @@ class ClientLogoController extends ClientCRUD
 
 	public function logoUpdate(Request $request, string $client)
 	{
+		// Dropzone sends "file", bypassing the ordinary form field validation in CRUD.
+		if (CrudRequestHelper::isFileUploadRequest($request)) {
+			$request->validate([
+				'fieldname' => 'required|in:logo',
+				'file' => 'required|' . ClientLogoFieldsetsParameters::UPLOAD_RULES,
+			]);
+		}
+
 		return $this->_update($request, $this->findModel($client));
 	}
 }

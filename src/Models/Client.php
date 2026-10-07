@@ -275,12 +275,33 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 		if (is_null($value))
 			return null;
 
-		return str_pad($value, 11, '0', STR_PAD_LEFT);
+		return static::normalizeVat($value);
 	}
 
 	public function setVatAttribute($value)
 	{
-		$this->attributes['vat'] = str_pad($value, 11, '0', STR_PAD_LEFT);
+		$this->attributes['vat'] = static::normalizeVat($value);
+	}
+
+	public function setFiscalCodeAttribute($value)
+	{
+		$this->attributes['fiscal_code'] = filled($value) ? strtoupper(trim($value)) : null;
+	}
+
+	public function setSdiAttribute($value)
+	{
+		$this->attributes['sdi'] = filled($value) ? strtoupper(trim($value)) : null;
+	}
+
+	public static function normalizeVat($value) : ?string
+	{
+		$value = trim((string) $value);
+
+		if ($value === '')
+			return null;
+
+		// Preserve international identifiers; retain padding for numeric legacy values.
+		return ctype_digit($value) ? str_pad($value, 11, '0', STR_PAD_LEFT) : strtoupper($value);
 	}
 
 	private function assignRandomDestinationAsDefault() : Destination
