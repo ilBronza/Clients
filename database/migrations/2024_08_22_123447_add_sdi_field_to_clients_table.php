@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-	    Schema::table('clients__clients', function (Blueprint $table) {
+	    Schema::table(config('clients.models.client.table'), function (Blueprint $table) {
 		    $table->string('sdi', 7)->after('vat')->nullable();
 	    });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-	    Schema::table('clients__clients', function (Blueprint $table) {
+	    Schema::table(config('clients.models.client.table'), function (Blueprint $table) {
 		    $table->dropColumn('sdi');
 	    });
     }

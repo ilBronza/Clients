@@ -29,11 +29,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-
-        Destinationtype::truncate();
-        Referenttype::truncate();
-
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        // Seed rows may predate this migration or be referenced by user data.
+        // Leave them in place; the table migrations handle a full rollback.
     }
 };

@@ -26,7 +26,7 @@ return new class extends Migration
                 config('clients.models.referenttype.table')
             );
 
-            $table->unique(['referent_id', 'type_slug'], 'dest_type_unique');
+            $table->unique(['referent_id', 'type_slug'], 'ref_type_unique');
 
             $table->timestamps();
         });
