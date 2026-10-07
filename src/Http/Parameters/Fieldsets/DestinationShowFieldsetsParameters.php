@@ -33,7 +33,7 @@ class DestinationShowFieldsetsParameters extends FieldsetParametersFile
                     'client_id' => [
                         'type' => 'select',
                         'multiple' => false,
-                        'rules' => 'string|nullable|exists:clients__clients,id',
+                        'rules' => 'string|nullable|exists:' . config('clients.models.client.table') . ',id',
                         'relation' => 'client',
                         'disabled' => true
                     ],
@@ -50,7 +50,7 @@ class DestinationShowFieldsetsParameters extends FieldsetParametersFile
                         'type' => 'select',
                         'multiple' => true,
                         // 'select2' => false,
-                        'rules' => 'array|nullable|exists:' . config('clients.models.referent.table') . ',slug',
+                        'rules' => 'array|nullable|exists:' . config('clients.models.referent.table') . ',id',
                         'relation' => 'referents'
                     ],
                     'emotional_image' => [

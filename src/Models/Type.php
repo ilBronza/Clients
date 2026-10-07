@@ -54,7 +54,7 @@ class Type extends PackagedBaseModel
 			3600,
 			function()
 			{
-				return static::where('name', static::getLegalName())->first();
+				return static::firstOrCreate(['name' => static::getLegalName()]);
 			}
 		);
 	}

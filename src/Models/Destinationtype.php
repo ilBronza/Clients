@@ -17,10 +17,11 @@ class Destinationtype extends Type
 
 	public function destinations()
 	{
-		dd(__METHOD__);
 		return $this->belongsToMany(
 			Destination::getProjectClassName(),
-			DestinationtypeDestination::getProjectClassName()->make()->getTable()
+			DestinationtypeDestination::getProjectClassName()::make()->getTable(),
+			'type_slug',
+			'destination_id'
 		);
 	}
 

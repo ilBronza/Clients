@@ -7,6 +7,7 @@ use IlBronza\Products\Models\Product\Product;
 use IlBronza\Products\Models\Quotations\Project;
 use IlBronza\Products\Models\Quotations\Quotation;
 use IlBronza\Warehouse\Models\Pallettype\Pallettype;
+use Illuminate\Database\Eloquent\Collection;
 
 trait ClientRelationsTrait
 {
@@ -50,7 +51,7 @@ trait ClientRelationsTrait
 		return $this->hasMany(Quotation::gpc());
 	}
 
-	public function getOrders() : ? Order
+	public function getOrders() : Collection
 	{
 		return $this->orders;
 	}

@@ -125,7 +125,7 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 		return config('clients.routePrefix');
 	}
 
-	public function getDestination() : Destination
+	public function getDestination() : ?Destination
 	{
 		return $this->getDefaultDestination();
 	}
@@ -142,9 +142,6 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 
 		if ($this->destinations()->count() != 1)
 			return null;
-
-		if (! $destination = $this->destinations()->first())
-			return $this->createDefaultDestination();
 
 		return $this->assignRandomDestinationAsDefault();
 	}
@@ -265,7 +262,7 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 	{
 		$types = Referenttype::whereIn('name', $types)->get();
 
-		$referentsByTypesIds = ReferenttypeReferent::whereIn('type_slug', $types->pluck('slug'))->select('referent_id')->get();
+		$referentsByTypesIds = ReferenttypeReferent::whereIn('type_slug', $types->pluck('slug'))->pluck('referent_id');
 
 		return $this->referents()->whereIn('id', $referentsByTypesIds)->get();
 	}
@@ -306,8 +303,9 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 
 	private function assignRandomDestinationAsDefault() : Destination
 	{
-		$destination = $this->destinations->first();
+		$destination = $this->destinations()->first();
 		$destination->setAsDefault();
+		$this->setRelation('defaultDestination', $destination);
 
 		Ukn::w(trans('clients::destinations.setAsDefaultBySystem', ['name' => $destination->getName()]));
 

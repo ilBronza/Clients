@@ -6,9 +6,6 @@ use IlBronza\Addresses\Models\Address;
 use IlBronza\Clients\Models\Destination;
 use IlBronza\Clients\Models\Destinationtype;
 
-use function d;
-use function dd;
-
 trait InteractsWithDestinationTrait
 {
 	public function createDestination() : Destination
@@ -17,7 +14,7 @@ trait InteractsWithDestinationTrait
 			'name' => $this->getName()
 		]);
 
-		$destination->save();
+		$this->destinations()->save($destination);
 
 		return $destination;
 	}
@@ -83,13 +80,24 @@ trait InteractsWithDestinationTrait
 		if ($this->address)
 			return $this->address;
 
-		if(! $destination = $this->getDefaultDestination())
+		$destination = method_exists($this, 'getDefaultDestination')
+			? $this->getDefaultDestination()
+			: $this->getDestination();
+
+		if (! $destination)
+		{
 			$destination = $this->createDefaultDestination();
+
+			if (! method_exists($this, 'getDefaultDestination')) {
+				$this->destination()->associate($destination);
+				$this->save();
+			}
+		}
 
 		if($address = $destination->getAddress())
 			return $address;
 
-		dd('creare address per la default destination');
+		return $destination->provideAddressModelForExtraFields();
 	}
 
 	public function scopeWithDefaultDestinationId($query)
@@ -99,7 +107,7 @@ trait InteractsWithDestinationTrait
 				->whereColumn('client_id', $this->getTable() . '.id')
 				->whereHas('destinationtypeDestinations', function ($_query)
 				{
-					$_query->where('type_slug', Destinationtype::getDefault());
+					$_query->where('type_slug', Destinationtype::getDefault()->getKey());
 				})
 				->take(1)
 				]);

@@ -2,32 +2,29 @@
 
 namespace IlBronza\Clients\Models;
 
-use IlBronza\CRUD\Models\BaseModel;
-use IlBronza\Clients\Models\ClientsPackageBaseModelTrait;
+use IlBronza\CRUD\Traits\Model\PackagedModelsTrait;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class DestinationReferent extends BaseModel
+class DestinationReferent extends Pivot
 {
+	static $packageConfigPrefix = 'clients';
 	public ? string $translationFolderPrefix = 'clients';
 	static $modelConfigPrefix = 'destinationReferent';
+	public $timestamps = false;
+	public $incrementing = true;
 
-	use ClientsPackageBaseModelTrait;
-
-	public function getTable()
-	{
-		return 'clients__destination_referent';
-	}
+	use PackagedModelsTrait;
 
 	public function referent()
 	{
-		return $this->hasOne(
+		return $this->belongsTo(
 			config('clients.models.referent.class')
 		);
 	}
 
 	public function destination()
 	{
-		dd('qua non abbiamo una belongsTo!?!=!!??!');
-		return $this->hasOne(
+		return $this->belongsTo(
 			config('clients.models.destination.class')
 		);
 	}

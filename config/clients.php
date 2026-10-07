@@ -11,7 +11,6 @@ use IlBronza\Clients\Http\Controllers\Clients\ClientLogoController;
 use IlBronza\Clients\Http\Controllers\Clients\ClientShowController;
 use IlBronza\Clients\Http\Controllers\CrudClientController;
 use IlBronza\Clients\Http\Controllers\CrudClienthashController;
-use IlBronza\Clients\Http\Controllers\CrudDestinationController;
 use IlBronza\Clients\Http\Controllers\CrudDestinationtypeController;
 use IlBronza\Clients\Http\Controllers\CrudReferentController;
 use IlBronza\Clients\Http\Controllers\Destinations\DestinationCreateStoreController;
@@ -31,15 +30,16 @@ use IlBronza\Clients\Http\Parameters\Fieldsets\DestinationCreateStoreFieldsetsPa
 use IlBronza\Clients\Http\Parameters\Fieldsets\DestinationEditFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\DestinationShowFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\RelationshipsManagers\ClientRelationshipsManager;
+use IlBronza\Clients\Http\Parameters\RelationshipsManagers\DestinationRelationshipsManager;
 use IlBronza\Clients\Http\ParametersFile\CrudDestinationtypeParameters;
 use IlBronza\Clients\Http\ParametersFile\CrudReferenttypeParameters;
 use IlBronza\Clients\Http\ParametersFile\Referent\EditReferentParameters;
-use IlBronza\Clients\Http\Parameters\RelationshipsManagers\DestinationRelationshipsManager;
 use IlBronza\Clients\Models\Client;
 use IlBronza\Clients\Models\ClientAsClient;
 use IlBronza\Clients\Models\ClientAsSupplier;
 use IlBronza\Clients\Models\Clienthash;
 use IlBronza\Clients\Models\Destination;
+use IlBronza\Clients\Models\Destinatable;
 use IlBronza\Clients\Models\DestinationReferent;
 use IlBronza\Clients\Models\Destinationtype;
 use IlBronza\Clients\Models\DestinationtypeDestination;
@@ -152,7 +152,7 @@ return [
 		'destination' => [
 			'class' => Destination::class,
 			'table' => 'clients__destinations',
-			'controller' => CrudDestinationController::class,
+			'controller' => DestinationIndexController::class,
 			'fieldsGroupsFiles' => [
 				'index' => DestinationFieldsGroupParametersFile::class,
 				'related' => DestinationFieldsGroupParametersFile::class,
