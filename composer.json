@@ -1,19 +1,48 @@
 {
     "name": "ilbronza/clients",
-    "description": ":package_description",
+    "description": "Client and supplier registry, destinations and referents for Laravel.",
     "license": "MIT",
     "authors": [
         {
-            "name": "Author Name",
-            "email": "author@email.com",
-            "homepage": "http://author.com"
+            "name": "Davide Bronzini",
+            "email": "davide_bronzini@hotmail.com",
+            "homepage": "https://sistema.srl"
         }
     ],
     "homepage": "https://github.com/ilbronza/clients",
-    "keywords": ["Laravel", "Clients"],
+    "keywords": [
+        "Laravel",
+        "Clients"
+    ],
     "require": {
+        "php": "^8.2",
+        "laravel/framework": "^11.0 || ^12.0",
+        "spatie/laravel-medialibrary": "^11.0",
+        "ilbronza/accountmanager": "*",
+        "ilbronza/addresses": "*",
+        "ilbronza/buttons": "*",
+        "ilbronza/category": "*",
+        "ilbronza/contacts": "*",
+        "ilbronza/crud": "*",
+        "ilbronza/datatables": "*",
+        "ilbronza/filecabinet": "*",
+        "ilbronza/form": "*",
+        "ilbronza/formfield": "*",
+        "ilbronza/menu": "*",
+        "ilbronza/notes": "*",
+        "ilbronza/operators": "*",
+        "ilbronza/payments": "*",
+        "ilbronza/products": "*",
+        "ilbronza/ukn": "*",
+        "ilbronza/uikittemplate": "*",
+        "ilbronza/warehouse": "*",
+        "ilbronza/timeline": "*",
+        "spatie/laravel-permission": "^6.0",
+        "spatie/laravel-activitylog": "^4.0"
     },
     "require-dev": {
+        "orchestra/testbench": "^9.0 || ^10.0",
+        "phpunit/phpunit": "^11.0"
     },
     "autoload": {
         "psr-4": {
@@ -22,7 +51,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "IlBronza\\Clients\\Tests\\": "tests"
+            "IlBronza\\Clients\\Tests\\": "tests",
+            "App\\": "tests/Fixtures/App/"
         }
     },
     "extra": {
@@ -34,5 +64,9 @@
                 "Clients": "IlBronza\\Clients\\Facades\\Clients"
             }
         }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test:lint": "find src config database routes tests -name '*.php' -print0 | xargs -0 -n1 php -l"
     }
 }
