@@ -110,7 +110,7 @@ class CrudDestinationtypeController extends CRUD
 
     public function getDestinationtype(int|string $destinationtype)
     {
-        return $this->getModelClass()::find($destinationtype);
+        return $this->getModelClass()::findOrFail($destinationtype);
     }
 
     public function show(int|string $destinationtype)

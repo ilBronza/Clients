@@ -14,17 +14,16 @@ class ClientByOperatorController extends ClientIndexController
 	public function getIndexFieldsArray()
 	{
 		//ClientByOperatorFieldsGroupParametersFile
-		return config('clients.models.client.fieldsGroupsFiles.byOperator')::getTracedFieldsGroup();
+		return config('clients.models.client.fieldsGroupsFiles.byOperator', config('clients.models.client.fieldsGroupsFiles.index'))::getTracedFieldsGroup();
 	}
 
 	public function getIndexElements()
 	{
-		$operator = Operator::gpc()::find(request()->operator);
+		$operator = Operator::gpc()::findOrFail(request()->operator);
 
-		$query = $operator->clients()::with([
+		$query = $operator->clients()->with([
 			'categories',
-			'defaultDestination.address',
-			'categories'
+			'defaultDestination.address'
 		]);
 
 		return $query->get();

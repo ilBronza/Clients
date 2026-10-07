@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 
-use function dd;
-
 class ClientAreaManagerScope implements Scope
 {
 	/**
@@ -18,6 +16,13 @@ class ClientAreaManagerScope implements Scope
 		if(! auth()->user()?->hasRole('areaManager'))
 			return ;
 
-		$builder->forAreaManagers();
+		if ($model->hasNamedScope('forAreaManagers')) {
+			$builder->forAreaManagers();
+			return;
+		}
+
+		// Applications define their area assignment rules on the configured Client model.
+		// Without those rules, never expose the entire registry to an area manager.
+		$builder->whereRaw('1 = 0');
 	}
 }

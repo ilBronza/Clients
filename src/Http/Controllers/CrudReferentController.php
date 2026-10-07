@@ -171,12 +171,12 @@ class CrudReferentController extends CRUD
 
     public function getClient($client)
     {
-        return Client::getProjectClassName()::find($client);
+        return Client::getProjectClassName()::findOrFail($client);
     }
 
     public function getReferent(int|string $referent)
     {
-        return $this->getModelClass()::find($referent);
+        return $this->getModelClass()::findOrFail($referent);
     }
 
     /**

@@ -152,7 +152,7 @@ class CrudClientController extends CRUD
 
     public function getClient(int|string $client)
     {
-        return $this->getModelClass()::find($client);
+        return $this->getModelClass()::findOrFail($client);
     }
 
     public function show($client)

@@ -3,17 +3,22 @@
 namespace IlBronza\Clients\Http\Controllers\Destinations;
 
 use IlBronza\CRUD\Models\Media;
-use IlBronza\CRUD\Traits\CRUDDeleteMediaTrait;
 use IlBronza\Clients\Http\Controllers\Destinations\DestinationCRUD;
 
 class DestinationDeleteMediaController extends DestinationCRUD
 {
-    use CRUDDeleteMediaTrait;
-
     public $allowedMethods = ['deleteMedia'];
 
-    public function deleteMedia($packing, Media $media)
+    public function deleteMedia($destination, Media $media)
     {
-        return $this->_deleteMedia($packing, $media);
+        $model = $this->findModel($destination);
+
+        abort_unless($model, 404);
+        abort_unless($model->userCanDelete(), 403);
+
+        abort_unless($model->is($media->model), 403);
+        $media->delete();
+
+        return ['success' => true];
     }
 }

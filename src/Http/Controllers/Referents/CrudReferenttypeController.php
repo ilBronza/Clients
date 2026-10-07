@@ -110,7 +110,7 @@ class CrudReferenttypeController extends CRUD
 
     public function getReferenttype(int|string $referenttype)
     {
-        return $this->getModelClass()::find($referenttype);
+        return $this->getModelClass()::findOrFail($referenttype);
     }
 
     public function show(int|string $referenttype)

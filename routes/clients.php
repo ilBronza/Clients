@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 use IlBronza\Clients\Clients;
 
@@ -81,13 +80,13 @@ Route::group([
 
 		Route::group(['prefix' => 'destinations'], function()
 		{
-			Route::get('delete-media/{destination}/{media}', [Clients::getController('destination', 'deleteMedia'), 'deleteMedia'])->name('destinations.deleteMedia');
+			Route::delete('delete-media/{destination}/{media}', [Clients::getController('destination', 'deleteMedia'), 'deleteMedia'])->name('destinations.deleteMedia');
 			Route::get('', [Clients::getController('destination', 'index'), 'index'])->name('destinations.index');
 			Route::get('create', [Clients::getController('destination', 'create'), 'create'])->name('destinations.create');
 			Route::post('', [Clients::getController('destination', 'store'), 'store'])->name('destinations.store');
 			Route::get('{destination}', [Clients::getController('destination', 'show'), 'show'])->name('destinations.show');
 			Route::get('{destination}/edit', [Clients::getController('destination', 'edit'), 'edit'])->name('destinations.edit');
-			Route::put('{destination}', [Clients::getController('destination', 'edit'), 'update'])->name('destinations.update');
+			Route::put('{destination}', [Clients::getController('destination', 'update'), 'update'])->name('destinations.update');
 
 			Route::delete('{destination}/delete', [Clients::getController('destination', 'destroy'), 'destroy'])->name('destinations.destroy');
 		});

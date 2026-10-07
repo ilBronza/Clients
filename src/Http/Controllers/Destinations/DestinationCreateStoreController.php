@@ -34,7 +34,7 @@ class DestinationCreateStoreController extends DestinationCRUD
 
 	public function createFromClient(int|string $client)
 	{
-		$client = Client::getProjectClassName()::find($client);
+		$client = Client::getProjectClassName()::findOrFail($client);
 
 		$destination = $this->getModelClass()::make();
 		$destination->client_id = $client->getKey();
@@ -50,7 +50,7 @@ class DestinationCreateStoreController extends DestinationCRUD
 	{
 		$quotationClass = config('products.models.quotation.class');
 
-		$quotation = $quotationClass::find($quotation);
+		$quotation = $quotationClass::findOrFail($quotation);
 
 		$client = $quotation->client;
 
@@ -72,7 +72,7 @@ class DestinationCreateStoreController extends DestinationCRUD
 	{
 		$orderClass = config('products.models.order.class');
 
-		$order = $orderClass::find($order);
+		$order = $orderClass::findOrFail($order);
 
 		$client = $order->client;
 
