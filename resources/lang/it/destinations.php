@@ -13,4 +13,5 @@ return array (
   'cardIntroShow' => 'Informazioni sulla destinazione',
   'cardTitleCreate' => 'Crea destinazione',
   'cardIntroCreate' => 'Inserisci i dati della destinazione',
+    'titles.show' => 'Dettagli :element',
 );

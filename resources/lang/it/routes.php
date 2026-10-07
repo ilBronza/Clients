@@ -97,4 +97,5 @@ return [
 
   'clientsmanagerclients.destinations.create' => 'Crea destinazione cliente',
   'clientsmanagerclients.referents.create' => 'Crea referente cliente',
+    'clientsmanagerclients.logoUploadForm' => 'Carica logo del cliente',
 ];

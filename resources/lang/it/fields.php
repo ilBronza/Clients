@@ -21,6 +21,7 @@ return [
 	'venue' => 'Sede',
 	'fiscal_name' => 'Ragione sociale',
 	'fiscal_code' => 'Codice fiscale',
+	'sdi' => 'Codice destinatario SDI',
 	'rea' => 'REA',
 	'istat_code' => 'Istat',
 	'mySelfSee' => 'Mostra',
@@ -84,4 +85,7 @@ return [
   'tmp_cciia' => 'Codice CCIAA',
   'tmp_eu' => 'Codice UE',
   'regulate_production_tolerance' => 'Tolleranza di produzione',
+    'paymenttype_id' => 'Modalità di pagamento',
+    'target' => 'Elemento collegato',
+    'payments' => 'Pagamenti',
 ];

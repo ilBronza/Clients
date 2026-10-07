@@ -37,4 +37,8 @@ return [
   'cardIntroCreate' => 'Inserisci i dati del cliente',
   'referent' => 'Referente',
   'titles.show' => 'Dettagli :element',
+    'referenttype' => 'Tipo di referente',
+    'clienthash' => 'Identificativo cliente',
+    'destinationtypes' => 'Tipi di destinazione',
+    'destinationtype' => 'Tipo di destinazione',
 ];
