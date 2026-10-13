@@ -75,6 +75,18 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 
 	use ClientRelationsTrait;
 
+	public static function getIndexCacheKeys() : array
+	{
+		$models = array_unique([
+			static::class,
+			config('clients.models.client.class', Client::class),
+			config('clients.models.client.asClient', ClientAsClient::class),
+			config('clients.models.client.asSupplier', ClientAsSupplier::class),
+		]);
+
+		return array_map(fn ($modelClass) => $modelClass::getIndexCacheKey(), $models);
+	}
+
 	public function getExtraFieldsClass() : ? string
 	{
 		return null;

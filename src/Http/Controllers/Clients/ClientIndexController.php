@@ -39,6 +39,16 @@ class ClientIndexController extends ClientCRUD
 //			]);
 //	}
 
+	public function usesIndexCache() : bool
+	{
+		return $this->useIndexCache && ! auth()->user()?->hasRole('areaManager');
+	}
+
+	public function beforeIndex() : void
+	{
+		CompanySessionHelper::exitFromCompany();
+	}
+
 	public function getIndexElements()
 	{
 		ini_set('max_execution_time', '120');
@@ -55,7 +65,13 @@ class ClientIndexController extends ClientCRUD
 			'address'
 		]);
 
-		return $query->get();
+		// Area managers have user-specific visibility rules in the model scope.
+		if (! $this->usesIndexCache())
+			return $query->get();
+
+		return cache()->remember(
+			$this->getModelClass()::getIndexCacheKey(), 3600, fn () => $query->get()
+		);
 	}
 
 }
