@@ -15,7 +15,7 @@ use function config;
 
 class ClientRelationshipsManager Extends RelationshipsManager
 {
-	public  function getAllRelationsParameters() : array
+	public function getSectionsParameters() : array
 	{
 		$relations = [];
 
@@ -103,7 +103,7 @@ class ClientRelationshipsManager Extends RelationshipsManager
 		if(app('clients')->hasDestinations())
 			$relations['destinations'] = config('clients.models.destination.controllers.index');
 
-		if(method_exists($this->getModel(), 'projects'))
+		if(config('products.sellables.enabled'))
 			$relations['projects'] = config('products.models.project.controllers.index');
 
 		if(config('filecabinets.enabled'))
@@ -115,9 +115,6 @@ class ClientRelationshipsManager Extends RelationshipsManager
 		if(config('notes.enabled'))
 			$relations['notes'] = CrudNoteController::class;
 
-		return [
-			'show' => [
-				'relations' => $relations
-			]
-		];	}
+		return $relations;
+	}
 }

@@ -126,7 +126,8 @@ return [
 				'logo' => ClientLogoController::class,
 			],
 			'relationshipsManagerClasses' => [
-				'show' => ClientRelationshipsManager::class
+				'show' => ClientRelationshipsManager::class,
+				'edit' => ClientRelationshipsManager::class,
 			],
 			//TODO ELIMINARE
 			'controller' => CrudClientController::class,
