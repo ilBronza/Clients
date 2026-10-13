@@ -17,6 +17,7 @@ use IlBronza\Clients\Models\Traits\Client\ClientRelationsTrait;
 use IlBronza\Clients\Models\Traits\InteractsWithDestinationTrait;
 use IlBronza\Contacts\Models\Traits\InteractsWithContact;
 use IlBronza\Notes\Traits\InteractsWithNotesTrait;
+use IlBronza\Payments\Models\Traits\InteractsWithBankaccounts;
 use IlBronza\Payments\Models\Traits\InteractsWithPaymenttypes;
 use IlBronza\Products\Models\Interfaces\SupplierInterface;
 use IlBronza\Products\Models\Traits\Sellable\InteractsWithSupplierTrait;
@@ -55,6 +56,7 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 
 	use InteractsWithContact;
 	use InteractsWithDestinationTrait;
+	use InteractsWithBankaccounts;
 	use InteractsWithPaymenttypes;
 	use PackagedModelsTrait;
 	use InteractsWithNotesTrait;

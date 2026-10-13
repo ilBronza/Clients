@@ -11,6 +11,7 @@ use IlBronza\CRUD\Traits\Model\CRUDBrotherhoodTrait;
 use IlBronza\CRUD\Traits\Model\CRUDModelExtraFieldsTrait;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
 use IlBronza\CRUD\Traits\Model\PackagedModelsTrait;
+use IlBronza\Payments\Models\Traits\InteractsWithBankaccounts;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -29,6 +30,7 @@ class Destination extends BaseModel implements HasMedia
 
 	use ClientsPackageBaseModelTrait;
 	use PackagedModelsTrait;
+	use InteractsWithBankaccounts;
 	use InteractsWithMedia;
 
 	use CRUDModelExtraFieldsTrait;

@@ -115,6 +115,13 @@ class ClientRelationshipsManager Extends RelationshipsManager
 		if(config('notes.enabled'))
 			$relations['notes'] = CrudNoteController::class;
 
+		if(config('payments.active', false) === true)
+			$relations['bankAccounts'] = [
+				'relation' => 'bankaccounts',
+				'controller' => config('payments.models.bankaccount.controllers.index'),
+				'elementGetterMethod' => 'getRelatedBankaccountElements',
+			];
+
 		return $relations;
 	}
 }
