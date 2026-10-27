@@ -6,9 +6,12 @@ colori aziendali e logo.
 
 ## Requisiti e integrazioni
 
-- PHP 8.2 o successivo della serie 8; Laravel 11 o 12.
-- Le dipendenze runtime sono dichiarate in `composer.json`. La suite è verificata
-  con Laravel 11, PHP 8.4 e SQLite; Laravel 12 richiede Testbench 10 per i test.
+- PHP 8.2 o successivo della serie 8; Laravel con minimo dichiarato in Composer.
+- Le dipendenze Laravel e le relative integrazioni indicano soltanto versioni
+  minime, senza tetti sulle major. Le versioni concrete vengono scelte
+  dall’applicazione ospite e fissate nel suo `composer.lock`.
+- La suite locale usa Laravel 11, PHP 8.4 e SQLite. La compatibilità del
+  codice con altre versioni va verificata eseguendo i test.
 - Un'applicazione Laravel ospite con `App\Http\Controllers\Controller` e
   `App\Models\User`, richiesti da CRUD e AccountManager.
 - AccountManager e Spatie Permission per autenticazione e ruoli; CRUD, Form,
