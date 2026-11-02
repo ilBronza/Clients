@@ -101,7 +101,10 @@ class ClientRelationshipsManager Extends RelationshipsManager
 //			$relations['supplier'] = config('products.models.supplier.controllers.show');
 //
 		if(app('clients')->hasDestinations())
-			$relations['destinations'] = config('clients.models.destination.controllers.index');
+			$relations['destinations'] = [
+				'controller' => config('clients.models.destination.controllers.index'),
+				'fieldsGroupsParametersFile' => config('clients.models.destination.fieldsGroupsFiles.relatedByOwner'),
+			];
 
 		if(config('products.sellables.enabled'))
 			$relations['projects'] = config('products.models.project.controllers.index');
@@ -110,15 +113,22 @@ class ClientRelationshipsManager Extends RelationshipsManager
 			$relations['dossiers'] = config('filecabinet.models.dossier.controllers.index');
 
 		if(app('clients')->hasReferents())
-			$relations['referents'] = config('clients.models.referent.controller');
+			$relations['referents'] = [
+				'controller' => config('clients.models.referent.controller'),
+				'fieldsGroupsParametersFile' => config('clients.models.referent.fieldsGroupsFiles.relatedByOwner'),
+			];
 
 		if(config('notes.enabled'))
-			$relations['notes'] = CrudNoteController::class;
+			$relations['notes'] = [
+				'controller' => CrudNoteController::class,
+				'fieldsGroupsParametersFile' => config('notes.models.note.fieldsGroupsFiles.relatedByOwner'),
+			];
 
 		if(config('payments.active', false) === true)
 			$relations['bankAccounts'] = [
 				'relation' => 'bankaccounts',
 				'controller' => config('payments.models.bankaccount.controllers.index'),
+				'fieldsGroupsParametersFile' => config('payments.models.bankaccount.fieldsGroupsFiles.relatedByOwner'),
 				'elementGetterMethod' => 'getRelatedBankaccountElements',
 			];
 

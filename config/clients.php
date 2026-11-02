@@ -23,6 +23,8 @@ use IlBronza\Clients\Http\Controllers\Referents\CrudReferenttypeController;
 use IlBronza\Clients\Http\Parameters\Datatables\ClientIndexFieldsGroupParametersFile;
 use IlBronza\Clients\Http\Parameters\Datatables\ClientRelatedFieldsGroupParametersFile;
 use IlBronza\Clients\Http\Parameters\Datatables\DestinationFieldsGroupParametersFile;
+use IlBronza\Clients\Http\Parameters\Datatables\DestinationRelatedByOwnerFieldsGroupParametersFile;
+use IlBronza\Clients\Http\Parameters\Datatables\ReferentRelatedByOwnerFieldsGroupParametersFile;
 use IlBronza\Clients\Http\Parameters\Fieldsets\ClientCreateFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\ClientEditFieldsetsParameters;
 use IlBronza\Clients\Http\Parameters\Fieldsets\ClientShowFieldsetsParameters;
@@ -156,6 +158,7 @@ return [
 			'controller' => DestinationIndexController::class,
 			'fieldsGroupsFiles' => [
 				'index' => DestinationFieldsGroupParametersFile::class,
+				'relatedByOwner' => DestinationRelatedByOwnerFieldsGroupParametersFile::class,
 				'related' => DestinationFieldsGroupParametersFile::class,
 			],
 			'parametersFiles' => [
@@ -210,6 +213,9 @@ return [
 		],
 		'referent' => [
 			'class' => Referent::class,
+			'fieldsGroupsFiles' => [
+				'relatedByOwner' => ReferentRelatedByOwnerFieldsGroupParametersFile::class,
+			],
 			'table' => 'clients__referents',
 			'controller' => CrudReferentController::class,
 			'parametersFiles' => [
