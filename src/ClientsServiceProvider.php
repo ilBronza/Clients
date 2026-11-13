@@ -53,6 +53,7 @@ class ClientsServiceProvider extends ServiceProvider
 	public function register() : void
 	{
 		$this->mergeConfigFrom(__DIR__ . '/../config/clients.php', 'clients');
+		$this->mergeConfigFrom(__DIR__ . '/../config/resource-filters/clients.php', 'resource-filters.resources.clients');
 
 		// Register the service the package provides.
 		$this->app->singleton('clients', function ($app)

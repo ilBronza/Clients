@@ -6,6 +6,7 @@ use IlBronza\Addresses\Models\Address;
 use IlBronza\Buttons\Button;
 use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Models\Casts\ExtraField;
+use IlBronza\CRUD\ResourceFilters\SessionResourceScope;
 use IlBronza\CRUD\Traits\CRUDSluggableTrait;
 use IlBronza\CRUD\Traits\IlBronzaPackages\CRUDLogoTrait;
 use IlBronza\CRUD\Traits\Model\CRUDModelExtraFieldsTrait;
@@ -344,7 +345,12 @@ class Client extends BaseModel implements SupplierInterface, HasMedia
 			if(! config('clients.ownCompanyName'))
 				throw new \Exception('Please compile ownCompanyName on clients config');
 
-			if ($client = static::withoutGlobalScopes([Vnl25Scope::class])->where('name', config('clients.ownCompanyName'))->first())
+			// This lookup creates the configured owner on a miss. A browsing
+			// preference must never make an existing owner look absent.
+			if ($client = static::withoutGlobalScopes([
+				Vnl25Scope::class,
+				SessionResourceScope::class,
+			])->where('name', config('clients.ownCompanyName'))->first())
 				return $client;
 
 			$client = static::make();

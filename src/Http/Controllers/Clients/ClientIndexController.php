@@ -2,6 +2,7 @@
 
 namespace IlBronza\Clients\Http\Controllers\Clients;
 
+use IlBronza\CRUD\ResourceFilters\ResourceFilters;
 use IlBronza\CRUD\Traits\CRUDIndexTrait;
 use IlBronza\CRUD\Traits\CRUDPlainIndexTrait;
 use IlBronza\Operators\Helpers\Companies\CompanySessionHelper;
@@ -66,7 +67,7 @@ class ClientIndexController extends ClientCRUD
 		]);
 
 		// Area managers have user-specific visibility rules in the model scope.
-		if (! $this->usesIndexCache())
+		if (! $this->usesIndexCache() || ResourceFilters::currentCacheContext() !== null)
 			return $query->get();
 
 		return cache()->remember(
